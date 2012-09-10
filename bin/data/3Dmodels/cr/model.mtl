@@ -1,0 +1,118 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 6.3 6.3.1.7958
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl ac3dmat60
+Ka 0.458824 0.227451 0
+Kd 1 0.501961 0
+Ks 0.34902 0.176471 0
+illum 2
+Ns 2
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat3
+Ka 0.2 0.2 0.2
+Kd 0 0 0.623529
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2048
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat30
+Ka 0.2 0.2 0.2
+Kd 0 0 0
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2048
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat2
+Ka 0.2 0.2 0.2
+Kd 0.364706 0.235294 0
+Ks 0.2 0.2 0.2
+illum 2
+Ns 7.46426
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat4
+Ka 0.2 0.2 0.2
+Kd 0.960784 0.784314 0.537255
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat6
+Ka 0.2 0.2 0.2
+Kd 1 0.501961 0
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat1
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2048
+map_Kd /Users/rahulbudhiraja/Documents/Processing/OutdoorAR_assets_import/data/3Dmodels/cr/model.obj
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 

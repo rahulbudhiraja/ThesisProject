@@ -1,0 +1,70 @@
+# 
+# Wavefront material file
+# Converted by the DEEP Exploration  Deep Exploration 6.3 6.3.1.7958
+# Right Hemisphere, LTD
+# http://www.righthemisphere.com/
+# 
+
+newmtl ac3dmat2
+Ka 0.2 0.2 0.2
+Kd 0 0 0.25098
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2.2974
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat20
+Ka 0.2 0.2 0.2
+Kd 0.717647 0.356863 0
+Ks 0.2 0.2 0.2
+illum 2
+Ns 7.46426
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat1
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2048
+map_Kd 
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 
+
+newmtl ac3dmat10
+Ka 0.2 0.2 0.2
+Kd 1 1 1
+Ks 0.2 0.2 0.2
+illum 2
+Ns 2048
+map_Kd 3Dmodels/pog/blackbay.png
+map_bump 
+bump 
+map_opacity 
+map_d 
+refl 
+map_kS 
+map_kA 
+map_Ns 

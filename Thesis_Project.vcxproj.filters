@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\testApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TrackerStuff\IWRFilterTracking.cpp">
+      <Filter>src\TrackerStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TrackerStuff\IWRsdk.c">
+      <Filter>src\TrackerStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.cpp">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\TrackerStuff">
+      <UniqueIdentifier>{85283b1c-4613-461f-810e-4b01c682d015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\VuzixSDK">
+      <UniqueIdentifier>{d510474a-05fc-490f-8b88-62ae33c0ad9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Addons">
+      <UniqueIdentifier>{f3455e1a-38b9-4beb-ae09-a15c9594bb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Addons\ofNetwork">
+      <UniqueIdentifier>{5d929717-c47d-40ab-812c-1c08dcf262cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Addons\Thread">
+      <UniqueIdentifier>{bcb41bba-9689-4411-8d16-8f801713a729}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\CustomClasses">
+      <UniqueIdentifier>{1d700ba0-fab1-4dbf-897d-cb4ad7a930e5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\testApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TrackerStuff\IWRsdk.h">
+      <Filter>src\TrackerStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VuzixSDK\inc\iwrstdrv.h">
+      <Filter>src\VuzixSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VuzixSDK\inc\iwrsguid.h">
+      <Filter>src\VuzixSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VuzixSDK\inc\iwrstreo.h">
+      <Filter>src\VuzixSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="src\VuzixSDK\inc\iweardrv.h">
+      <Filter>src\VuzixSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TrackerStuff\resource.h">
+      <Filter>src\TrackerStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TrackerStuff\stdafx.h">
+      <Filter>src\TrackerStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetwork.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxNetworkUtils.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPClient.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxThread\src\ofxThread.h">
+      <Filter>src\Addons\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h">
+      <Filter>src\Addons\ofNetwork</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUIStuff.h">
+      <Filter>src\CustomClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\POIS.h">
+      <Filter>src\CustomClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ProcessReceivedData.h">
+      <Filter>src\CustomClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NoteInformation.h">
+      <Filter>src\CustomClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Calculations.h">
+      <Filter>src\CustomClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofx3DBaseLoader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
