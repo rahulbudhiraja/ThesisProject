@@ -18,3 +18,7 @@
 *.la
 *.a
 >>>>>>> 0961aed7d41f5f1c9258604eb35eec46f69bbe15
+*.exe
+*.ipch
+*.obj
+*.exe

@@ -1,0 +1,222 @@
+\hypertarget{test_app_8cpp}{\section{src/test\-App.cpp File Reference}
+\label{test_app_8cpp}\index{src/test\-App.\-cpp@{src/test\-App.\-cpp}}
+}
+
+
+Implements the test application class.  
+
+
+{\ttfamily \#include \char`\"{}test\-App.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}stdafx.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}I\-W\-Rsdk.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$fcntl.\-h$>$}\\*
+{\ttfamily \#include $<$io.\-h$>$}\\*
+{\ttfamily \#include $<$sys\textbackslash{}stat.\-h$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+\subsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \hyperlink{namespacestd}{std}
+\begin{DoxyCompactList}\small\item\em \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{test_app_8cpp_af3fff26dd0daf747313fea22d007e08f}{I\-W\-R\-\_\-\-O\-K}~0
+\begin{DoxyCompactList}\small\item\em A macro that defines iwr ok. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a2700b1789448312031a74498f20c6151}{\#define {\bfseries I\-W\-R\-\_\-\-N\-O\-\_\-\-T\-R\-A\-C\-K\-E\-R}~1}\label{test_app_8cpp_a2700b1789448312031a74498f20c6151}
+
+\item 
+\#define \hyperlink{test_app_8cpp_a76171800ff5c2c8a68158b633bf34224}{I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E}~2
+\begin{DoxyCompactList}\small\item\em A macro that defines iwr offline. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a396a3b6ee3905182e93a223c5baba939}{\#define {\bfseries I\-W\-R\-\_\-\-T\-R\-A\-C\-K\-E\-R\-\_\-\-C\-O\-R\-R\-U\-P\-T}~3}\label{test_app_8cpp_a396a3b6ee3905182e93a223c5baba939}
+
+\item 
+\#define \hyperlink{test_app_8cpp_a0133f9ab2073f3ed92ed68ab31207461}{I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E}~4
+\begin{DoxyCompactList}\small\item\em A macro that defines iwr notracker instance. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a6ac55ca9ec2b159b660ad85684feffa7}{\#define {\bfseries I\-W\-R\-\_\-\-N\-O\-\_\-\-S\-T\-E\-R\-E\-O}~5}\label{test_app_8cpp_a6ac55ca9ec2b159b660ad85684feffa7}
+
+\item 
+\#define \hyperlink{test_app_8cpp_abf7f3ce37211489caedaaecd77232c35}{I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T}~6
+\begin{DoxyCompactList}\small\item\em A macro that defines iwr stereo corrupt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ {\bfseries N\-O\-\_\-\-F\-I\-L\-T\-E\-R} =0, 
+{\bfseries A\-P\-P\-L\-I\-C\-A\-T\-I\-O\-N\-\_\-\-F\-I\-L\-T\-E\-R}, 
+{\bfseries I\-N\-T\-E\-R\-N\-A\-L\-\_\-\-F\-I\-L\-T\-E\-R}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{test_app_8cpp_abc3d99fdd08f8cf5968947ade2874ec5}{void {\bfseries I\-W\-R\-Filter\-Tracking} (long $\ast$\hyperlink{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw}, long $\ast$pitch, long $\ast$roll)}\label{test_app_8cpp_abc3d99fdd08f8cf5968947ade2874ec5}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{test_app_8cpp_a176d63bc2538f9abe94a1a39f88348ed}{bool {\bfseries g\-\_\-tracking} = false}\label{test_app_8cpp_a176d63bc2538f9abe94a1a39f88348ed}
+
+\item 
+\hypertarget{test_app_8cpp_a5b7b2353e37b213f7d54fd5c41405e6d}{float \hyperlink{test_app_8cpp_a5b7b2353e37b213f7d54fd5c41405e6d}{g\-\_\-f\-Yaw} = 0.\-0f}\label{test_app_8cpp_a5b7b2353e37b213f7d54fd5c41405e6d}
+
+\begin{DoxyCompactList}\small\item\em The roll. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a03b98db700342d558e183b7f610f957e}{float {\bfseries g\-\_\-f\-Pitch} = 0.\-0f}\label{test_app_8cpp_a03b98db700342d558e183b7f610f957e}
+
+\item 
+\hypertarget{test_app_8cpp_a4c06be914a849a84a818cfb2a8f192a8}{float {\bfseries g\-\_\-f\-Roll} = 0.\-0f}\label{test_app_8cpp_a4c06be914a849a84a818cfb2a8f192a8}
+
+\item 
+\hypertarget{test_app_8cpp_a20de1ec8e34993508aef934f2ea06149}{long \hyperlink{test_app_8cpp_a20de1ec8e34993508aef934f2ea06149}{iwr\-\_\-status}}\label{test_app_8cpp_a20de1ec8e34993508aef934f2ea06149}
+
+\begin{DoxyCompactList}\small\item\em The iwr status. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a3a1437b324a10893d0a616cd086c6271}{int \hyperlink{test_app_8cpp_a3a1437b324a10893d0a616cd086c6271}{g\-\_\-\-Filtering} = 0}\label{test_app_8cpp_a3a1437b324a10893d0a616cd086c6271}
+
+\begin{DoxyCompactList}\small\item\em The filtering. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a0868f931f3e011d04c6a7072fd91a576}{int \hyperlink{test_app_8cpp_a0868f931f3e011d04c6a7072fd91a576}{Pid} = 0}\label{test_app_8cpp_a0868f931f3e011d04c6a7072fd91a576}
+
+\begin{DoxyCompactList}\small\item\em The P\-I\-D. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a639c84ce78fef8ba2780de9c25770791}{H\-M\-O\-D\-U\-L\-E {\bfseries h\-Mod}}\label{test_app_8cpp_a639c84ce78fef8ba2780de9c25770791}
+
+\item 
+\hypertarget{test_app_8cpp_a6a757ca08fc9a3db5efe516c2055fff7}{of\-Camera {\bfseries cam}}\label{test_app_8cpp_a6a757ca08fc9a3db5efe516c2055fff7}
+
+\item 
+float \hyperlink{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw} =0
+\begin{DoxyCompactList}\small\item\em -- Processing ... \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a26fd84d522945b6038221d9e38c7cc39}{float {\bfseries roll} =0}\label{test_app_8cpp_a26fd84d522945b6038221d9e38c7cc39}
+
+\item 
+\hypertarget{test_app_8cpp_a2a45ec4ebd7ddda05fdd49eb42148544}{vector$<$ \hyperlink{class_p_o_is}{P\-O\-Is} $>$ \hyperlink{test_app_8cpp_a2a45ec4ebd7ddda05fdd49eb42148544}{scenes}}\label{test_app_8cpp_a2a45ec4ebd7ddda05fdd49eb42148544}
+
+\begin{DoxyCompactList}\small\item\em The scenes. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_ac440c8cafae97a89976b9bc5a60e90de}{vector$<$ \hyperlink{class_note_information}{Note\-Information} $>$ {\bfseries Notes}}\label{test_app_8cpp_ac440c8cafae97a89976b9bc5a60e90de}
+
+\item 
+\hypertarget{test_app_8cpp_ac9bfcbe432b145792a0b6a0eea4906c5}{float {\bfseries rot\-X}}\label{test_app_8cpp_ac9bfcbe432b145792a0b6a0eea4906c5}
+
+\item 
+float \hyperlink{test_app_8cpp_a677393b11ed5136b379e1b2d9ba008f1}{rot\-Y}
+\begin{DoxyCompactList}\small\item\em Gets the rot y coordinate. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_acff4256798c08cf5ac9f0b6d961671be}{float \hyperlink{test_app_8cpp_acff4256798c08cf5ac9f0b6d961671be}{rot\-Angle} =0}\label{test_app_8cpp_acff4256798c08cf5ac9f0b6d961671be}
+
+\begin{DoxyCompactList}\small\item\em The rot angle. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a67edb40b2aec44dc1f59cc8ce5f4eb44}{of\-Image \hyperlink{test_app_8cpp_a67edb40b2aec44dc1f59cc8ce5f4eb44}{crosshair}}\label{test_app_8cpp_a67edb40b2aec44dc1f59cc8ce5f4eb44}
+
+\begin{DoxyCompactList}\small\item\em The crosshair. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_afef2218c3159c33bb3e2a84280541309}{float \hyperlink{test_app_8cpp_afef2218c3159c33bb3e2a84280541309}{initialyaw} =0}\label{test_app_8cpp_afef2218c3159c33bb3e2a84280541309}
+
+\begin{DoxyCompactList}\small\item\em The initialyaw. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_acb559820d9ca11295b4500f179ef6392}{int \hyperlink{test_app_8cpp_acb559820d9ca11295b4500f179ef6392}{i}}\label{test_app_8cpp_acb559820d9ca11295b4500f179ef6392}
+
+\begin{DoxyCompactList}\small\item\em Zero-\/based index of the. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_ab1b4d9fb9f738cef6f815a498af72064}{\hyperlink{class_calculations}{Calculations} {\bfseries calc}}\label{test_app_8cpp_ab1b4d9fb9f738cef6f815a498af72064}
+
+\item 
+\hypertarget{test_app_8cpp_ac95cac19f6a7a7db0e4a6347af105547}{vector$<$ string $>$ \hyperlink{test_app_8cpp_ac95cac19f6a7a7db0e4a6347af105547}{result}}\label{test_app_8cpp_ac95cac19f6a7a7db0e4a6347af105547}
+
+\begin{DoxyCompactList}\small\item\em \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_a32c6734ce7abc3300b2239785b23df5c}{of\-Color \hyperlink{test_app_8cpp_a32c6734ce7abc3300b2239785b23df5c}{white} =of\-Color\-::from\-Hex(0xffffff)}\label{test_app_8cpp_a32c6734ce7abc3300b2239785b23df5c}
+
+\begin{DoxyCompactList}\small\item\em The white. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_aa58af911ab57bdf37823dcd2286e4c66}{of\-Color {\bfseries green} = of\-Color\-::from\-Hex(0x00ff00)}\label{test_app_8cpp_aa58af911ab57bdf37823dcd2286e4c66}
+
+\item 
+\hypertarget{test_app_8cpp_a2d0305516339ed5db19b9a2f8e8869e8}{of\-Color \hyperlink{test_app_8cpp_a2d0305516339ed5db19b9a2f8e8869e8}{blue} =of\-Color\-::from\-Hex(0x0000ff)}\label{test_app_8cpp_a2d0305516339ed5db19b9a2f8e8869e8}
+
+\begin{DoxyCompactList}\small\item\em The blue. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_af306de37383449d0273c65e01df28bcf}{of\-Color {\bfseries yellow} =of\-Color\-::from\-Hex(0xffff00)}\label{test_app_8cpp_af306de37383449d0273c65e01df28bcf}
+
+\item 
+\hypertarget{test_app_8cpp_a69aedf2df8226da8bdbb25f31c6aae51}{of\-Color \hyperlink{test_app_8cpp_a69aedf2df8226da8bdbb25f31c6aae51}{red} =of\-Color\-::from\-Hex(0xff0000)}\label{test_app_8cpp_a69aedf2df8226da8bdbb25f31c6aae51}
+
+\begin{DoxyCompactList}\small\item\em The red. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_adda20be792fdf00d6ed4a0ef65883e51}{of\-Color {\bfseries black} =of\-Color\-::from\-Hex(0x000000)}\label{test_app_8cpp_adda20be792fdf00d6ed4a0ef65883e51}
+
+\item 
+\hypertarget{test_app_8cpp_aa6f56bb80388eba91f06c92632bc1dda}{of\-True\-Type\-Font \hyperlink{test_app_8cpp_aa6f56bb80388eba91f06c92632bc1dda}{Serif\-\_\-15}}\label{test_app_8cpp_aa6f56bb80388eba91f06c92632bc1dda}
+
+\begin{DoxyCompactList}\small\item\em The fifth serif 1. \end{DoxyCompactList}\item 
+\hypertarget{test_app_8cpp_ac1daf15866a617ff20285b658d2e6ce4}{of\-True\-Type\-Font {\bfseries Serif\-\_\-10}}\label{test_app_8cpp_ac1daf15866a617ff20285b658d2e6ce4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implements the test application class. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{test_app_8cpp_a0133f9ab2073f3ed92ed68ab31207461}{\index{test\-App.\-cpp@{test\-App.\-cpp}!I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E@{I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E}}
+\index{I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E@{I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-W\-R\-\_\-\-N\-O\-T\-R\-A\-C\-K\-E\-R\-\_\-\-I\-N\-S\-T\-A\-N\-C\-E~4}}\label{test_app_8cpp_a0133f9ab2073f3ed92ed68ab31207461}
+
+
+A macro that defines iwr notracker instance. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9/21/2012 
+\end{DoxyDate}
+\hypertarget{test_app_8cpp_a76171800ff5c2c8a68158b633bf34224}{\index{test\-App.\-cpp@{test\-App.\-cpp}!I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E@{I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E}}
+\index{I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E@{I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-W\-R\-\_\-\-O\-F\-F\-L\-I\-N\-E~2}}\label{test_app_8cpp_a76171800ff5c2c8a68158b633bf34224}
+
+
+A macro that defines iwr offline. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9/21/2012 
+\end{DoxyDate}
+\hypertarget{test_app_8cpp_af3fff26dd0daf747313fea22d007e08f}{\index{test\-App.\-cpp@{test\-App.\-cpp}!I\-W\-R\-\_\-\-O\-K@{I\-W\-R\-\_\-\-O\-K}}
+\index{I\-W\-R\-\_\-\-O\-K@{I\-W\-R\-\_\-\-O\-K}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{I\-W\-R\-\_\-\-O\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-W\-R\-\_\-\-O\-K~0}}\label{test_app_8cpp_af3fff26dd0daf747313fea22d007e08f}
+
+
+A macro that defines iwr ok. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9/21/2012 
+\end{DoxyDate}
+\hypertarget{test_app_8cpp_abf7f3ce37211489caedaaecd77232c35}{\index{test\-App.\-cpp@{test\-App.\-cpp}!I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T@{I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T}}
+\index{I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T@{I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-W\-R\-\_\-\-S\-T\-E\-R\-E\-O\-\_\-\-C\-O\-R\-R\-U\-P\-T~6}}\label{test_app_8cpp_abf7f3ce37211489caedaaecd77232c35}
+
+
+A macro that defines iwr stereo corrupt. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9/21/2012 
+\end{DoxyDate}
+
+
+\subsection{Variable Documentation}
+\hypertarget{test_app_8cpp_a677393b11ed5136b379e1b2d9ba008f1}{\index{test\-App.\-cpp@{test\-App.\-cpp}!rot\-Y@{rot\-Y}}
+\index{rot\-Y@{rot\-Y}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{rot\-Y}]{\setlength{\rightskip}{0pt plus 5cm}float rot\-X rot\-Y}}\label{test_app_8cpp_a677393b11ed5136b379e1b2d9ba008f1}
+
+
+Gets the rot y coordinate. 
+
+\begin{DoxyReturn}{Returns}
+The rot y coordinate. 
+\end{DoxyReturn}
+\hypertarget{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{\index{test\-App.\-cpp@{test\-App.\-cpp}!yaw@{yaw}}
+\index{yaw@{yaw}!testApp.cpp@{test\-App.\-cpp}}
+\subsubsection[{yaw}]{\setlength{\rightskip}{0pt plus 5cm}float yaw =0}}\label{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}
+
+
+-- Processing ... 
+
+The roll. 

@@ -1,3 +1,9 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \file src\testApp.cpp
+///
+/// \brief Implements the test application class.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "testApp.h"
 
 // Including all the header files for Vuzix Tracker  ..
@@ -12,12 +18,52 @@
 
 
 // Function return defines.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \def IWR_OK();
+///
+/// \brief A macro that defines iwr ok.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define IWR_OK					0 // Ok 2 go with tracker driver.
 #define IWR_NO_TRACKER			1 // Tracker Driver is NOT installed.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \def IWR_OFFLINE();
+///
+/// \brief A macro that defines iwr offline.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define IWR_OFFLINE				2 // Tracker driver installed, yet appears to be offline or not responding.
 #define IWR_TRACKER_CORRUPT		3 // Tracker driver installed, and missing exports.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \def IWR_NOTRACKER_INSTANCE();
+///
+/// \brief A macro that defines iwr notracker instance.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define IWR_NOTRACKER_INSTANCE	4 // Tracker driver did not open properly.
 #define IWR_NO_STEREO			5 // Stereo driver not loaded.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \def IWR_STEREO_CORRUPT();
+///
+/// \brief A macro that defines iwr stereo corrupt.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define IWR_STEREO_CORRUPT		6 // Stereo driver exports incorrect.
 
 
@@ -27,13 +73,31 @@ extern void	IWRFilterTracking( long *yaw, long *pitch, long *roll );
 
 
 bool g_tracking	= false;		// True = enable head tracking
+/// \brief The roll.
 float g_fYaw = 0.0f,  g_fPitch = 0.0f, g_fRoll = 0.0f;
+/// \brief The iwr status.
 long iwr_status;
 
+/// \brief The filtering.
 int	g_Filtering	= 0;			// Provide very primitive filtering process.
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \enum 
+///
+/// \brief Values that represent .
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 enum { NO_FILTER=0, APPLICATION_FILTER, INTERNAL_FILTER };
 
+/// \brief The PID.
 int	Pid	= 0;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \namespace std
+///
+/// \brief .
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 using namespace std;
 HMODULE hMod;
 
@@ -42,40 +106,69 @@ ofCamera cam;
 
 /// -- Processing ...
 
+/// \brief The roll.
 float yaw=0,roll=0;
 
 //vector <POIs> scenes();
+/// \brief The scenes.
 vector<POIs> scenes;
 vector <NoteInformation> Notes;
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \property float rotX, rotY
+///
+/// \brief Gets the rot y coordinate.
+///
+/// \return The rot y coordinate.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 float rotX, rotY;
 
+/// \brief The rot angle.
 float rotAngle=0;
 
 // Crosshair ..
+/// \brief The crosshair.
 ofImage crosshair;
 
+/// \brief The initialyaw.
 float initialyaw=0;
 ///////
 
+/// \brief Zero-based index of the.
 int i;
 Calculations calc;
 
+/// \brief .
 vector <string>result;
 
 
 
+/// \brief The white.
 ofColor white =ofColor::fromHex(0xffffff); 
 ofColor green= ofColor::fromHex(0x00ff00);
+/// \brief The blue.
 ofColor blue=ofColor::fromHex(0x0000ff);
 ofColor yellow=ofColor::fromHex(0xffff00);
+/// \brief The red.
 ofColor red=ofColor::fromHex(0xff0000);
 ofColor black=ofColor::fromHex(0x000000);
 
+/// \brief The fifth serif 1.
 ofTrueTypeFont Serif_15;
 ofTrueTypeFont Serif_10;
 
 //--------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn void testApp::setup()
+///
+/// \brief Setups this object.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void testApp::setup()
 {
 
@@ -108,8 +201,31 @@ void testApp::setup()
 
 	//load the squirrel model - the 3ds and the texture file need to be in the same folder
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn crosshair.loadImage("crosshair.png");
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param parameter1 The first parameter.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	crosshair.loadImage("crosshair.png");
 	crosshair.saveImage("asdasdsa.png");
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param [in,out] 1.5 If non-null, the fifth 1.
+	/// \param [in,out] 1.5 If non-null, the fifth 1.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
 	UpdateTracking();
@@ -160,11 +276,32 @@ void testApp::draw()
 	cam.end();
 
 	UDPReceive();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param parameter1 The first parameter.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
 
 	//ofFill();
 	//	gui.drawAxes();
 	//cout<<"\n\n "<<g_fPitch<<"\t "<<g_fRoll<<"\t"<<g_fYaw;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn ofEnableAlphaBlending();
+	///
+	/// \brief Default constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	ofEnableAlphaBlending();
 	crosshair.draw(ofGetWidth()/2-crosshair.width/2,ofGetHeight()/2-crosshair.height/2 );
@@ -174,29 +311,54 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn } void testApp::keyReleased(int key)
+///
+/// \brief Key released.
+///
+/// \author Rahul
+/// \date 9/21/2012
+///
+/// \param key The key.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
-//--------------------------------------------------------------
+// --------------------------------------------------------------. 
 void testApp::keyReleased(int key){
 
 }
 
-//--------------------------------------------------------------
+// --------------------------------------------------------------. 
 void testApp::mouseMoved(int x, int y ){
 
 }
 
-//--------------------------------------------------------------
+// --------------------------------------------------------------. 
 void testApp::mouseDragged(int x, int y, int button){
 
 }
 
-//--------------------------------------------------------------
+// --------------------------------------------------------------. 
 void testApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn void testApp::mouseReleased(int x, int y, int button)
+///
+/// \brief Mouse released.
+///
+/// \author Rahul
+/// \date 9/21/2012
+///
+/// \param x	  The x coordinate.
+/// \param y	  The y coordinate.
+/// \param button The button.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void testApp::mouseReleased(int x, int y, int button){
 
 }
@@ -232,6 +394,15 @@ void testApp::UpdateTracking(){
 		g_tracking = false;
 		Yaw = Pitch = Roll = 0;
 		IWROpenTracker();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \property }
+	///
+	/// \brief Gets the. 
+	///
+	/// \value .
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	}
 
 
@@ -282,6 +453,20 @@ void testApp::setupModels()
 
 
 	Scene_Center=sr_model.getSceneCenter();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn sr_model.setPosition(-Scene_Center.x,-Scene_Center.y,-Scene_Center.z);
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param parameter1 The first parameter.
+	/// \param parameter2 The second parameter.
+	/// \param parameter3 The third parameter.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	sr_model.setPosition(-Scene_Center.x,-Scene_Center.y,-Scene_Center.z);
 	cout<<"\n"<<sr_model.getSceneCenter();
 
@@ -330,6 +515,18 @@ void testApp::drawModels()
 
 	ofPushMatrix();
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn ofTranslate(-100.23,129.49);
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param parameter1 The first parameter.
+	/// \param parameter2 The second parameter.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	ofTranslate(-100.23,129.49);
 
 	ofRotateZ(rotAngle);
@@ -346,6 +543,18 @@ void testApp::drawModels()
 
 void testApp::drawAxes()
 {
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn ofSetColor(255, 0,0);
+	///
+	/// \brief Constructor.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param parameter1 The first parameter.
+	/// \param parameter2 The second parameter.
+	/// \param parameter3 The third parameter.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	ofSetColor(255, 0,0);
 	ofLine(100,0,0,0); 
@@ -357,6 +566,15 @@ void testApp::drawAxes()
 	ofLine(0,0,0,0,0,100); 
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn void testApp::drawPlane()
+///
+/// \brief Draw plane.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void testApp::drawPlane()
 {
@@ -387,6 +605,16 @@ void testApp::UDPReceive()
 		else if(result[0].compare("color")==0)
 		{
 			if(result[1].length()>2)
+
+				////////////////////////////////////////////////////////////////////////////////////////////////////
+				/// \fn Notes.back().text_color=Returncolor(result[1]);
+				///
+				/// \brief Default constructor.
+				///
+				/// \author Rahul
+				/// \date 9/21/2012
+				////////////////////////////////////////////////////////////////////////////////////////////////////
+
 				Notes.back().text_color=Returncolor(result[1]);
 			if(result[2].length()>2)
 				Notes.back().bg_color=Returncolor(result[2]);
@@ -412,6 +640,7 @@ void testApp::addObjecttoScene(string message)
 
    calc.Calculate2dCoordinates(calc.lat1,calc.long1,ofToFloat(messageParts[1]),ofToFloat(messageParts[2])); 
   
+ /// \brief .
  }
  
   cout<<"Xposition\t"<<calc.x_temp_poi;  cout<<"\n\nYposition\t"<<calc.y_temp_poi;  
@@ -445,6 +674,24 @@ ofColor testApp::Returncolor(string colorstring)
   else return black;
   
 }
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,
+	/// ofColor bgColor,int i,string note_heading,string note_text)
+	///
+	/// \brief Draw augmented plane.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param xPosition    The position.
+	/// \param yPosition    The position.
+	/// \param textColor    The text color.
+	/// \param bgColor	    The background color.
+	/// \param i		    Zero-based index of the.
+	/// \param note_heading The note heading.
+	/// \param note_text    The note text.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,ofColor bgColor,int i,string note_heading,string note_text)
 	{

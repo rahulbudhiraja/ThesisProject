@@ -26,7 +26,7 @@
       <Filter>src\Addons\ofNetwork</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Addons\Assimp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +50,9 @@
     </Filter>
     <Filter Include="src\CustomClasses">
       <UniqueIdentifier>{1d700ba0-fab1-4dbf-897d-cb4ad7a930e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Addons\Assimp">
+      <UniqueIdentifier>{9d8a55e5-2793-44b8-8f8b-bf6556c54909}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,14 +116,14 @@
     <ClInclude Include="src\Calculations.h">
       <Filter>src\CustomClasses</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofx3DBaseLoader.h">
+      <Filter>src\Addons\Assimp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.h">
-      <Filter>src</Filter>
+      <Filter>src\Addons\Assimp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofx3DBaseLoader.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h">
+      <Filter>src\Addons\Assimp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

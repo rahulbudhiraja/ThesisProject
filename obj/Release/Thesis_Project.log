@@ -1,13 +1,16 @@
-﻿Build started 8/30/2012 9:48:23 PM.
-     1>Project "D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\Thesis_Project.vcxproj" on node 2 (build target(s)).
+﻿Build started 9/21/2012 12:33:30 AM.
+     1>Project "C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\Thesis_Project.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "obj\Release\Thesis_Project.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\libs\openFrameworks /I..\..\..\libs\openFrameworks\graphics /I..\..\..\libs\openFrameworks\app /I..\..\..\libs\openFrameworks\sound /I..\..\..\libs\openFrameworks\utils /I..\..\..\libs\openFrameworks\communication /I..\..\..\libs\openFrameworks\video /I..\..\..\libs\openFrameworks\types /I..\..\..\libs\openFrameworks\math /I..\..\..\libs\openFrameworks\3d /I..\..\..\libs\openFrameworks\gl /I..\..\..\libs\openFrameworks\events /I..\..\..\libs\glut\include /I..\..\..\libs\rtAudio\include /I..\..\..\libs\quicktime\include /I..\..\..\libs\freetype\include /I..\..\..\libs\freetype\include\freetype2 /I..\..\..\libs\freeImage\include /I..\..\..\libs\fmodex\include /I..\..\..\libs\videoInput\include /I..\..\..\libs\glew\include\ /I..\..\..\libs\glu\include /I..\..\..\libs\tess2\include /I..\..\..\libs\cairo\include\cairo /I..\..\..\libs\poco\include /I..\..\..\addons /Isrc /I..\..\..\addons\ofxNetwork\libs /I..\..\..\addons\ofxNetwork\src /I..\..\..\addons\ofxThread\libs /I..\..\..\addons\ofxThread\src /I..\..\..\addons\ofx3DModelLoader\libs /I..\..\..\addons\ofx3DModelLoader\src /I..\..\..\addons\ofx3DModelLoader\src\3DS /Isrc\TrackerStuff /Isrc\VuzixSDK\inc /I..\..\..\addons\ofxVectorMath\src /I..\..\..\addons\ofxObjLoader\src /I..\..\..\addons\ofxObjLoader\glm /I..\..\..\addons\ofxAssimpModelLoader\src /I..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _CONSOLE /D POCO_STATIC /D CAIRO_WIN32_STATIC_BUILD /D DISABLE_SOME_FLOATING_POINT /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\Release\\" /Fd"obj\Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt src\testApp.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\libs\openFrameworks /I..\..\..\libs\openFrameworks\graphics /I..\..\..\libs\openFrameworks\app /I..\..\..\libs\openFrameworks\sound /I..\..\..\libs\openFrameworks\utils /I..\..\..\libs\openFrameworks\communication /I..\..\..\libs\openFrameworks\video /I..\..\..\libs\openFrameworks\types /I..\..\..\libs\openFrameworks\math /I..\..\..\libs\openFrameworks\3d /I..\..\..\libs\openFrameworks\gl /I..\..\..\libs\openFrameworks\events /I..\..\..\libs\glut\include /I..\..\..\libs\rtAudio\include /I..\..\..\libs\quicktime\include /I..\..\..\libs\freetype\include /I..\..\..\libs\freetype\include\freetype2 /I..\..\..\libs\freeImage\include /I..\..\..\libs\fmodex\include /I..\..\..\libs\videoInput\include /I..\..\..\libs\glew\include\ /I..\..\..\libs\glu\include /I..\..\..\libs\tess2\include /I..\..\..\libs\cairo\include\cairo /I..\..\..\libs\poco\include /I..\..\..\addons /Isrc /I..\..\..\addons\ofxNetwork\libs /I..\..\..\addons\ofxNetwork\src /I..\..\..\addons\ofxThread\libs /I..\..\..\addons\ofxThread\src /I..\..\..\addons\ofx3DModelLoader\libs /I..\..\..\addons\ofx3DModelLoader\src /I..\..\..\addons\ofx3DModelLoader\src\3DS /Isrc\TrackerStuff /Isrc\VuzixSDK\inc /I..\..\..\addons\ofxVectorMath\src /I..\..\..\addons\ofxObjLoader\src /I..\..\..\addons\ofxObjLoader\glm /I..\..\..\addons\ofxAssimpModelLoader\src /I..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include /nologo /W3 /WX- /O2 /Oy- /D WIN32 /D NDEBUG /D _CONSOLE /D POCO_STATIC /D CAIRO_WIN32_STATIC_BUILD /D DISABLE_SOME_FLOATING_POINT /D _MBCS /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"obj\Release\\" /Fd"obj\Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp src\main.cpp src\testApp.cpp
+         ofxAssimpModelLoader.cpp
+         main.cpp
          testApp.cpp
+         Generating Code...
          All outputs are up-to-date.
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\Thesis_Project.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs2010 /LIBPATH:..\..\..\libs\glut\lib\vs2010 /LIBPATH:..\..\..\libs\rtAudio\lib\vs2010 /LIBPATH:..\..\..\libs\FreeImage\lib\vs2010 /LIBPATH:..\..\..\libs\freetype\lib\vs2010 /LIBPATH:..\..\..\libs\quicktime\lib\vs2010 /LIBPATH:..\..\..\libs\fmodex\lib\vs2010 /LIBPATH:..\..\..\libs\videoInput\lib\vs2010 /LIBPATH:..\..\..\libs\cairo\lib\vs2010 /LIBPATH:..\..\..\libs\glew\lib\vs2010 /LIBPATH:..\..\..\libs\glu\lib\vs2010 /LIBPATH:..\..\..\libs\Poco\lib\vs2010 /LIBPATH:..\..\..\libs\tess2\lib\vs2010 assimp.lib "cairo-static.lib" "pixman-1.lib" msimg32.lib OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib Vfw32.lib comctl32.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib glew32s.lib fmodex_vc.lib glu32.lib PocoFoundationmd.lib PocoNetmd.lib PocoUtilmd.lib PocoXMLmd.lib Ws2_32.lib tess2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:PocoFoundationd.lib /NODEFAULTLIB:atlthunk.lib /NODEFAULTLIB:LIBC.lib /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"obj\Release\Thesis_Project.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\bin\Thesis_Project.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"bin\Thesis_Project.lib" /MACHINE:X86 obj\Release\ofxAssimpModelLoader.obj
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"bin\Thesis_Project.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:..\..\..\addons\ofxAssimpModelLoader\libs\assimp\lib\vs2010 /LIBPATH:..\..\..\libs\glut\lib\vs2010 /LIBPATH:..\..\..\libs\rtAudio\lib\vs2010 /LIBPATH:..\..\..\libs\FreeImage\lib\vs2010 /LIBPATH:..\..\..\libs\freetype\lib\vs2010 /LIBPATH:..\..\..\libs\quicktime\lib\vs2010 /LIBPATH:..\..\..\libs\fmodex\lib\vs2010 /LIBPATH:..\..\..\libs\videoInput\lib\vs2010 /LIBPATH:..\..\..\libs\cairo\lib\vs2010 /LIBPATH:..\..\..\libs\glew\lib\vs2010 /LIBPATH:..\..\..\libs\glu\lib\vs2010 /LIBPATH:..\..\..\libs\Poco\lib\vs2010 /LIBPATH:..\..\..\libs\tess2\lib\vs2010 assimp.lib "cairo-static.lib" "pixman-1.lib" msimg32.lib OpenGL32.lib GLu32.lib kernel32.lib setupapi.lib Vfw32.lib comctl32.lib glut32.lib rtAudioD.lib videoInput.lib libfreetype.lib FreeImage.lib qtmlClient.lib dsound.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib glew32s.lib fmodex_vc.lib glu32.lib PocoFoundationmd.lib PocoNetmd.lib PocoUtilmd.lib PocoXMLmd.lib Ws2_32.lib tess2.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:PocoFoundationd.lib /NODEFAULTLIB:atlthunk.lib /NODEFAULTLIB:LIBC.lib /NODEFAULTLIB:LIBCMT /MANIFEST /ManifestFile:"obj\Release\Thesis_Project.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /PDB:"C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\bin\Thesis_Project.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /TLBID:1 /DYNAMICBASE:NO /IMPLIB:"bin\Thesis_Project.lib" /MACHINE:X86 obj\Release\ofxAssimpModelLoader.obj
          obj\Release\ofxTCPClient.obj
          obj\Release\ofxTCPManager.obj
          obj\Release\ofxTCPServer.obj
@@ -16,28 +19,28 @@
          obj\Release\testApp.obj
          obj\Release\IWRFilterTracking.obj
          obj\Release\IWRsdk.obj
-         "D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\libs\openFrameworksCompiled\lib\vs2010\openframeworksLib.lib"
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\libs\openFrameworksCompiled\lib\vs2010\openframeworksLib.lib
             Creating library bin\Thesis_Project.lib and object bin\Thesis_Project.exp
-         Thesis_Project.vcxproj -> D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\bin\Thesis_Project.exe
+         Thesis_Project.vcxproj -> C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\bin\Thesis_Project.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"bin\Thesis_Project.exe;#1" /manifest obj\Release\Thesis_Project.exe.intermediate.manifest
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"bin\Thesis_Project.exe;#1" /manifest obj\Release\Thesis_Project.exe.intermediate.manifest
        PostBuildEvent:
          Description: adding DLLs and creating data folder
-         xcopy /e /i /y "D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\*.dll" "D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\bin"
+         xcopy /e /i /y "C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\*.dll" "C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\bin"
          :VCEnd
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\Assimp32.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\fmodex.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\fmodexL.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\FreeImage.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\FreeType-6.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\glut32.dll
-         D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\..\..\..\export\vs2010\Zlib.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\Assimp32.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\fmodex.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\fmodexL.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\FreeImage.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\FreeType-6.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\glut32.dll
+         C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\..\..\..\export\vs2010\Zlib.dll
          7 File(s) copied
        FinalizeBuildStatus:
          Deleting file "obj\Release\Thesis_Project.unsuccessfulbuild".
          Touching "obj\Release\Thesis_Project.lastbuildstate".
-     1>Done Building Project "D:\Rahuls Stuff\OpenFrameWorks\of_v0071_vs2010_release\of_v0071_vs2010_release\apps\myApps\Thesis_Project\Thesis_Project.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Users\Rahul\Desktop\Work\of_v0071_vs2010_release\apps\myApps\ThesisProject\Thesis_Project.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:18.26
+Time Elapsed 00:00:06.47

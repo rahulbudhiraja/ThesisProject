@@ -1,4 +1,20 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \file src\testApp.h
+///
+/// \brief Declares the test application class.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #ifndef _TEST_APP
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \def _TEST_APP
+///
+/// \brief A macro that defines test application.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define _TEST_APP
 
 
@@ -30,6 +46,20 @@ class testApp : public ofBaseApp{
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
 		void mouseDragged(int x, int y, int button);
+
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// \fn void testApp::mousePressed(int x, int y, int button);
+		///
+		/// \brief Mouse pressed.
+		///
+		/// \author Rahul
+		/// \date 9/21/2012
+		///
+		/// \param x	  The x coordinate.
+		/// \param y	  The y coordinate.
+		/// \param button The button.
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
@@ -42,9 +72,20 @@ class testApp : public ofBaseApp{
 
 		ofxUDPManager udpConnection;
 		ofTrueTypeFont  mono;
+		/// \brief The monosm.
 		ofTrueTypeFont  monosm;
 
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// \property ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,
+		/// pog_model,rc_model,sr_model,tbox_model
+		///
+		/// \brief Gets the tbox model.
+		///
+		/// \return The tbox model.
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,pog_model,rc_model,sr_model,tbox_model;
+		/// \brief The squirrel model.
 		ofxAssimpModelLoader squirrelModel;
 	
 		void drawAxes();
