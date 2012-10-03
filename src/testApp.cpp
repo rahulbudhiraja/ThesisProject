@@ -20,9 +20,9 @@
 // Function return defines.
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def IWR_OK();
+/// \def IWR_OK
 ///
-/// \brief A macro that defines iwr ok.
+/// \brief Vuzix Trackers Macros .
 ///
 /// \author Rahul
 /// \date 9/21/2012
@@ -30,45 +30,29 @@
 
 #define IWR_OK					0 // Ok 2 go with tracker driver.
 #define IWR_NO_TRACKER			1 // Tracker Driver is NOT installed.
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def IWR_OFFLINE();
-///
-/// \brief A macro that defines iwr offline.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-#define IWR_OFFLINE				2 // Tracker driver installed, yet appears to be offline or not responding.
-#define IWR_TRACKER_CORRUPT		3 // Tracker driver installed, and missing exports.
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def IWR_NOTRACKER_INSTANCE();
-///
-/// \brief A macro that defines iwr notracker instance.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
+#define IWR_OFFLINE				2 /// Tracker driver installed, yet appears to be offline or not responding.
+#define IWR_TRACKER_CORRUPT		3 /// Tracker driver installed, and missing exports.
 #define IWR_NOTRACKER_INSTANCE	4 // Tracker driver did not open properly.
 #define IWR_NO_STEREO			5 // Stereo driver not loaded.
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def IWR_STEREO_CORRUPT();
-///
-/// \brief A macro that defines iwr stereo corrupt.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 #define IWR_STEREO_CORRUPT		6 // Stereo driver exports incorrect.
 
 
 
-// Provide for a filtering mechanism on the VR920 tracker reading.
+// Provide for a filtering mechanism on the VR920 tracker reading. 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn IWRFilterTracking( long *yaw, long *pitch, long *roll );
+///
+/// \brief The Filtered tracking output
+///
+/// \author Rahul
+/// \date 9/21/2012
+///
+/// \param [in,out] yaw    the yaw.
+/// \param [in,out] pitch  the pitch.
+/// \param [in,out] roll   the roll.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 extern void	IWRFilterTracking( long *yaw, long *pitch, long *roll );
 
 
@@ -81,22 +65,12 @@ long iwr_status;
 /// \brief The filtering.
 int	g_Filtering	= 0;			// Provide very primitive filtering process.
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \enum 
-///
-/// \brief Values that represent .
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 enum { NO_FILTER=0, APPLICATION_FILTER, INTERNAL_FILTER };
 
-/// \brief The PID.
-int	Pid	= 0;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \namespace std
-///
-/// \brief .
-////////////////////////////////////////////////////////////////////////////////////////////////////
+int	Pid	= 0;
 
 using namespace std;
 HMODULE hMod;
@@ -109,8 +83,10 @@ ofCamera cam;
 /// \brief The roll.
 float yaw=0,roll=0;
 
-//vector <POIs> scenes();
+
 /// \brief The scenes.
+///
+/// This Vector stores the Scene Information
 vector<POIs> scenes;
 vector <NoteInformation> Notes;
 
@@ -127,7 +103,7 @@ float rotX, rotY;
 /// \brief The rot angle.
 float rotAngle=0;
 
-// Crosshair ..
+
 /// \brief The crosshair.
 ofImage crosshair;
 
@@ -135,7 +111,7 @@ ofImage crosshair;
 float initialyaw=0;
 ///////
 
-/// \brief Zero-based index of the.
+
 int i;
 Calculations calc;
 
@@ -158,6 +134,8 @@ ofColor black=ofColor::fromHex(0x000000);
 ofTrueTypeFont Serif_15;
 ofTrueTypeFont Serif_10;
 
+bool sent=false;
+string dirn="up";
 //--------------------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,6 +177,13 @@ void testApp::setup()
 	udpConnection.Bind(12001);
 	udpConnection.SetNonBlocking(true);
 
+	udpSendConnection.Create();
+	udpSendConnection.Connect("192.168.43.1",13001);
+	udpSendConnection.SetNonBlocking(true);
+
+	udpReceiveConnection.Create();
+	udpReceiveConnection.Bind(12003);
+	udpReceiveConnection.SetNonBlocking(true);
 	//load the squirrel model - the 3ds and the texture file need to be in the same folder
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,22 +220,49 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update(){
 
+	//char udpMessage[100000];
+	//udpReceiveConnection.Receive(udpMessage,100000);
+	//string message=udpMessage;
+	//if(message.length()>0)
+	//{
+	//  cout<<message<<"\n\n";
+ //     drawTouches(message);
+	//}
 }
 
 //--------------------------------------------------------------
 void testApp::draw()
 {
 
+	windowWidth=ofGetWidth();
+	windowHeight=ofGetHeight();
 
 	ofBackground(0,0,0);
+	
+	UpdateTracking();
+
+	
+	if(g_fPitch>-25)
+	{
+
+		if(dirn.compare("down")==0)
+		{
+			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
+		    dirn="up";
+		}
+
+	char udpMessage[100000];
+	udpReceiveConnection.Receive(udpMessage,100000);
+	string message=udpMessage;
+
 	cam.setPosition(0,0,10);
 	cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
 	//BlackbayModels.ModelsDraw();
 
-	UpdateTracking();
-
-
+	//cout<<"\nPitch"<<g_fPitch;
+	cout<<"\n yaw"<<yaw<<endl;
 	cam.pan(g_fYaw);
+	cam.tilt(g_fPitch);
 	cam.begin();
 
 	drawAxes();
@@ -290,6 +302,14 @@ void testApp::draw()
 
 	calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
 
+	if(message.length()>0)
+	{
+	  cout<<message<<"\n\n";
+      drawTouches(message);
+	}
+
+
+
 	//ofFill();
 	//	gui.drawAxes();
 	//cout<<"\n\n "<<g_fPitch<<"\t "<<g_fRoll<<"\t"<<g_fYaw;
@@ -302,8 +322,17 @@ void testApp::draw()
 	/// \author Rahul
 	/// \date 9/21/2012
 	////////////////////////////////////////////////////////////////////////////////////////////////////
+	}
 
+	else if(dirn.compare("up")==0)
+		{
+			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
+		    dirn="down";
+		}
+
+	
 	ofEnableAlphaBlending();
+	ofSetColor(255);
 	crosshair.draw(ofGetWidth()/2-crosshair.width/2,ofGetHeight()/2-crosshair.height/2 );
 	 ofDisableAlphaBlending();
 }
@@ -321,7 +350,7 @@ void testApp::keyPressed(int key){
 ///
 /// \param key The key.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	yaw++;
 }
 
 // --------------------------------------------------------------. 
@@ -340,6 +369,11 @@ void testApp::mouseDragged(int x, int y, int button){
 }
 
 // --------------------------------------------------------------. 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \details This function will be called when the mouse is pressed 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void testApp::mousePressed(int x, int y, int button){
 
 }
@@ -395,13 +429,6 @@ void testApp::UpdateTracking(){
 		Yaw = Pitch = Roll = 0;
 		IWROpenTracker();
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \property }
-	///
-	/// \brief Gets the. 
-	///
-	/// \value .
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	}
 
@@ -754,3 +781,32 @@ ofColor testApp::Returncolor(string colorstring)
 
 
 	}
+
+
+void testApp::drawTouches(string udpMessage)
+{
+  vector<string> components= ofSplitString(udpMessage,",");
+
+	ofSetColor(255,0,0,90);
+ 
+  ofFill();
+
+  ofEnableAlphaBlending();
+  for(int i=1;i<=2*ofToInt(components[0]);i+=2)
+  { 		 
+	ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
+	calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
+  }
+  
+  cout<<"g-Fyaw"<<g_fYaw<<endl;
+  
+  components.clear();
+  ofDisableAlphaBlending();
+
+  ofSetColor(255);
+
+		
+  ofSetLineWidth(100);
+  ofLine(0,100,100,200);
+  ofSetLineWidth(1);
+}

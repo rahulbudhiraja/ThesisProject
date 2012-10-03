@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -215,11 +215,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; <span class="keywordflow">if</span>(ray_sphere_intersect(origin,ofVec3f(10000*sin(-0.62831837),10000*cos(-0.62831837),10),Bbay,40))</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;     cout&lt;&lt;<span class="stringliteral">&quot;HIITTTTTTTTTTTTTT&quot;</span>;</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; <span class="keywordflow">for</span>(<span class="keywordtype">int</span> <a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>=0;<a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>&lt;scenes.size();<a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>++)</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0;i&lt;scenes.size();i++)</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; {</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;   </div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordflow">if</span>(ray_sphere_intersect(origin,long_ray,ofVec3f(scenes[<a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>].x,-scenes[<a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>].y,10),15))</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    selected_note=5+<a class="code" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392" title="Zero-based index of the.">i</a>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;  <span class="keywordflow">if</span>(ray_sphere_intersect(origin,long_ray,ofVec3f(scenes[i].x,-scenes[i].y,10),15))</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    selected_note=5+i;</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;  <span class="keywordflow">else</span> selected_note=0;    </div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; }</div>
@@ -273,7 +273,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 00:35:35 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 3 2012 00:38:50 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

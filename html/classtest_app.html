@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,6 +89,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">testApp Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Test application.  
+ <a href="classtest_app.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="test_app_8h_source.html">testApp.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for testApp:</div>
 <div class="dyncontent">
@@ -129,6 +134,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mouseDragged</b> (int
 void&#160;</td><td class="memItemRight" valign="bottom"><b>windowResized</b> (int w, int h)</td></tr>
 <tr class="separator:a428b7df9c64352d6e7cb234fc297e6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853bbabdab3e7d2f207bb5a2028990bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a853bbabdab3e7d2f207bb5a2028990bd">UpdateTracking</a> ()</td></tr>
+<tr class="memdesc:a853bbabdab3e7d2f207bb5a2028990bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the tracking.  <a href="#a853bbabdab3e7d2f207bb5a2028990bd"></a><br/></td></tr>
 <tr class="separator:a853bbabdab3e7d2f207bb5a2028990bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a4db7a6a914fc4899763fc94bfca4b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a4db7a6a914fc4899763fc94bfca4b7"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setupTracker</b> ()</td></tr>
@@ -137,86 +143,96 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setupTracker</b> ()</
 <tr class="separator:af88f7715b2e0a9692b4ec947fad63c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78bdea262a12308cb6f9f9243bdb3db9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a78bdea262a12308cb6f9f9243bdb3db9">drawModels</a> ()</td></tr>
 <tr class="separator:a78bdea262a12308cb6f9f9243bdb3db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2fcbae31171ba366d4c0fcaf44149f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a> ()</td></tr>
-<tr class="separator:aa2fcbae31171ba366d4c0fcaf44149f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47747729f6d0d84c36ef0ec9fca01303"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a47747729f6d0d84c36ef0ec9fca01303">drawPlane</a> ()</td></tr>
-<tr class="memdesc:a47747729f6d0d84c36ef0ec9fca01303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw plane.  <a href="#a47747729f6d0d84c36ef0ec9fca01303"></a><br/></td></tr>
-<tr class="separator:a47747729f6d0d84c36ef0ec9fca01303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae18e12d5025a2167ebd63ca019468cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a> ()</td></tr>
-<tr class="separator:ae18e12d5025a2167ebd63ca019468cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1d58aa9130d8d7526eb407f13f7a833"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a> (string)</td></tr>
-<tr class="separator:aa1d58aa9130d8d7526eb407f13f7a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a689f3b0cf0b38217152da7f5ce0d609f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a689f3b0cf0b38217152da7f5ce0d609f"></a>
+<tr class="memitem:gaa2fcbae31171ba366d4c0fcaf44149f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gaa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a> ()</td></tr>
+<tr class="separator:gaa2fcbae31171ba366d4c0fcaf44149f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47747729f6d0d84c36ef0ec9fca01303"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga47747729f6d0d84c36ef0ec9fca01303">drawPlane</a> ()</td></tr>
+<tr class="memdesc:ga47747729f6d0d84c36ef0ec9fca01303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw plane.  <a href="group___int_variables.html#ga47747729f6d0d84c36ef0ec9fca01303"></a><br/></td></tr>
+<tr class="separator:ga47747729f6d0d84c36ef0ec9fca01303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae18e12d5025a2167ebd63ca019468cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a> ()</td></tr>
+<tr class="separator:gae18e12d5025a2167ebd63ca019468cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1d58aa9130d8d7526eb407f13f7a833"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gaa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a> (string)</td></tr>
+<tr class="separator:gaa1d58aa9130d8d7526eb407f13f7a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga689f3b0cf0b38217152da7f5ce0d609f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga689f3b0cf0b38217152da7f5ce0d609f"></a>
 ofColor&#160;</td><td class="memItemRight" valign="bottom"><b>Returncolor</b> (string)</td></tr>
-<tr class="separator:a689f3b0cf0b38217152da7f5ce0d609f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a34646de458b0af33bc02457c9b8583df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a34646de458b0af33bc02457c9b8583df">drawAugmentedPlane</a> (float, float, ofColor, ofColor, int, string, string)</td></tr>
-<tr class="memdesc:a34646de458b0af33bc02457c9b8583df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw augmented plane.  <a href="#a34646de458b0af33bc02457c9b8583df"></a><br/></td></tr>
-<tr class="separator:a34646de458b0af33bc02457c9b8583df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga689f3b0cf0b38217152da7f5ce0d609f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga34646de458b0af33bc02457c9b8583df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga34646de458b0af33bc02457c9b8583df">drawAugmentedPlane</a> (float, float, ofColor, ofColor, int, string, string)</td></tr>
+<tr class="memdesc:ga34646de458b0af33bc02457c9b8583df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw augmented plane.  <a href="group___int_variables.html#ga34646de458b0af33bc02457c9b8583df"></a><br/></td></tr>
+<tr class="separator:ga34646de458b0af33bc02457c9b8583df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga16036c3aa23c1747e315a3e18105cf45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga16036c3aa23c1747e315a3e18105cf45">drawTouches</a> (string udpMessage)</td></tr>
+<tr class="memdesc:ga16036c3aa23c1747e315a3e18105cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.  <a href="group___int_variables.html#ga16036c3aa23c1747e315a3e18105cf45"></a><br/></td></tr>
+<tr class="separator:ga16036c3aa23c1747e315a3e18105cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a30c39505591fda7ed8ef4d8c4f0128fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30c39505591fda7ed8ef4d8c4f0128fd"></a>
-ofxUDPManager&#160;</td><td class="memItemRight" valign="bottom"><b>udpConnection</b></td></tr>
+ofxUDPManager&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a30c39505591fda7ed8ef4d8c4f0128fd">udpConnection</a></td></tr>
+<tr class="memdesc:a30c39505591fda7ed8ef4d8c4f0128fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The UDP connection. <br/></td></tr>
 <tr class="separator:a30c39505591fda7ed8ef4d8c4f0128fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f96e427475843d44539f125ca454cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35f96e427475843d44539f125ca454cd"></a>
+ofxUDPManager&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a35f96e427475843d44539f125ca454cd">udpSendConnection</a></td></tr>
+<tr class="memdesc:a35f96e427475843d44539f125ca454cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The UDP send connection. <br/></td></tr>
+<tr class="separator:a35f96e427475843d44539f125ca454cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630d5b8b53aee0c07dc79db616f4eb48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a630d5b8b53aee0c07dc79db616f4eb48"></a>
+ofxUDPManager&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a630d5b8b53aee0c07dc79db616f4eb48">udpReceiveConnection</a></td></tr>
+<tr class="memdesc:a630d5b8b53aee0c07dc79db616f4eb48"><td class="mdescLeft">&#160;</td><td class="mdescRight">The UDP receive connection. <br/></td></tr>
+<tr class="separator:a630d5b8b53aee0c07dc79db616f4eb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bcefa3afb830941451f72174a36b722"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bcefa3afb830941451f72174a36b722"></a>
-ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><b>mono</b></td></tr>
+ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a9bcefa3afb830941451f72174a36b722">mono</a></td></tr>
+<tr class="memdesc:a9bcefa3afb830941451f72174a36b722"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mono. <br/></td></tr>
 <tr class="separator:a9bcefa3afb830941451f72174a36b722"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc42ad25d37b1292d27d783380249424"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc42ad25d37b1292d27d783380249424"></a>
 ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#afc42ad25d37b1292d27d783380249424">monosm</a></td></tr>
 <tr class="memdesc:afc42ad25d37b1292d27d783380249424"><td class="mdescLeft">&#160;</td><td class="mdescRight">The monosm. <br/></td></tr>
 <tr class="separator:afc42ad25d37b1292d27d783380249424"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55051db1203331adb5556373b1f93194"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55051db1203331adb5556373b1f93194"></a>
+<tr class="memitem:ga9ed611377cd46f5148a3a3d538e96484"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9ed611377cd46f5148a3a3d538e96484"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>windowWidth</b></td></tr>
+<tr class="separator:ga9ed611377cd46f5148a3a3d538e96484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31efaa85f8a900bb659a537d56c73e03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03">windowHeight</a></td></tr>
+<tr class="memdesc:ga31efaa85f8a900bb659a537d56c73e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the window.  <a href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03"></a><br/></td></tr>
+<tr class="separator:ga31efaa85f8a900bb659a537d56c73e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">The AssimpModelLoader Variables ..</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>BlackBay <a class="el" href="class_models.html">Models</a> ..</p>
+<p>These Variables will load all the <a class="el" href="class_models.html">Models</a> that were used for the BlackBayAR demo . </p>
+</div></td></tr>
+<tr class="memitem:ga55051db1203331adb5556373b1f93194"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55051db1203331adb5556373b1f93194"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>bb_model</b></td></tr>
-<tr class="separator:a55051db1203331adb5556373b1f93194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0226f29cac900da4a7d1a698b1b5b9d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0226f29cac900da4a7d1a698b1b5b9d3"></a>
+<tr class="separator:ga55051db1203331adb5556373b1f93194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0226f29cac900da4a7d1a698b1b5b9d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0226f29cac900da4a7d1a698b1b5b9d3"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>cr_model</b></td></tr>
-<tr class="separator:a0226f29cac900da4a7d1a698b1b5b9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75d1f2c61d9e27b0f639a2632de94ed0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75d1f2c61d9e27b0f639a2632de94ed0"></a>
+<tr class="separator:ga0226f29cac900da4a7d1a698b1b5b9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga75d1f2c61d9e27b0f639a2632de94ed0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga75d1f2c61d9e27b0f639a2632de94ed0"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>lr_model</b></td></tr>
-<tr class="separator:a75d1f2c61d9e27b0f639a2632de94ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7fc48fde55ff01601e7ec704685fda7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7fc48fde55ff01601e7ec704685fda7"></a>
+<tr class="separator:ga75d1f2c61d9e27b0f639a2632de94ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7fc48fde55ff01601e7ec704685fda7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab7fc48fde55ff01601e7ec704685fda7"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>ls_model</b></td></tr>
-<tr class="separator:ab7fc48fde55ff01601e7ec704685fda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80f171a105bccdb3e505d438462d089a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a80f171a105bccdb3e505d438462d089a"></a>
+<tr class="separator:gab7fc48fde55ff01601e7ec704685fda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80f171a105bccdb3e505d438462d089a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga80f171a105bccdb3e505d438462d089a"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pgn_model</b></td></tr>
-<tr class="separator:a80f171a105bccdb3e505d438462d089a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4ab187191426de0728985d0789acf88"><td class="memItemLeft" align="right" valign="top">ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ae4ab187191426de0728985d0789acf88">pgy_model</a></td></tr>
-<tr class="memdesc:ae4ab187191426de0728985d0789acf88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the tbox model.  <a href="#ae4ab187191426de0728985d0789acf88"></a><br/></td></tr>
-<tr class="separator:ae4ab187191426de0728985d0789acf88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28a2622b1304d4096d4fefc1a46759b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28a2622b1304d4096d4fefc1a46759b3"></a>
+<tr class="separator:ga80f171a105bccdb3e505d438462d089a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf98c6967c563936d418bf048a7d392b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf98c6967c563936d418bf048a7d392b7"></a>
+ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pgy_model</b></td></tr>
+<tr class="separator:gaf98c6967c563936d418bf048a7d392b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga28a2622b1304d4096d4fefc1a46759b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a2622b1304d4096d4fefc1a46759b3"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pog_model</b></td></tr>
-<tr class="separator:a28a2622b1304d4096d4fefc1a46759b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24711bff00befce43455ad79653d388d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24711bff00befce43455ad79653d388d"></a>
+<tr class="separator:ga28a2622b1304d4096d4fefc1a46759b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24711bff00befce43455ad79653d388d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga24711bff00befce43455ad79653d388d"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>rc_model</b></td></tr>
-<tr class="separator:a24711bff00befce43455ad79653d388d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74279f23511603111eb4126414556b1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74279f23511603111eb4126414556b1b"></a>
+<tr class="separator:ga24711bff00befce43455ad79653d388d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74279f23511603111eb4126414556b1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga74279f23511603111eb4126414556b1b"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>sr_model</b></td></tr>
-<tr class="separator:a74279f23511603111eb4126414556b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56819e740669b8f1b443bdee23851442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56819e740669b8f1b443bdee23851442"></a>
+<tr class="separator:ga74279f23511603111eb4126414556b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga56819e740669b8f1b443bdee23851442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56819e740669b8f1b443bdee23851442"></a>
 ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>tbox_model</b></td></tr>
-<tr class="separator:a56819e740669b8f1b443bdee23851442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6319a81becbadfcdd229bf2c98a7f930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6319a81becbadfcdd229bf2c98a7f930"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a6319a81becbadfcdd229bf2c98a7f930">squirrelModel</a></td></tr>
-<tr class="memdesc:a6319a81becbadfcdd229bf2c98a7f930"><td class="mdescLeft">&#160;</td><td class="mdescRight">The squirrel model. <br/></td></tr>
-<tr class="separator:a6319a81becbadfcdd229bf2c98a7f930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ga56819e740669b8f1b443bdee23851442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6319a81becbadfcdd229bf2c98a7f930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6319a81becbadfcdd229bf2c98a7f930"></a>
+ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squirrelModel</b></td></tr>
+<tr class="separator:ga6319a81becbadfcdd229bf2c98a7f930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="aa1d58aa9130d8d7526eb407f13f7a833"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void testApp::addObjecttoScene </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>message</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Test application. </p>
+<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="af869cba67b1dab8481f8d0e216d59dcd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -235,104 +251,6 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">parameter1</td><td>The first parameter.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a34646de458b0af33bc02457c9b8583df"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void testApp::drawAugmentedPlane </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>xPosition</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>yPosition</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ofColor&#160;</td>
-          <td class="paramname"><em>textColor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ofColor&#160;</td>
-          <td class="paramname"><em>bgColor</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>note_heading</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>note_text</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Draw augmented plane. </p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">xPosition</td><td>The position. </td></tr>
-    <tr><td class="paramname">yPosition</td><td>The position. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The text color. </td></tr>
-    <tr><td class="paramname">bgColor</td><td>The background color. </td></tr>
-    <tr><td class="paramname">i</td><td>Zero-based index of the. </td></tr>
-    <tr><td class="paramname">note_heading</td><td>The note heading. </td></tr>
-    <tr><td class="paramname">note_text</td><td>The note text. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="aa2fcbae31171ba366d4c0fcaf44149f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void testApp::drawAxes </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Constructor.</p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">parameter1</td><td>The first parameter. </td></tr>
-    <tr><td class="paramname">parameter2</td><td>The second parameter. </td></tr>
-    <tr><td class="paramname">parameter3</td><td>The third parameter.</td></tr>
   </table>
   </dd>
 </dl>
@@ -361,25 +279,6 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="a47747729f6d0d84c36ef0ec9fca01303"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void testApp::drawPlane </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Draw plane. </p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
 
 </div>
 </div>
@@ -439,6 +338,7 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
 </div><div class="memdoc">
 
 <p>Mouse pressed. </p>
+<p>This function will be called when the mouse is pressed</p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -550,24 +450,6 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
 
 </div>
 </div>
-<a class="anchor" id="ae18e12d5025a2167ebd63ca019468cc0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void testApp::UDPReceive </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Default constructor.</p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="a853bbabdab3e7d2f207bb5a2028990bd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -580,25 +462,10 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Gets the.</p>
-<p>.</p>
 
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="ae4ab187191426de0728985d0789acf88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ofxAssimpModelLoader bb_model cr_model lr_model ls_model pgn_model testApp::pgy_model</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the tbox model. </p>
-<p>pog_model,rc_model,sr_model,tbox_model</p>
-<dl class="section return"><dt>Returns</dt><dd>The tbox model. </dd></dl>
+<p>Updates the tracking. </p>
+<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
 
 </div>
 </div>
@@ -609,7 +476,7 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><a class
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 00:35:36 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 3 2012 00:38:51 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

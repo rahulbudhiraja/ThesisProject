@@ -1,0 +1,45 @@
+\contentsline {chapter}{\numberline {1}Hierarchical Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Class Hierarchy}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}
+\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}Calculations Class Reference}{7}{section.4.1}
+\contentsline {section}{\numberline {4.2}G\discretionary {-}{}{}U\discretionary {-}{}{}I\discretionary {-}{}{}Stuff Class Reference}{8}{section.4.2}
+\contentsline {section}{\numberline {4.3}Models Class Reference}{8}{section.4.3}
+\contentsline {section}{\numberline {4.4}Note\discretionary {-}{}{}Information Class Reference}{8}{section.4.4}
+\contentsline {section}{\numberline {4.5}P\discretionary {-}{}{}O\discretionary {-}{}{}Is Class Reference}{9}{section.4.5}
+\contentsline {section}{\numberline {4.6}test\discretionary {-}{}{}App Class Reference}{9}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Member Function Documentation}{10}{subsection.4.6.1}
+\contentsline {subsubsection}{\numberline {4.6.1.1}add\discretionary {-}{}{}Objectto\discretionary {-}{}{}Scene}{10}{subsubsection.4.6.1.1}
+\contentsline {subsubsection}{\numberline {4.6.1.2}draw}{10}{subsubsection.4.6.1.2}
+\contentsline {subsubsection}{\numberline {4.6.1.3}draw\discretionary {-}{}{}Augmented\discretionary {-}{}{}Plane}{10}{subsubsection.4.6.1.3}
+\contentsline {subsubsection}{\numberline {4.6.1.4}draw\discretionary {-}{}{}Axes}{11}{subsubsection.4.6.1.4}
+\contentsline {subsubsection}{\numberline {4.6.1.5}draw\discretionary {-}{}{}Models}{11}{subsubsection.4.6.1.5}
+\contentsline {subsubsection}{\numberline {4.6.1.6}draw\discretionary {-}{}{}Plane}{11}{subsubsection.4.6.1.6}
+\contentsline {subsubsection}{\numberline {4.6.1.7}key\discretionary {-}{}{}Pressed}{12}{subsubsection.4.6.1.7}
+\contentsline {subsubsection}{\numberline {4.6.1.8}mouse\discretionary {-}{}{}Pressed}{12}{subsubsection.4.6.1.8}
+\contentsline {subsubsection}{\numberline {4.6.1.9}mouse\discretionary {-}{}{}Released}{12}{subsubsection.4.6.1.9}
+\contentsline {subsubsection}{\numberline {4.6.1.10}setup}{13}{subsubsection.4.6.1.10}
+\contentsline {subsubsection}{\numberline {4.6.1.11}setup\discretionary {-}{}{}Models}{13}{subsubsection.4.6.1.11}
+\contentsline {subsubsection}{\numberline {4.6.1.12}U\discretionary {-}{}{}D\discretionary {-}{}{}P\discretionary {-}{}{}Receive}{13}{subsubsection.4.6.1.12}
+\contentsline {subsubsection}{\numberline {4.6.1.13}Update\discretionary {-}{}{}Tracking}{14}{subsubsection.4.6.1.13}
+\contentsline {subsection}{\numberline {4.6.2}Member Data Documentation}{14}{subsection.4.6.2}
+\contentsline {subsubsection}{\numberline {4.6.2.1}pgy\discretionary {-}{}{}\_\discretionary {-}{}{}model}{14}{subsubsection.4.6.2.1}
+\contentsline {chapter}{\numberline {5}File Documentation}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}src/test\discretionary {-}{}{}App.cpp File Reference}{15}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{16}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}Macro Definition Documentation}{17}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}I\discretionary {-}{}{}W\discretionary {-}{}{}R\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}O\discretionary {-}{}{}K}{17}{subsubsection.5.1.2.1}
+\contentsline {subsection}{\numberline {5.1.3}Function Documentation}{17}{subsection.5.1.3}
+\contentsline {subsubsection}{\numberline {5.1.3.1}I\discretionary {-}{}{}W\discretionary {-}{}{}R\discretionary {-}{}{}Filter\discretionary {-}{}{}Tracking}{17}{subsubsection.5.1.3.1}
+\contentsline {subsection}{\numberline {5.1.4}Variable Documentation}{17}{subsection.5.1.4}
+\contentsline {subsubsection}{\numberline {5.1.4.1}rot\discretionary {-}{}{}Y}{17}{subsubsection.5.1.4.1}
+\contentsline {subsubsection}{\numberline {5.1.4.2}scenes}{17}{subsubsection.5.1.4.2}
+\contentsline {subsubsection}{\numberline {5.1.4.3}yaw}{17}{subsubsection.5.1.4.3}
+\contentsline {section}{\numberline {5.2}src/test\discretionary {-}{}{}App.h File Reference}{18}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Detailed Description}{18}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Macro Definition Documentation}{18}{subsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.2.1}\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}T\discretionary {-}{}{}E\discretionary {-}{}{}S\discretionary {-}{}{}T\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}A\discretionary {-}{}{}P\discretionary {-}{}{}P}{18}{subsubsection.5.2.2.1}
+\contentsline {part}{Index}{18}{subsubsection.5.2.2.1}

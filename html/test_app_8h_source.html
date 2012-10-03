@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,52 +114,74 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#include&quot;Calculations.h&quot;</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#include&quot;NoteInformation.h&quot;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="code" href="classtest_app.html">   38</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtest_app.html">testApp</a> : <span class="keyword">public</span> ofBaseApp{</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#ad431db15b6150b965cd52bcba8e16e11" title="Setups this object.">setup</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> update();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#af869cba67b1dab8481f8d0e216d59dcd">draw</a>();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a904d147c7e532cb92656d5dd4895cd26">keyPressed</a>  (<span class="keywordtype">int</span> key);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> keyReleased(<span class="keywordtype">int</span> key);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> mouseMoved(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> mouseDragged(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a3f200702ce91859cac2872a39302679d" title="Mouse pressed.">mousePressed</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#aa3680ffc782b1e5c451289817f20c9c6" title="Mouse released.">mouseReleased</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> windowResized(<span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a853bbabdab3e7d2f207bb5a2028990bd">UpdateTracking</a>();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> setupTracker();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#af88f7715b2e0a9692b4ec947fad63c31">setupModels</a>();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a78bdea262a12308cb6f9f9243bdb3db9">drawModels</a>();</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="code" href="classtest_app.html">   45</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtest_app.html" title="Test application.">testApp</a> : <span class="keyword">public</span> ofBaseApp{</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#ad431db15b6150b965cd52bcba8e16e11" title="Setups this object.">setup</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> update();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#af869cba67b1dab8481f8d0e216d59dcd">draw</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a904d147c7e532cb92656d5dd4895cd26">keyPressed</a>  (<span class="keywordtype">int</span> key);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> keyReleased(<span class="keywordtype">int</span> key);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> mouseMoved(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y );</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> mouseDragged(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">// UDP Stuff ..</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        ofxUDPManager udpConnection;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        ofTrueTypeFont  mono;</div>
-<div class="line"><a name="l00076"></a><span class="lineno"><a class="code" href="classtest_app.html#afc42ad25d37b1292d27d783380249424">   76</a></span>&#160;        ofTrueTypeFont  <a class="code" href="classtest_app.html#afc42ad25d37b1292d27d783380249424" title="The monosm.">monosm</a>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno"><a class="code" href="classtest_app.html#ae4ab187191426de0728985d0789acf88">   87</a></span>&#160;        ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,<a class="code" href="classtest_app.html#ae4ab187191426de0728985d0789acf88" title="Gets the tbox model.">pgy_model</a>,pog_model,rc_model,sr_model,tbox_model;</div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="classtest_app.html#a6319a81becbadfcdd229bf2c98a7f930">   89</a></span>&#160;        ofxAssimpModelLoader <a class="code" href="classtest_app.html#a6319a81becbadfcdd229bf2c98a7f930" title="The squirrel model.">squirrelModel</a>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#aa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a>();</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a47747729f6d0d84c36ef0ec9fca01303" title="Draw plane.">drawPlane</a>();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#ae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a>();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#aa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a>(<span class="keywordtype">string</span>);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        ofColor Returncolor(<span class="keywordtype">string</span>);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a34646de458b0af33bc02457c9b8583df" title="Draw augmented plane.">drawAugmentedPlane</a>(<span class="keywordtype">float</span> ,<span class="keywordtype">float</span>,ofColor,ofColor,<span class="keywordtype">int</span> ,<span class="keywordtype">string</span>,<span class="keywordtype">string</span>);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;};</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a3f200702ce91859cac2872a39302679d" title="Mouse pressed.">mousePressed</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#aa3680ffc782b1e5c451289817f20c9c6" title="Mouse released.">mouseReleased</a>(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> button);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">void</span> windowResized(<span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a853bbabdab3e7d2f207bb5a2028990bd" title="Updates the tracking.">UpdateTracking</a>();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> setupTracker();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#af88f7715b2e0a9692b4ec947fad63c31">setupModels</a>();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtest_app.html#a78bdea262a12308cb6f9f9243bdb3db9">drawModels</a>();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="comment">// UDP Stuff ..</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="code" href="classtest_app.html#a30c39505591fda7ed8ef4d8c4f0128fd">   92</a></span>&#160;    ofxUDPManager <a class="code" href="classtest_app.html#a30c39505591fda7ed8ef4d8c4f0128fd" title="The UDP connection.">udpConnection</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="code" href="classtest_app.html#a35f96e427475843d44539f125ca454cd">   95</a></span>&#160;    ofxUDPManager <a class="code" href="classtest_app.html#a35f96e427475843d44539f125ca454cd" title="The UDP send connection.">udpSendConnection</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="code" href="classtest_app.html#a630d5b8b53aee0c07dc79db616f4eb48">   97</a></span>&#160;    ofxUDPManager <a class="code" href="classtest_app.html#a630d5b8b53aee0c07dc79db616f4eb48" title="The UDP receive connection.">udpReceiveConnection</a>;</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="code" href="classtest_app.html#a9bcefa3afb830941451f72174a36b722">  100</a></span>&#160;    ofTrueTypeFont  <a class="code" href="classtest_app.html#a9bcefa3afb830941451f72174a36b722" title="The mono.">mono</a>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="code" href="classtest_app.html#afc42ad25d37b1292d27d783380249424">  102</a></span>&#160;    ofTrueTypeFont  <a class="code" href="classtest_app.html#afc42ad25d37b1292d27d783380249424" title="The monosm.">monosm</a>;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,pog_model,rc_model,sr_model,tbox_model;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    ofxAssimpModelLoader squirrelModel;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#gaa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a>();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#ga47747729f6d0d84c36ef0ec9fca01303" title="Draw plane.">drawPlane</a>();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#gae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a>();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#gaa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a>(<span class="keywordtype">string</span>);</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    ofColor Returncolor(<span class="keywordtype">string</span>);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#ga34646de458b0af33bc02457c9b8583df" title="Draw augmented plane.">drawAugmentedPlane</a>(<span class="keywordtype">float</span> ,<span class="keywordtype">float</span>,ofColor,ofColor,<span class="keywordtype">int</span> ,<span class="keywordtype">string</span>,<span class="keywordtype">string</span>);</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="group___int_variables.html#ga16036c3aa23c1747e315a3e18105cf45" title="If the Handheld is being used a controller,This function will take the touch information and draw it ...">drawTouches</a>(<span class="keywordtype">string</span> udpMessage);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno"><a class="code" href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03">  172</a></span>&#160;    <span class="keywordtype">int</span> windowWidth,<a class="code" href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03" title="Gets the height of the window.">windowHeight</a>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;};</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 00:35:35 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 3 2012 00:38:50 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

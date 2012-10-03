@@ -22,3 +22,8 @@
 *.ipch
 *.obj
 *.exe
+*.exe
+*.lib
+*.ilk
+*.tlog
+*.obj

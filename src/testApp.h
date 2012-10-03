@@ -33,67 +33,144 @@
 #include"Calculations.h"
 #include"NoteInformation.h"
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \class testApp
+///
+/// \brief Test application.
+///
+/// \author Rahul
+/// \date 9/21/2012
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class testApp : public ofBaseApp{
 
-	public:
-		void setup();
-		void update();
-		void draw();
+public:
 
-		void keyPressed  (int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
+	void setup();
+	void update();
+	void draw();
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \fn void testApp::mousePressed(int x, int y, int button);
-		///
-		/// \brief Mouse pressed.
-		///
-		/// \author Rahul
-		/// \date 9/21/2012
-		///
-		/// \param x	  The x coordinate.
-		/// \param y	  The y coordinate.
-		/// \param button The button.
-		////////////////////////////////////////////////////////////////////////////////////////////////////
+	void keyPressed  (int key);
+	void keyReleased(int key);
+	void mouseMoved(int x, int y );
+	void mouseDragged(int x, int y, int button);
 
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-		void UpdateTracking();
-		void setupTracker();
-		void setupModels();
-		void drawModels();
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::mousePressed(int x, int y, int button);
+	///
+	/// \brief Mouse pressed.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	///
+	/// \param x	  The x coordinate.
+	/// \param y	  The y coordinate.
+	/// \param button The button.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// UDP Stuff ..
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
 
-		ofxUDPManager udpConnection;
-		ofTrueTypeFont  mono;
-		/// \brief The monosm.
-		ofTrueTypeFont  monosm;
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::UpdateTracking();
+	///
+	/// \brief Updates the tracking.
+	///
+	/// \author Rahul
+	/// \date 9/21/2012
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		/// \property ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,
-		/// pog_model,rc_model,sr_model,tbox_model
-		///
-		/// \brief Gets the tbox model.
-		///
-		/// \return The tbox model.
-		////////////////////////////////////////////////////////////////////////////////////////////////////
+	void UpdateTracking();
+	void setupTracker();
+	void setupModels();
+	void drawModels();
 
-		ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,pog_model,rc_model,sr_model,tbox_model;
-		/// \brief The squirrel model.
-		ofxAssimpModelLoader squirrelModel;
+	// UDP Stuff ..
+
+	/// \brief The UDP connection.
+	ofxUDPManager udpConnection;
+
+	/// \brief The UDP send connection.
+	ofxUDPManager udpSendConnection;
+	/// \brief The UDP receive connection.
+	ofxUDPManager udpReceiveConnection;
+
+	/// \brief The mono.
+	ofTrueTypeFont  mono;
+	/// \brief The monosm.
+	ofTrueTypeFont  monosm;
+
+	/**
+	 * \defgroup IntVariables Global integer variables
+	 * @{
+	 */
 	
-		void drawAxes();
-		void drawPlane();
-		void UDPReceive();
-		void addObjecttoScene(string);
-		ofColor Returncolor(string);
-		void drawAugmentedPlane(float ,float,ofColor,ofColor,int ,string,string);
+	
+
+
+	///@{
+	
+	///	\name The AssimpModelLoader Variables ..
+	///		  These Variables will load all the Models that were used for the BlackBayAR demo .
+	///	\brief BlackBay Models ..	  
+	
+	ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,pog_model,rc_model,sr_model,tbox_model;
+	
+	ofxAssimpModelLoader squirrelModel;
+
+	///@}
+
+	void drawAxes();
+	void drawPlane();
+	void UDPReceive();
+
+	void addObjecttoScene(string);
+
+	ofColor Returncolor(string);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::drawAugmentedPlane(float ,float,ofColor,ofColor,int ,string,string);
+	///
+	/// \brief Takes information from Handheld Phone and draws augmented plane in the AR view.
+	///
+	/// \author Rahul
+	/// \date 9/28/2012
+	///
+	/// \param xPosition    The x-position.
+	/// \param yPosition    The y-position.
+	/// \param textColor    The color of the text written on the plane.
+	/// \param bgColor	    The background color of the plane.
+	/// \param i		    Index,Which Plane is being changed.
+	/// \param note_heading The note heading.
+	/// \param note_text    The note text.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void drawAugmentedPlane(float ,float,ofColor,ofColor,int ,string,string);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::drawTouches(string udpMessage);
+	///
+	/// \brief If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.
+	///
+	/// \author Rahul
+	/// \date 9/28/2012
+	///
+	/// \param udpMessage The Message received though UDP ..
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void drawTouches(string udpMessage);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \property int windowWidth,windowHeight
+	///
+	/// \brief Gets the height of the window.
+	///
+	/// \brief The height of the window.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	int windowWidth,windowHeight;
+
 };
 
 #endif

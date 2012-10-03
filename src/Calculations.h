@@ -25,6 +25,7 @@ float intersection_pt1,intersection_pt2;
 ofVec3f test;
 
 ofVec3f origin,Bbay,receiver,destination1,friend_loc;
+ofVec2f touch_pos;
 
 Calculations()
 { lat1=-43.522189; 
@@ -124,8 +125,8 @@ void check_intersection(float yaw,vector <POIs>&scenes)
 // 
 
 
- if(ray_sphere_intersect(origin,ofVec3f(10000*sin(-0.62831837),10000*cos(-0.62831837),10),Bbay,40))
-	 cout<<"HIITTTTTTTTTTTTTT";
+ /*if(ray_sphere_intersect(origin,ofVec3f(10000*sin(-0.62831837),10000*cos(-0.62831837),10),Bbay,40))
+	 cout<<"HIITTTTTTTTTTTTTT";*/
  
  for(int i=0;i<scenes.size();i++)
  {
@@ -177,6 +178,35 @@ bool ray_sphere_intersect(ofVec3f p1,ofVec3f p2,ofVec3f sc,double r)
    
    //cout<<"intersection point 1"<<intersection_pt1<<"\tIntersection pt 2 is  \t"<<intersection_pt2;
    return true;
+ 
+ 
+}
+
+void check_touch_intersection(ofVec2f Touch_Pos,int windowWidth,int windowHeight,float yaw )
+{
+
+	ofVec3f long_ray2(10000*sin(yaw+(convertDegreestoRadians(60*-(Touch_Pos.x/windowWidth)))),10000*cos(yaw+(convertDegreestoRadians(60*-(Touch_Pos.x/windowWidth)))),10);
+
+	//cout<<"   sfdsfs "<<60*Touch_Pos.x/windowWidth<<endl;
+	//ofSetColor(255);
+	// 
+
+
+	//ofLine(ofVec3f(0,0,10),long_ray);
+
+	///< Touch_Pos is the vector that stores the touch position from the center .
+
+ if(ray_sphere_intersect(origin,long_ray2,Bbay,50))
+ cout<<"BBay"<<endl;
+ 
+ else if(ray_sphere_intersect(origin,long_ray2,destination1,50))
+ cout<<"Destination"<<endl;
+ 
+ else if(ray_sphere_intersect(origin,long_ray2,friend_loc,50))
+ cout<<"Friend Location"<<endl;
+ 
+ else if(ray_sphere_intersect(origin,long_ray2,receiver,50))
+ cout<<"Receiver"<<endl;
  
  
 }

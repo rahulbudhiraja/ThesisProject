@@ -36,7 +36,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -68,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -84,7 +84,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
@@ -105,34 +104,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <code>#include &lt;sys\stat.h&gt;</code><br/>
 <code>#include &lt;iostream&gt;</code><br/>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacestd"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestd.html">std</a></td></tr>
-<tr class="memdesc:namespacestd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:af3fff26dd0daf747313fea22d007e08f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#af3fff26dd0daf747313fea22d007e08f">IWR_OK</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:af3fff26dd0daf747313fea22d007e08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro that defines iwr ok.  <a href="#af3fff26dd0daf747313fea22d007e08f"></a><br/></td></tr>
+<tr class="memdesc:af3fff26dd0daf747313fea22d007e08f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vuzix Trackers Macros .  <a href="#af3fff26dd0daf747313fea22d007e08f"></a><br/></td></tr>
 <tr class="separator:af3fff26dd0daf747313fea22d007e08f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2700b1789448312031a74498f20c6151"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2700b1789448312031a74498f20c6151"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_NO_TRACKER</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a2700b1789448312031a74498f20c6151"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a76171800ff5c2c8a68158b633bf34224"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#a76171800ff5c2c8a68158b633bf34224">IWR_OFFLINE</a>&#160;&#160;&#160;2</td></tr>
-<tr class="memdesc:a76171800ff5c2c8a68158b633bf34224"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro that defines iwr offline.  <a href="#a76171800ff5c2c8a68158b633bf34224"></a><br/></td></tr>
+<tr class="memitem:a76171800ff5c2c8a68158b633bf34224"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76171800ff5c2c8a68158b633bf34224"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_OFFLINE</b>&#160;&#160;&#160;2</td></tr>
 <tr class="separator:a76171800ff5c2c8a68158b633bf34224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a396a3b6ee3905182e93a223c5baba939"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a396a3b6ee3905182e93a223c5baba939"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_TRACKER_CORRUPT</b>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a396a3b6ee3905182e93a223c5baba939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0133f9ab2073f3ed92ed68ab31207461"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#a0133f9ab2073f3ed92ed68ab31207461">IWR_NOTRACKER_INSTANCE</a>&#160;&#160;&#160;4</td></tr>
-<tr class="memdesc:a0133f9ab2073f3ed92ed68ab31207461"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro that defines iwr notracker instance.  <a href="#a0133f9ab2073f3ed92ed68ab31207461"></a><br/></td></tr>
+<tr class="memitem:a0133f9ab2073f3ed92ed68ab31207461"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0133f9ab2073f3ed92ed68ab31207461"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_NOTRACKER_INSTANCE</b>&#160;&#160;&#160;4</td></tr>
 <tr class="separator:a0133f9ab2073f3ed92ed68ab31207461"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ac55ca9ec2b159b660ad85684feffa7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ac55ca9ec2b159b660ad85684feffa7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_NO_STEREO</b>&#160;&#160;&#160;5</td></tr>
 <tr class="separator:a6ac55ca9ec2b159b660ad85684feffa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf7f3ce37211489caedaaecd77232c35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#abf7f3ce37211489caedaaecd77232c35">IWR_STEREO_CORRUPT</a>&#160;&#160;&#160;6</td></tr>
-<tr class="memdesc:abf7f3ce37211489caedaaecd77232c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">A macro that defines iwr stereo corrupt.  <a href="#abf7f3ce37211489caedaaecd77232c35"></a><br/></td></tr>
+<tr class="memitem:abf7f3ce37211489caedaaecd77232c35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf7f3ce37211489caedaaecd77232c35"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>IWR_STEREO_CORRUPT</b>&#160;&#160;&#160;6</td></tr>
 <tr class="separator:abf7f3ce37211489caedaaecd77232c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -145,9 +138,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abc3d99fdd08f8cf5968947ade2874ec5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abc3d99fdd08f8cf5968947ade2874ec5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>IWRFilterTracking</b> (long *<a class="el" href="test_app_8cpp.html#a7efc219781df4a1e281cb5d348b7fbf9">yaw</a>, long *pitch, long *roll)</td></tr>
-<tr class="separator:abc3d99fdd08f8cf5968947ade2874ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac33b46e212d3b40c7e706084f0707cd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#ac33b46e212d3b40c7e706084f0707cd8">IWRFilterTracking</a> (long *<a class="el" href="test_app_8cpp.html#a7efc219781df4a1e281cb5d348b7fbf9">yaw</a>, long *pitch, long *roll)</td></tr>
+<tr class="memdesc:ac33b46e212d3b40c7e706084f0707cd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Filtered tracking output.  <a href="#ac33b46e212d3b40c7e706084f0707cd8"></a><br/></td></tr>
+<tr class="separator:ac33b46e212d3b40c7e706084f0707cd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -173,8 +166,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_
 <tr class="memdesc:a3a1437b324a10893d0a616cd086c6271"><td class="mdescLeft">&#160;</td><td class="mdescRight">The filtering. <br/></td></tr>
 <tr class="separator:a3a1437b324a10893d0a616cd086c6271"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0868f931f3e011d04c6a7072fd91a576"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0868f931f3e011d04c6a7072fd91a576"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#a0868f931f3e011d04c6a7072fd91a576">Pid</a> = 0</td></tr>
-<tr class="memdesc:a0868f931f3e011d04c6a7072fd91a576"><td class="mdescLeft">&#160;</td><td class="mdescRight">The PID. <br/></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Pid</b> = 0</td></tr>
 <tr class="separator:a0868f931f3e011d04c6a7072fd91a576"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a639c84ce78fef8ba2780de9c25770791"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a639c84ce78fef8ba2780de9c25770791"></a>
 HMODULE&#160;</td><td class="memItemRight" valign="bottom"><b>hMod</b></td></tr>
@@ -188,9 +180,8 @@ ofCamera&#160;</td><td class="memItemRight" valign="bottom"><b>cam</b></td></tr>
 <tr class="memitem:a26fd84d522945b6038221d9e38c7cc39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26fd84d522945b6038221d9e38c7cc39"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>roll</b> =0</td></tr>
 <tr class="separator:a26fd84d522945b6038221d9e38c7cc39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a45ec4ebd7ddda05fdd49eb42148544"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a45ec4ebd7ddda05fdd49eb42148544"></a>
-vector&lt; <a class="el" href="class_p_o_is.html">POIs</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#a2a45ec4ebd7ddda05fdd49eb42148544">scenes</a></td></tr>
-<tr class="memdesc:a2a45ec4ebd7ddda05fdd49eb42148544"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scenes. <br/></td></tr>
+<tr class="memitem:a2a45ec4ebd7ddda05fdd49eb42148544"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="class_p_o_is.html">POIs</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#a2a45ec4ebd7ddda05fdd49eb42148544">scenes</a></td></tr>
+<tr class="memdesc:a2a45ec4ebd7ddda05fdd49eb42148544"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scenes.  <a href="#a2a45ec4ebd7ddda05fdd49eb42148544"></a><br/></td></tr>
 <tr class="separator:a2a45ec4ebd7ddda05fdd49eb42148544"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac440c8cafae97a89976b9bc5a60e90de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac440c8cafae97a89976b9bc5a60e90de"></a>
 vector&lt; <a class="el" href="class_note_information.html">NoteInformation</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Notes</b></td></tr>
@@ -214,8 +205,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tes
 <tr class="memdesc:afef2218c3159c33bb3e2a84280541309"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initialyaw. <br/></td></tr>
 <tr class="separator:afef2218c3159c33bb3e2a84280541309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb559820d9ca11295b4500f179ef6392"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb559820d9ca11295b4500f179ef6392"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="test_app_8cpp.html#acb559820d9ca11295b4500f179ef6392">i</a></td></tr>
-<tr class="memdesc:acb559820d9ca11295b4500f179ef6392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero-based index of the. <br/></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>i</b></td></tr>
 <tr class="separator:acb559820d9ca11295b4500f179ef6392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1b4d9fb9f738cef6f815a498af72064"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1b4d9fb9f738cef6f815a498af72064"></a>
 <a class="el" href="class_calculations.html">Calculations</a>&#160;</td><td class="memItemRight" valign="bottom"><b>calc</b></td></tr>
@@ -252,42 +242,16 @@ ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="memitem:ac1daf15866a617ff20285b658d2e6ce4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1daf15866a617ff20285b658d2e6ce4"></a>
 ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><b>Serif_10</b></td></tr>
 <tr class="separator:ac1daf15866a617ff20285b658d2e6ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a466fbcc2d25245770ef45cbb35a0ddab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a466fbcc2d25245770ef45cbb35a0ddab"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>sent</b> =false</td></tr>
+<tr class="separator:a466fbcc2d25245770ef45cbb35a0ddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd0d76b17170ff6264bde41c74131302"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd0d76b17170ff6264bde41c74131302"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>dirn</b> =&quot;up&quot;</td></tr>
+<tr class="separator:afd0d76b17170ff6264bde41c74131302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements the test application class. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a0133f9ab2073f3ed92ed68ab31207461"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IWR_NOTRACKER_INSTANCE&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A macro that defines iwr notracker instance. </p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="a76171800ff5c2c8a68158b633bf34224"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IWR_OFFLINE&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A macro that defines iwr offline. </p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
-
-</div>
-</div>
 <a class="anchor" id="af3fff26dd0daf747313fea22d007e08f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -298,25 +262,54 @@ ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><b>Serif_10</b
       </table>
 </div><div class="memdoc">
 
-<p>A macro that defines iwr ok. </p>
+<p>Vuzix Trackers Macros . </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="abf7f3ce37211489caedaaecd77232c35"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ac33b46e212d3b40c7e706084f0707cd8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IWR_STEREO_CORRUPT&#160;&#160;&#160;6</td>
+          <td class="memname">IWRFilterTracking </td>
+          <td>(</td>
+          <td class="paramtype">long *&#160;</td>
+          <td class="paramname"><em>yaw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long *&#160;</td>
+          <td class="paramname"><em>pitch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long *&#160;</td>
+          <td class="paramname"><em>roll</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A macro that defines iwr stereo corrupt. </p>
+<p>The Filtered tracking output. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">yaw</td><td>the yaw. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pitch</td><td>the pitch. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">roll</td><td>the roll. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -333,6 +326,21 @@ ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><b>Serif_10</b
 
 <p>Gets the rot y coordinate. </p>
 <dl class="section return"><dt>Returns</dt><dd>The rot y coordinate. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2a45ec4ebd7ddda05fdd49eb42148544"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="class_p_o_is.html">POIs</a>&gt; scenes</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The scenes. </p>
+<p>This Vector stores the Scene Information </p>
 
 </div>
 </div>
@@ -354,7 +362,7 @@ ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><b>Serif_10</b
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Sep 21 2012 00:35:35 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 3 2012 00:38:50 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
