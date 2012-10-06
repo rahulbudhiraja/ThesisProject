@@ -171,6 +171,24 @@ public:
 
 	int windowWidth,windowHeight;
 
+	int something_touch_selected;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::translate_3D_Model(string);
+	///
+	/// \brief This function will translate the 3D Model depending on users finger movement on the touch screen ...
+	///
+	/// \author Rahul
+	/// \date 10/6/2012
+	///
+	/// \param string The UDP string that was Received ..
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void translate_3D_Model(string);
+
+	float Bbaymodel_origin[2],Destination_origin[2],Friend_model_origin[2],Reciever_model_origin[2];
+
+	void set_model_initial_position();
 };
 
 #endif

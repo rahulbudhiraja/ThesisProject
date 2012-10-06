@@ -136,26 +136,22 @@ ofTrueTypeFont Serif_10;
 
 bool sent=false;
 string dirn="up";
-//--------------------------------------------------------------
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn void testApp::setup()
-///
-/// \brief Setups this object.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
+int bb_model_touch_trans_x=0;
+
+//Storing the last touch-positions
+
+float last_single_touch[2];
 
 void testApp::setup()
 {
-
+	something_touch_selected=0;
 	Serif_10.loadFont("Serif.ttf",10);
 	Serif_15.loadFont("Serif.ttf",15);
 
 	setupTracker();
 	setupModels();
-
+	set_model_initial_position();
 
 	//some model / light stuff
 	glEnable (GL_DEPTH_TEST);
@@ -184,33 +180,12 @@ void testApp::setup()
 	udpReceiveConnection.Create();
 	udpReceiveConnection.Bind(12003);
 	udpReceiveConnection.SetNonBlocking(true);
-	//load the squirrel model - the 3ds and the texture file need to be in the same folder
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn crosshair.loadImage("crosshair.png");
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param parameter1 The first parameter.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	
+	/// This function sets the initial position of the models 
+    set_model_initial_position();
 	crosshair.loadImage("crosshair.png");
 	crosshair.saveImage("asdasdsa.png");
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param [in,out] 1.5 If non-null, the fifth 1.
-	/// \param [in,out] 1.5 If non-null, the fifth 1.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
 	UpdateTracking();
@@ -238,29 +213,20 @@ void testApp::draw()
 	windowHeight=ofGetHeight();
 
 	ofBackground(0,0,0);
-	
 	UpdateTracking();
-
 	
 	if(g_fPitch>-25)
 	{
-
 		if(dirn.compare("down")==0)
 		{
 			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
 		    dirn="up";
 		}
 
-	char udpMessage[100000];
-	udpReceiveConnection.Receive(udpMessage,100000);
-	string message=udpMessage;
-
 	cam.setPosition(0,0,10);
 	cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
 	//BlackbayModels.ModelsDraw();
 
-	//cout<<"\nPitch"<<g_fPitch;
-	cout<<"\n yaw"<<yaw<<endl;
 	cam.pan(g_fYaw);
 	cam.tilt(g_fPitch);
 	cam.begin();
@@ -276,29 +242,26 @@ void testApp::draw()
     {
       
         ofPushMatrix();
-//        println("Xposition\t"+x_temp_poi); println("\n\nYposition\t"+y_temp_poi);  
         ofTranslate(scenes[i].x,scenes[i].y);
-        
-		drawAugmentedPlane(scenes[i].x,scenes[i].y,Notes[i].text_color,Notes[i].bg_color,i,Notes[i].note_heading,Notes[i].note_text);
-      
+     	drawAugmentedPlane(scenes[i].x,scenes[i].y,Notes[i].text_color,Notes[i].bg_color,i,Notes[i].note_heading,Notes[i].note_text);
         ofPopMatrix();
     }
 	
 
 	cam.end();
 
-	UDPReceive();
+	char udpMessage[100000];
+	udpReceiveConnection.Receive(udpMessage,100000);
+	string message=udpMessage;
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param parameter1 The first parameter.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+	if(something_touch_selected!=0)
+	{
+
+	   translate_3D_Model(message);
+	}
+
+	else {
+	UDPReceive();
 
 	calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
 
@@ -308,20 +271,8 @@ void testApp::draw()
       drawTouches(message);
 	}
 
+	}
 
-
-	//ofFill();
-	//	gui.drawAxes();
-	//cout<<"\n\n "<<g_fPitch<<"\t "<<g_fRoll<<"\t"<<g_fYaw;
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn ofEnableAlphaBlending();
-	///
-	/// \brief Default constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 
 	else if(dirn.compare("up")==0)
@@ -505,34 +456,29 @@ void testApp::setupModels()
 
 void testApp::drawModels()
 {
-	ofNoFill();
+	//ofNoFill();
 
 	ofSetColor(255,255,255);
 
 	ofPushMatrix();
-	ofTranslate(116.747,-163.28,1);
+	ofTranslate(Bbaymodel_origin[0],Bbaymodel_origin[1],1);
 	ofRotateZ(rotAngle);
-
-
-
+  
 	bb_model.drawFaces();
-
 
 	ofPopMatrix();
 
 	ofPushMatrix();
-	ofTranslate(280.72705,244.184);
+	ofTranslate(Friend_model_origin[0],Friend_model_origin[1]);
 
 	ofRotateZ(rotAngle);
 
 	cr_model.drawFaces();
-
-
+	
 	ofPopMatrix();
 
 	ofPushMatrix();
-
-	ofTranslate(-250,-300);
+	ofTranslate(Destination_origin[0],Destination_origin[1]);
 	ofRotateZ(rotAngle);
 
 	lr_model.enableColors();
@@ -542,19 +488,7 @@ void testApp::drawModels()
 
 	ofPushMatrix();
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn ofTranslate(-100.23,129.49);
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param parameter1 The first parameter.
-	/// \param parameter2 The second parameter.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	ofTranslate(-100.23,129.49);
+	ofTranslate(Reciever_model_origin[0],Reciever_model_origin[1]);
 
 	ofRotateZ(rotAngle);
 	sr_model.enableColors();
@@ -632,16 +566,6 @@ void testApp::UDPReceive()
 		else if(result[0].compare("color")==0)
 		{
 			if(result[1].length()>2)
-
-				////////////////////////////////////////////////////////////////////////////////////////////////////
-				/// \fn Notes.back().text_color=Returncolor(result[1]);
-				///
-				/// \brief Default constructor.
-				///
-				/// \author Rahul
-				/// \date 9/21/2012
-				////////////////////////////////////////////////////////////////////////////////////////////////////
-
 				Notes.back().text_color=Returncolor(result[1]);
 			if(result[2].length()>2)
 				Notes.back().bg_color=Returncolor(result[2]);
@@ -763,9 +687,6 @@ ofColor testApp::Returncolor(string colorstring)
 
 		ofPushMatrix();
 		
-
-		
-
 		ofPopMatrix();
 
 		//ofSetColor(textColor);
@@ -775,7 +696,6 @@ ofColor testApp::Returncolor(string colorstring)
 
   //		Serif_15.drawString(note_heading,-50,-40); // May require Changes ..
 		//Serif_10.drawString(note_text,-50,-30);
-
 
 		ofPopMatrix();
 
@@ -788,7 +708,13 @@ void testApp::drawTouches(string udpMessage)
   vector<string> components= ofSplitString(udpMessage,",");
 
 	ofSetColor(255,0,0,90);
- 
+
+	if(ofToFloat(components[0])==1)
+		{
+			last_single_touch[1]=ofToFloat(components[1]);
+			last_single_touch[2]=ofToFloat(components[2]);
+	    }
+
   ofFill();
 
   ofEnableAlphaBlending();
@@ -797,16 +723,52 @@ void testApp::drawTouches(string udpMessage)
 	ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
 	calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
   }
-  
+
+  //cout<<"           "<<components[components.size()-2]<<endl;
+
+  if(ofToInt(components[0])==1&&components[components.size()-2]=="Sticky Finger"&&calc.touch_selected!=0)
+	  {
+	      something_touch_selected=1;
+		  cout<<"\nThe 3D Model is"<<calc.touch_selected;
+      }
+
   cout<<"g-Fyaw"<<g_fYaw<<endl;
   
   components.clear();
   ofDisableAlphaBlending();
 
   ofSetColor(255);
+	
+  
+}
 
-		
-  ofSetLineWidth(100);
-  ofLine(0,100,100,200);
-  ofSetLineWidth(1);
+void testApp::translate_3D_Model(string message)
+{
+	result=ofSplitString(ofToString(message),",");
+
+	if(ofToInt(result[0])==1&&something_touch_selected==1)
+	{
+		//find which model is selected	;
+		cout<<"somethin is selected";
+		Bbaymodel_origin[0]=ofToInt(result[1])-last_single_touch[1];
+
+	}
+
+	else something_touch_selected=0;
+
+}
+
+void testApp::set_model_initial_position()
+{
+	Bbaymodel_origin[0]=116.747;
+	Bbaymodel_origin[1]=-163.28;
+
+	Destination_origin[0]=-250;
+	Destination_origin[1]=-300;
+
+	Friend_model_origin[0]=280.72705;
+	Friend_model_origin[1]=244.184;
+
+	Reciever_model_origin[0]=-100.23;
+	Reciever_model_origin[1]=129.49;
 }

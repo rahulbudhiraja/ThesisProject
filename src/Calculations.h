@@ -12,7 +12,7 @@ float bearing,bearing_correction;
 float xpos,ypos;
 float x_temp_poi,y_temp_poi;
 float Hdistance;
-int selected_model,selected_note;
+int selected_model,selected_note,touch_selected;
 
 float intersection_pt1,intersection_pt2;
 
@@ -43,6 +43,7 @@ Calculations()
 
   selected_model=0;
   selected_note=0;
+  touch_selected=0;
 }
 
 float convertDegreestoRadians(float val)
@@ -187,6 +188,7 @@ void check_touch_intersection(ofVec2f Touch_Pos,int windowWidth,int windowHeight
 
 	ofVec3f long_ray2(10000*sin(yaw+(convertDegreestoRadians(60*-(Touch_Pos.x/windowWidth)))),10000*cos(yaw+(convertDegreestoRadians(60*-(Touch_Pos.x/windowWidth)))),10);
 
+	touch_selected=0;
 	//cout<<"   sfdsfs "<<60*Touch_Pos.x/windowWidth<<endl;
 	//ofSetColor(255);
 	// 
@@ -197,17 +199,25 @@ void check_touch_intersection(ofVec2f Touch_Pos,int windowWidth,int windowHeight
 	///< Touch_Pos is the vector that stores the touch position from the center .
 
  if(ray_sphere_intersect(origin,long_ray2,Bbay,50))
- cout<<"BBay"<<endl;
- 
+ {
+	 touch_selected=1;
+	 cout<<"BBay"<<endl;
+ }
  else if(ray_sphere_intersect(origin,long_ray2,destination1,50))
- cout<<"Destination"<<endl;
- 
+ {
+	 touch_selected=2;
+	 cout<<"Destination"<<endl;
+ }
  else if(ray_sphere_intersect(origin,long_ray2,friend_loc,50))
- cout<<"Friend Location"<<endl;
- 
+ {
+	 touch_selected=3;
+	 cout<<"Friend Location"<<endl;
+ }
  else if(ray_sphere_intersect(origin,long_ray2,receiver,50))
- cout<<"Receiver"<<endl;
- 
+ {   
+	 touch_selected=4;
+	 cout<<"Receiver"<<endl;
+ }
  
 }
 
