@@ -16,18 +16,6 @@
 #include <sys\stat.h>
 #include <iostream>
 
-
-// Function return defines.
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def IWR_OK
-///
-/// \brief Vuzix Trackers Macros .
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 #define IWR_OK					0 // Ok 2 go with tracker driver.
 #define IWR_NO_TRACKER			1 // Tracker Driver is NOT installed.
 #define IWR_OFFLINE				2 /// Tracker driver installed, yet appears to be offline or not responding.
@@ -142,16 +130,21 @@ int bb_model_touch_trans_x=0;
 //Storing the last touch-positions
 
 float last_single_touch[2];
+long last_time_select=0;
+
+float midPoint_x=0,midPoint_y=0;
 
 void testApp::setup()
 {
 	something_touch_selected=0;
-	Serif_10.loadFont("Serif.ttf",10);
-	Serif_15.loadFont("Serif.ttf",15);
 
 	setupTracker();
 	setupModels();
 	set_model_initial_position();
+	setupFonts();
+	setupUDPConnections();
+	setupCrosshair();
+	beginSelection=false;
 
 	//some model / light stuff
 	glEnable (GL_DEPTH_TEST);
@@ -160,49 +153,21 @@ void testApp::setup()
 
 	glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable (GL_COLOR_MATERIAL);
-	//we run at 60 fps!
 
 	ofSetFrameRate(90);
 
-	//load our type
-	mono.loadFont("type/mono.ttf", 9);
-	monosm.loadFont("type/mono.ttf", 8);
-
-	//create the socket and bind to port 11999
-	udpConnection.Create();
-	udpConnection.Bind(12001);
-	udpConnection.SetNonBlocking(true);
-
-	udpSendConnection.Create();
-	udpSendConnection.Connect("192.168.43.1",13001);
-	udpSendConnection.SetNonBlocking(true);
-
-	udpReceiveConnection.Create();
-	udpReceiveConnection.Bind(12003);
-	udpReceiveConnection.SetNonBlocking(true);
-	
 	/// This function sets the initial position of the models 
-    set_model_initial_position();
-	crosshair.loadImage("crosshair.png");
-	crosshair.saveImage("asdasdsa.png");
+	set_model_initial_position();
 
-
-	crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
 	UpdateTracking();
 	initialyaw=g_fYaw;
+	last_time_select=0;
+
 }
 
 //--------------------------------------------------------------
 void testApp::update(){
 
-	//char udpMessage[100000];
-	//udpReceiveConnection.Receive(udpMessage,100000);
-	//string message=udpMessage;
-	//if(message.length()>0)
-	//{
-	//  cout<<message<<"\n\n";
- //     drawTouches(message);
-	//}
 }
 
 //--------------------------------------------------------------
@@ -214,94 +179,96 @@ void testApp::draw()
 
 	ofBackground(0,0,0);
 	UpdateTracking();
-	
+
 	if(g_fPitch>-25)
 	{
 		if(dirn.compare("down")==0)
 		{
 			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
-		    dirn="up";
+			dirn="up";
 		}
 
-	cam.setPosition(0,0,10);
-	cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
-	//BlackbayModels.ModelsDraw();
+		cam.setPosition(0,0,10);
+		cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
+		
 
-	cam.pan(g_fYaw);
-	cam.tilt(g_fPitch);
-	cam.begin();
+		cam.pan(g_fYaw);
+		cam.tilt(g_fPitch);
+		cam.begin();
 
-	drawAxes();
-	drawPlane();
-	drawModels();
+		drawAxes();
+		drawPlane();
+		drawModels();
 
-	ofSetColor(255, 255, 255);
-	ofFill();
-	
-	 for(i=0;i<scenes.size();i++)
-    {
-      
-        ofPushMatrix();
-        ofTranslate(scenes[i].x,scenes[i].y);
-     	drawAugmentedPlane(scenes[i].x,scenes[i].y,Notes[i].text_color,Notes[i].bg_color,i,Notes[i].note_heading,Notes[i].note_text);
-        ofPopMatrix();
-    }
-	
+		ofSetColor(255, 255, 255);
+		ofFill();
 
-	cam.end();
+		for(i=0;i<scenes.size();i++)
+		{
 
-	char udpMessage[100000];
-	udpReceiveConnection.Receive(udpMessage,100000);
-	string message=udpMessage;
+			ofPushMatrix();
+			ofTranslate(scenes[i].x,scenes[i].y);
+			drawAugmentedPlane(scenes[i].x,scenes[i].y,Notes[i].text_color,Notes[i].bg_color,i,Notes[i].note_heading,Notes[i].note_text);
+			ofPopMatrix();
+		}
 
-	if(something_touch_selected!=0)
-	{
 
-	   translate_3D_Model(message);
-	}
+		cam.end();
 
-	else {
-	UDPReceive();
+		char udpMessage[100000];
+		udpReceiveConnection.Receive(udpMessage,100000);
+		string message=udpMessage;
 
-	calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),scenes);
+		//cout<<ofGetSystemTime()<<endl;
 
-	if(message.length()>0)
-	{
-	  cout<<message<<"\n\n";
-      drawTouches(message);
-	}
+		if(something_touch_selected!=0)
+		{
+			    translate_3D_Model(message);
+				//updateModelPositions();
+				//cout<<"With Sticky"<<ofGetSystemTime()<<"\n\n";
+			
+		}
 
-	}
+		else {	
+		
+	        beginSelection=false;
+			updateModelPositions();
+
+			UDPReceive();
+
+				//cout<<"Without Sticky"<<ofGetSystemTime()<<"\n\n";
+
+			calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),calc.convertDegreestoRadians(g_fPitch),scenes);
+
+			if(message.length()>0)
+			{
+				//cout<<message<<"\n\n";
+				drawTouches(message);
+			}
+
+			else calc.touch_selected=0;
+
+		}
 
 	}
 
 	else if(dirn.compare("up")==0)
-		{
-			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
-		    dirn="down";
-		}
+	{
+		int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
+		dirn="down";
+	}
 
-	
+
 	ofEnableAlphaBlending();
 	ofSetColor(255);
 	crosshair.draw(ofGetWidth()/2-crosshair.width/2,ofGetHeight()/2-crosshair.height/2 );
-	 ofDisableAlphaBlending();
+	ofDisableAlphaBlending();
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn } void testApp::keyReleased(int key)
-///
-/// \brief Key released.
-///
-/// \author Rahul
-/// \date 9/21/2012
-///
-/// \param key The key.
-////////////////////////////////////////////////////////////////////////////////////////////////////
-	yaw++;
+		yaw++;
 }
 
 // --------------------------------------------------------------. 
@@ -321,28 +288,11 @@ void testApp::mouseDragged(int x, int y, int button){
 
 // --------------------------------------------------------------. 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \details This function will be called when the mouse is pressed 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void testApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn void testApp::mouseReleased(int x, int y, int button)
-///
-/// \brief Mouse released.
-///
-/// \author Rahul
-/// \date 9/21/2012
-///
-/// \param x	  The x coordinate.
-/// \param y	  The y coordinate.
-/// \param button The button.
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void testApp::mouseReleased(int x, int y, int button){
 
@@ -432,24 +382,12 @@ void testApp::setupModels()
 
 	Scene_Center=sr_model.getSceneCenter();
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn sr_model.setPosition(-Scene_Center.x,-Scene_Center.y,-Scene_Center.z);
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param parameter1 The first parameter.
-	/// \param parameter2 The second parameter.
-	/// \param parameter3 The third parameter.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	sr_model.setPosition(-Scene_Center.x,-Scene_Center.y,-Scene_Center.z);
 	cout<<"\n"<<sr_model.getSceneCenter();
 
 	cout<<"\n Models loaded successfully";
-
+	Destination_origin[2]=1;
+	cout<<Destination_origin[2]<<endl;
 
 }
 
@@ -460,39 +398,63 @@ void testApp::drawModels()
 
 	ofSetColor(255,255,255);
 
+	if(calc.touch_selected==1)
+    ofSetColor(0,0,255);
+
 	ofPushMatrix();
-	ofTranslate(Bbaymodel_origin[0],Bbaymodel_origin[1],1);
+	ofTranslate(Bbaymodel_origin[0]+Bbaymodel_translate[0],Bbaymodel_origin[1]+Bbaymodel_translate[1],Bbaymodel_origin[2]+Bbaymodel_translate[2]);
 	ofRotateZ(rotAngle);
-  
+
 	bb_model.drawFaces();
 
 	ofPopMatrix();
 
 	ofPushMatrix();
-	ofTranslate(Friend_model_origin[0],Friend_model_origin[1]);
-
-	ofRotateZ(rotAngle);
-
-	cr_model.drawFaces();
 	
+	ofSetColor(255,255,255);
+
+	ofTranslate(Friend_model_origin[0]+Friend_model_translate[0],Friend_model_origin[1]+Friend_model_translate[1],Friend_model_origin[2]+Friend_model_translate[2]);
+
+	ofRotateZ(rotAngle);
+
+	if(calc.touch_selected==3)
+    cr_model.drawWireframe();
+	
+	else cr_model.drawFaces();
+	//cr_model.drawVertices();
+
 	ofPopMatrix();
 
 	ofPushMatrix();
-	ofTranslate(Destination_origin[0],Destination_origin[1]);
+
+	ofSetColor(255,255,255);
+
+	ofTranslate(Destination_origin[0]+Destination_translate[0],Destination_origin[1]+Destination_translate[1],Destination_origin[2]+Destination_translate[2]);
+	cout<<Destination_origin[2]<<endl;
+
 	ofRotateZ(rotAngle);
 
-	lr_model.enableColors();
-	lr_model.drawFaces();
+	if(calc.touch_selected==2)
+		lr_model.drawWireframe();
+	else lr_model.drawFaces();
 
 	ofPopMatrix();
 
 	ofPushMatrix();
 
-	ofTranslate(Reciever_model_origin[0],Reciever_model_origin[1]);
+	
+	ofSetColor(255,255,255);
 
+	
+	ofTranslate(Reciever_model_origin[0]+Reciever_model_translate[0],Reciever_model_origin[1]+Reciever_model_translate[1],Reciever_model_origin[2]+Reciever_model_translate[2]);
+
+	
 	ofRotateZ(rotAngle);
-	sr_model.enableColors();
-	sr_model.drawFaces();
+
+	if(calc.touch_selected==4)
+		sr_model.drawWireframe();
+
+	else sr_model.drawFaces();
 
 	ofPopMatrix();
 
@@ -504,18 +466,6 @@ void testApp::drawModels()
 
 void testApp::drawAxes()
 {
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn ofSetColor(255, 0,0);
-	///
-	/// \brief Constructor.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param parameter1 The first parameter.
-	/// \param parameter2 The second parameter.
-	/// \param parameter3 The third parameter.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	ofSetColor(255, 0,0);
 	ofLine(100,0,0,0); 
@@ -527,15 +477,6 @@ void testApp::drawAxes()
 	ofLine(0,0,0,0,0,100); 
 
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn void testApp::drawPlane()
-///
-/// \brief Draw plane.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void testApp::drawPlane()
 {
@@ -569,188 +510,395 @@ void testApp::UDPReceive()
 				Notes.back().text_color=Returncolor(result[1]);
 			if(result[2].length()>2)
 				Notes.back().bg_color=Returncolor(result[2]);
-     
-  }
-    }
+
+		}
+	}
 
 }
 
 void testApp::addObjecttoScene(string message)
 {
- vector <string>messageParts;
- messageParts=ofSplitString(message,",");
- 
- NoteInformation temp_note=NoteInformation(messageParts[3],messageParts[4],white,black);
+	vector <string>messageParts;
+	messageParts=ofSplitString(message,",");
 
- if(messageParts[0].compare("note")==0)
- {
-   cout<<"\n\n"<<messageParts[1]<<"\t\t"<<messageParts[2]; 
-   Notes.push_back(temp_note); 
-   
-   cout<<messageParts[3]<<"\t\t"<<messageParts[4];
+	NoteInformation temp_note=NoteInformation(messageParts[3],messageParts[4],white,black);
 
-   calc.Calculate2dCoordinates(calc.lat1,calc.long1,ofToFloat(messageParts[1]),ofToFloat(messageParts[2])); 
-  
- /// \brief .
- }
- 
-  cout<<"Xposition\t"<<calc.x_temp_poi;  cout<<"\n\nYposition\t"<<calc.y_temp_poi;  
+	if(messageParts[0].compare("note")==0)
+	{
+		cout<<"\n\n"<<messageParts[1]<<"\t\t"<<messageParts[2]; 
+		Notes.push_back(temp_note); 
 
-  POIs temp_POI=POIs(calc.x_temp_poi,calc.y_temp_poi);
-  scenes.push_back(temp_POI);
+		cout<<messageParts[3]<<"\t\t"<<messageParts[4];
+
+		calc.Calculate2dCoordinates(calc.lat1,calc.long1,ofToFloat(messageParts[1]),ofToFloat(messageParts[2])); 
+
+		/// \brief .
+	}
+
+	cout<<"Xposition\t"<<calc.x_temp_poi;  cout<<"\n\nYposition\t"<<calc.y_temp_poi;  
+
+	POIs temp_POI=POIs(calc.x_temp_poi,calc.y_temp_poi);
+	scenes.push_back(temp_POI);
 
 }
 
 ofColor testApp::Returncolor(string colorstring)
 {
-	 
-  if(colorstring.compare("white")==0)
-  return white;
-  
-  if(colorstring.compare("green")==0)
-  return green;
-  
-  if(colorstring.compare("red")==0)
-  return red;
-  
-  if(colorstring.compare("black")==0)
-  return black;
-  
-  if(colorstring.compare("yellow")==0)
-  return yellow;
-  
-  if(colorstring.compare("blue")==0)
-  return blue;
-  
-  else return black;
-  
+
+	if(colorstring.compare("white")==0)
+		return white;
+
+	if(colorstring.compare("green")==0)
+		return green;
+
+	if(colorstring.compare("red")==0)
+		return red;
+
+	if(colorstring.compare("black")==0)
+		return black;
+
+	if(colorstring.compare("yellow")==0)
+		return yellow;
+
+	if(colorstring.compare("blue")==0)
+		return blue;
+
+	else return black;
+
 }
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,
-	/// ofColor bgColor,int i,string note_heading,string note_text)
-	///
-	/// \brief Draw augmented plane.
-	///
-	/// \author Rahul
-	/// \date 9/21/2012
-	///
-	/// \param xPosition    The position.
-	/// \param yPosition    The position.
-	/// \param textColor    The text color.
-	/// \param bgColor	    The background color.
-	/// \param i		    Zero-based index of the.
-	/// \param note_heading The note heading.
-	/// \param note_text    The note text.
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/// \fn drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,
+/// ofColor bgColor,int i,string note_heading,string note_text)
+///
+/// \brief Draw augmented plane.
+///
+/// \author Rahul
+/// \date 9/21/2012
+///
+/// \param xPosition    The position.
+/// \param yPosition    The position.
+/// \param textColor    The text color.
+/// \param bgColor	    The background color.
+/// \param i		    Zero-based index of the.
+/// \param note_heading The note heading.
+/// \param note_text    The note text.
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,ofColor bgColor,int i,string note_heading,string note_text)
-	{
+void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textColor,ofColor bgColor,int i,string note_heading,string note_text)
+{
 
-		
+	ofTranslate(xPosition,yPosition,0); 
 
-		//  rotateZ( P(bearing)   );
+	ofRotateZ(180-calc.convertRadianstoDegrees(PI/2+acos((xPosition/sqrt(xPosition*xPosition+yPosition*yPosition))) ) ); // Moving the plane so that it faces the user ...
 
-		//  println("Bearing"+bearing);
+	//println(PI/2-acos((xPosition/sqrt(xPosition*xPosition+yPosition*yPosition)) ) );
+	ofPushMatrix();
 
-		//  Notes.lastElement().
+	ofRotateZ(PI/2);
 
-		ofTranslate(xPosition,yPosition,0); 
+	ofSetColor(bgColor);
 
-		ofRotateZ(180-calc.convertRadianstoDegrees(PI/2+acos((xPosition/sqrt(xPosition*xPosition+yPosition*yPosition))) ) ); // Moving the plane so that it faces the user ...
+	ofBeginShape();
 
-		//println(PI/2-acos((xPosition/sqrt(xPosition*xPosition+yPosition*yPosition)) ) );
-		ofPushMatrix();
-
-		ofRotateZ(PI/2);
-
-		ofSetColor(bgColor);
-
-		ofBeginShape();
-
-		ofVertex(0,-50,0);
-		ofVertex(0,50,0);
-		ofVertex(0,50,50);
-		ofVertex(0,-50,50);
+	ofVertex(0,-50,0);
+	ofVertex(0,50,0);
+	ofVertex(0,50,50);
+	ofVertex(0,-50,50);
 
 
-		ofEndShape();
+	ofEndShape();
 
-		ofSetColor(textColor);
+	ofSetColor(textColor);
 
-		ofRotateX(-90);
-		ofRotateY(+90);
+	ofRotateX(-90);
+	ofRotateY(+90);
 
-		ofTranslate(0,0,-1);
-		ofDrawBitmapString(note_heading,-50,-40);
-		ofDrawBitmapString(note_text,-50,-30);
+	ofTranslate(0,0,-1);
+	ofDrawBitmapString(note_heading,-50,-40);
+	ofDrawBitmapString(note_text,-50,-30);
 
-		ofPushMatrix();
-		
-		ofPopMatrix();
+	ofPushMatrix();
 
-		//ofSetColor(textColor);
+	ofPopMatrix();
 
-		//ofPushMatrix();
-		//ofRotateX(-PI/2); 
-
-  //		Serif_15.drawString(note_heading,-50,-40); // May require Changes ..
-		//Serif_10.drawString(note_text,-50,-30);
-
-		ofPopMatrix();
+	ofPopMatrix();
 
 
-	}
+}
 
 
 void testApp::drawTouches(string udpMessage)
 {
-  vector<string> components= ofSplitString(udpMessage,",");
+	vector<string> components= ofSplitString(udpMessage,",");
 
 	ofSetColor(255,0,0,90);
 
+	/* If its one finger */
+	 
 	if(ofToFloat(components[0])==1)
+	{
+		last_single_touch[1]=ofToFloat(components[1]);
+		last_single_touch[2]=ofToFloat(components[2]);
+	 ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/1280, windowHeight*ofToFloat(components[2])/720,  0.965f ) );  
+	cout<<sw<<endl;
+	}
+
+	/* If its 2 fingers */ 
+
+	else if(ofToFloat(components[0])==2)
+	{
+		last_single_touch[1]=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+		last_single_touch[2]=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
+	}
+
+	ofFill();
+
+	ofEnableAlphaBlending();
+
+	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
+	{ 		 
+		ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
+		
+		if(ofToInt(components[0])==1)
+		calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
+		else if (ofToInt(components[0])==2) 
 		{
-			last_single_touch[1]=ofToFloat(components[1]);
-			last_single_touch[2]=ofToFloat(components[2]);
-	    }
+			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
 
-  ofFill();
+			calc.check_touch_intersection(ofVec2f(windowWidth*midPoint_x/1280-windowWidth/2,windowHeight*midPoint_y/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
+		}
 
-  ofEnableAlphaBlending();
-  for(int i=1;i<=2*ofToInt(components[0]);i+=2)
-  { 		 
-	ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
-	calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
-  }
+	}
 
-  //cout<<"           "<<components[components.size()-2]<<endl;
+	//cout<<"           "<<components[components.size()-2]<<endl;
 
-  if(ofToInt(components[0])==1&&components[components.size()-2]=="Sticky Finger"&&calc.touch_selected!=0)
-	  {
-	      something_touch_selected=1;
-		  cout<<"\nThe 3D Model is"<<calc.touch_selected;
-      }
+	if(ofToInt(components[0])==1&&components[components.size()-2]=="S"&&calc.touch_selected!=0)
+	{
+		something_touch_selected=1;
+		cout<<"\nThe 3D Model is"<<calc.touch_selected;
+	}
 
-  cout<<"g-Fyaw"<<g_fYaw<<endl;
-  
-  components.clear();
-  ofDisableAlphaBlending();
+	if(ofToInt(components[0])==2&&components[components.size()-2]=="HC"&&calc.touch_selected!=0)
+	{
+		something_touch_selected=2;
+		cout<<"\n head Crusher";
+	}
 
-  ofSetColor(255);
-	
-  
+	//cout<<"g-Fyaw"<<g_fYaw<<endl;
+
+	components.clear();
+	ofDisableAlphaBlending();
+
+	ofSetColor(255);
+
+
 }
 
 void testApp::translate_3D_Model(string message)
 {
 	result=ofSplitString(ofToString(message),",");
 
+	if(ofToInt(result[0])==1)
+	{
+	ofFill();
+	ofSetColor(0,255,0,90);
+
+	ofEnableAlphaBlending();
+	ofCircle(windowWidth*ofToFloat(result[1])/1280,windowHeight*ofToFloat(result[2])/720,0,40);
+	
+	ofDisableAlphaBlending();
+	}
+
+	else if(ofToInt(result[0])==2)
+	{
+	ofFill();
+	ofSetColor(0,255,0,90);
+
+	ofEnableAlphaBlending();
+	ofCircle(windowWidth*ofToFloat(result[1])/1280,windowHeight*ofToFloat(result[2])/720,0,40);
+	ofCircle(windowWidth*ofToFloat(result[3])/1280,windowHeight*ofToFloat(result[4])/720,0,40);
+	
+	ofDisableAlphaBlending();
+	}
+
 	if(ofToInt(result[0])==1&&something_touch_selected==1)
 	{
+	
+	//find which model is selected	;
+	if(!beginSelection)
+	{	
+		last_single_touch[0]=(ofToFloat(result[1]));
+		last_single_touch[1]=(ofToFloat(result[2]));
+
+		beginSelection=!beginSelection;
+	}
+		
+	if(calc.touch_selected==1)
+	{
+		//cout<<"BBay is selected";
+		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	
+
+		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+		//cout<<sw<<endl;
+
+		//Bbaymodel_origin[0]=sw.x;
+		//Bbaymodel_origin[1]=sw.y;
+
+		////Bbaymodel_origin[2]=sw.z;
+
+		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+
+		//Bbaymodel_translate[2]=sw.z;
+
+		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==2)
+	{
+		cout<<"Destination is selected";
+		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	
+		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==3)
+	{
+		//cout<<"Destination is selected";
+		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	
+//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==4)
+	{
+		//cout<<"Receiver is selected";
+		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	
+	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	}
+	
+	}
+
+	else  if(ofToInt(result[0])==2&&something_touch_selected==2)
+	{
+
 		//find which model is selected	;
-		cout<<"somethin is selected";
-		Bbaymodel_origin[0]=ofToInt(result[1])-last_single_touch[1];
+	if(!beginSelection)
+	{	
+		
+		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+
+		beginSelection=!beginSelection;
+	}
+		
+	if(calc.touch_selected==1)
+	{
+		//cout<<"BBay is selected";
+		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
+	
+		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Bbaymodel_origin[0]=sw.x;
+		Bbaymodel_origin[1]=sw.y;
+		Bbaymodel_origin[2]=10;
+
+		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+
+		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==2)
+	{
+		cout<<"Destination is selected";
+		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+		
+
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Destination_origin[0]=sw.x;
+		Destination_origin[1]=sw.y;
+		Destination_origin[2]=1;
+
+		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
+
+
+		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==3)
+	{
+		//cout<<"Destination is selected";
+		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	
+		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+		
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Friend_model_origin[0]=sw.x;
+		Friend_model_origin[1]=sw.y;
+		Friend_model_origin[2]=1;
+
+		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+
+
+//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==4)
+	{
+		//cout<<"Receiver is selected";
+		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	*/
+	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	*/
+
+		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+		
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Reciever_model_origin[0]=sw.x;
+		Reciever_model_origin[1]=sw.y;
+		Reciever_model_origin[2]=1;
+
+		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+
+
+
+	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	}
+
 
 	}
 
@@ -762,13 +910,100 @@ void testApp::set_model_initial_position()
 {
 	Bbaymodel_origin[0]=116.747;
 	Bbaymodel_origin[1]=-163.28;
+	Bbaymodel_origin[2]=1;
+
 
 	Destination_origin[0]=-250;
 	Destination_origin[1]=-300;
+	Destination_origin[2]=1;
 
+	///< //////////////.
 	Friend_model_origin[0]=280.72705;
 	Friend_model_origin[1]=244.184;
+	Friend_model_origin[2]=1;
 
 	Reciever_model_origin[0]=-100.23;
 	Reciever_model_origin[1]=129.49;
+	Reciever_model_origin[2]=1;
+
+	Bbaymodel_translate[0]=Bbaymodel_translate[1]=Bbaymodel_translate[2]=0;
+	Destination_translate[0]=Destination_translate[1]=Destination_translate[2]=0;
+}
+
+void testApp::setupFonts()
+{
+	Serif_10.loadFont("Serif.ttf",10);
+	Serif_15.loadFont("Serif.ttf",15);
+
+	//load our type
+	mono.loadFont("type/mono.ttf", 9);
+	monosm.loadFont("type/mono.ttf", 8);
+
+}
+void testApp::setupUDPConnections()
+{
+
+	udpConnection.Create();
+	udpConnection.Bind(12001);
+	udpConnection.SetNonBlocking(true);
+
+	udpSendConnection.Create();
+	udpSendConnection.Connect("192.168.43.1",13001);
+	udpSendConnection.SetNonBlocking(true);
+
+	udpReceiveConnection.Create();
+	udpReceiveConnection.Bind(12003);
+	udpReceiveConnection.SetNonBlocking(true);
+}
+
+void testApp::setupCrosshair()
+{
+	crosshair.loadImage("crosshair.png");
+	crosshair.saveImage("asdasdsa.png");
+	crosshair.resize(crosshair.width*1.5,crosshair.height*1.5);
+}
+
+void testApp::updateModelPositions()
+{
+	if(Bbaymodel_translate[0]||Bbaymodel_translate[1])
+	{
+			Bbaymodel_origin[0]+=Bbaymodel_translate[0];
+	        Bbaymodel_translate[0]=0;
+			Bbaymodel_origin[1]+=Bbaymodel_translate[1];
+	        Bbaymodel_translate[1]=0;
+	
+			calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2]);
+	}
+	
+	if(Destination_translate[0]||Destination_translate[1])
+	{
+			Destination_origin[0]+=Destination_translate[0];
+			Destination_translate[0]=0;	
+			Destination_origin[1]+=Destination_translate[1];
+			Destination_translate[1]=0;
+
+			calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],Destination_origin[2]);
+	}
+	
+	if(Friend_model_translate[0]||Friend_model_translate[1])
+	{
+			Friend_model_origin[0]+=Friend_model_translate[0];
+			Friend_model_translate[0]=0;
+
+			Friend_model_origin[1]+=Friend_model_translate[1];
+			Friend_model_translate[1]=0;
+
+			calc.updateFriendModelOrigin(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2]);
+	}
+	
+	if(Reciever_model_translate[0]||Reciever_model_translate[1])
+	{
+			Reciever_model_origin[0]+=Reciever_model_translate[0];
+			Reciever_model_translate[0]=0;
+
+			Reciever_model_origin[1]+=Reciever_model_translate[1];
+			Reciever_model_translate[1]=0;
+
+			calc.updateReceiverModelOrigin(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2]);
+	}
 }

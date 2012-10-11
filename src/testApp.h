@@ -186,9 +186,17 @@ public:
 
 	void translate_3D_Model(string);
 
-	float Bbaymodel_origin[2],Destination_origin[2],Friend_model_origin[2],Reciever_model_origin[2];
+	float Bbaymodel_origin[3],Destination_origin[3],Friend_model_origin[3],Reciever_model_origin[3];
+	float Bbaymodel_translate[3],Destination_translate[3],Friend_model_translate[3],Reciever_model_translate[3];
+	
 
 	void set_model_initial_position();
+	void setupFonts();
+	void setupUDPConnections();
+	void setupCrosshair();
+	void updateModelPositions();
+
+	bool beginSelection;
 };
 
 #endif
