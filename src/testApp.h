@@ -171,7 +171,7 @@ public:
 
 	int windowWidth,windowHeight;
 
-	int something_touch_selected;
+	int gestureType;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \fn void testApp::translate_3D_Model(string);
@@ -197,6 +197,16 @@ public:
 	void updateModelPositions();
 
 	bool beginSelection;
+
+	void drawCrosshair();
+	string Receive_Message();
+	void drawTouchImpressions(vector <string>message);
+    void translateModel(vector <string>);
+	void storeFingerPosition(vector<string>);
+	void Check_if_Finger_Intersects_3DModel(vector <string>);
+
+	float scalexPosition,scaleyPosition;
+
 };
 
 #endif

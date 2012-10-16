@@ -125,5 +125,8 @@
     <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h">
       <Filter>src\Addons\Assimp</Filter>
     </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

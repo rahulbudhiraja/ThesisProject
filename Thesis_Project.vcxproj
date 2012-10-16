@@ -121,6 +121,7 @@
     <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h" />
     <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h" />
     <ClInclude Include="..\..\..\addons\ofxThread\src\ofxThread.h" />
+    <ClInclude Include="Network.h" />
     <ClInclude Include="src\Calculations.h" />
     <ClInclude Include="src\GUIStuff.h" />
     <ClInclude Include="src\NoteInformation.h" />

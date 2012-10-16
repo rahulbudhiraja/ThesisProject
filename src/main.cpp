@@ -2,7 +2,7 @@
 #include "testApp.h"
 #include "ofAppGlutWindow.h"
 
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+//#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 
 
 //========================================================================

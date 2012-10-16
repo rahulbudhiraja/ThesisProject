@@ -136,7 +136,7 @@ float midPoint_x=0,midPoint_y=0;
 
 void testApp::setup()
 {
-	something_touch_selected=0;
+	gestureType=0;
 
 	setupTracker();
 	setupModels();
@@ -150,7 +150,7 @@ void testApp::setup()
 	glEnable (GL_DEPTH_TEST);
 	glShadeModel (GL_SMOOTH);
 
-
+	
 	glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable (GL_COLOR_MATERIAL);
 
@@ -184,7 +184,7 @@ void testApp::draw()
 	{
 		if(dirn.compare("down")==0)
 		{
-			int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
+			int sent = udpSendConnection.Send("Change",6);//// Send a Change message and change to dirn.compare==up;
 			dirn="up";
 		}
 
@@ -215,13 +215,11 @@ void testApp::draw()
 
 		cam.end();
 
-		char udpMessage[100000];
-		udpReceiveConnection.Receive(udpMessage,100000);
-		string message=udpMessage;
 
+		string message=Receive_Message();
 		//cout<<ofGetSystemTime()<<endl;
 
-		if(something_touch_selected!=0)
+		if(gestureType!=0)
 		{
 			    translate_3D_Model(message);
 				//updateModelPositions();
@@ -232,6 +230,7 @@ void testApp::draw()
 		else {	
 		
 	        beginSelection=false;
+
 			updateModelPositions();
 
 			UDPReceive();
@@ -242,7 +241,6 @@ void testApp::draw()
 
 			if(message.length()>0)
 			{
-				//cout<<message<<"\n\n";
 				drawTouches(message);
 			}
 
@@ -259,10 +257,7 @@ void testApp::draw()
 	}
 
 
-	ofEnableAlphaBlending();
-	ofSetColor(255);
-	crosshair.draw(ofGetWidth()/2-crosshair.width/2,ofGetHeight()/2-crosshair.height/2 );
-	ofDisableAlphaBlending();
+	drawCrosshair();
 }
 
 //--------------------------------------------------------------
@@ -631,30 +626,15 @@ void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textCol
 void testApp::drawTouches(string udpMessage)
 {
 	vector<string> components= ofSplitString(udpMessage,",");
-
+	
 	ofSetColor(255,0,0,90);
 
-	/* If its one finger */
-	 
-	if(ofToFloat(components[0])==1)
-	{
-		last_single_touch[1]=ofToFloat(components[1]);
-		last_single_touch[2]=ofToFloat(components[2]);
-	 ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/1280, windowHeight*ofToFloat(components[2])/720,  0.965f ) );  
-	cout<<sw<<endl;
-	}
-
-	/* If its 2 fingers */ 
-
-	else if(ofToFloat(components[0])==2)
-	{
-		last_single_touch[1]=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
-		last_single_touch[2]=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
-	}
-
+	storeFingerPosition(components);
 	ofFill();
 
 	ofEnableAlphaBlending();
+
+	Check_if_Finger_Intersects_3DModel(components);
 
 	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
 	{ 		 
@@ -676,16 +656,25 @@ void testApp::drawTouches(string udpMessage)
 
 	if(ofToInt(components[0])==1&&components[components.size()-2]=="S"&&calc.touch_selected!=0)
 	{
-		something_touch_selected=1;
+		gestureType=1;
 		cout<<"\nThe 3D Model is"<<calc.touch_selected;
 	}
 
 	if(ofToInt(components[0])==2&&components[components.size()-2]=="HC"&&calc.touch_selected!=0)
 	{
-		something_touch_selected=2;
-		cout<<"\n head Crusher";
+		gestureType=2;
+		cout<<"\n Head Crusher";
 	}
 
+	if(ofToInt(components[0])==2&&components[components.size()-2]=="SF"&&calc.touch_selected!=0)
+	{
+		gestureType=3;
+		cout<<"\n Scaling Gesture";
+		//scalexPosition=
+
+	}
+
+	
 	//cout<<"g-Fyaw"<<g_fYaw<<endl;
 
 	components.clear();
@@ -700,210 +689,191 @@ void testApp::translate_3D_Model(string message)
 {
 	result=ofSplitString(ofToString(message),",");
 
-	if(ofToInt(result[0])==1)
-	{
-	ofFill();
-	ofSetColor(0,255,0,90);
-
-	ofEnableAlphaBlending();
-	ofCircle(windowWidth*ofToFloat(result[1])/1280,windowHeight*ofToFloat(result[2])/720,0,40);
-	
-	ofDisableAlphaBlending();
-	}
-
-	else if(ofToInt(result[0])==2)
-	{
-	ofFill();
-	ofSetColor(0,255,0,90);
-
-	ofEnableAlphaBlending();
-	ofCircle(windowWidth*ofToFloat(result[1])/1280,windowHeight*ofToFloat(result[2])/720,0,40);
-	ofCircle(windowWidth*ofToFloat(result[3])/1280,windowHeight*ofToFloat(result[4])/720,0,40);
-	
-	ofDisableAlphaBlending();
-	}
-
-	if(ofToInt(result[0])==1&&something_touch_selected==1)
-	{
-	
-	//find which model is selected	;
-	if(!beginSelection)
-	{	
-		last_single_touch[0]=(ofToFloat(result[1]));
-		last_single_touch[1]=(ofToFloat(result[2]));
-
-		beginSelection=!beginSelection;
-	}
-		
-	if(calc.touch_selected==1)
-	{
-		//cout<<"BBay is selected";
-		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	drawTouchImpressions(result);
+	translateModel(result);
 	
 
-		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
-		//cout<<sw<<endl;
-
-		//Bbaymodel_origin[0]=sw.x;
-		//Bbaymodel_origin[1]=sw.y;
-
-		////Bbaymodel_origin[2]=sw.z;
-
-		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-
-		//Bbaymodel_translate[2]=sw.z;
-
-		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==2)
-	{
-		cout<<"Destination is selected";
-		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	
-		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==3)
-	{
-		//cout<<"Destination is selected";
-		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	
-//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==4)
-	{
-		//cout<<"Receiver is selected";
-		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	
-	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	}
-	
-	}
-
-	else  if(ofToInt(result[0])==2&&something_touch_selected==2)
-	{
-
-		//find which model is selected	;
-	if(!beginSelection)
-	{	
-		
-		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-
-		beginSelection=!beginSelection;
-	}
-		
-	if(calc.touch_selected==1)
-	{
-		//cout<<"BBay is selected";
-		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
-	
-		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
-		cout<<sw<<endl;
-
-		Bbaymodel_origin[0]=sw.x;
-		Bbaymodel_origin[1]=sw.y;
-		Bbaymodel_origin[2]=10;
-
-		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-
-		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==2)
-	{
-		cout<<"Destination is selected";
-		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-		
-
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
-		cout<<sw<<endl;
-
-		Destination_origin[0]=sw.x;
-		Destination_origin[1]=sw.y;
-		Destination_origin[2]=1;
-
-		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
-
-
-		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==3)
-	{
-		//cout<<"Destination is selected";
-		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	
-		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-		
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
-		cout<<sw<<endl;
-
-		Friend_model_origin[0]=sw.x;
-		Friend_model_origin[1]=sw.y;
-		Friend_model_origin[2]=1;
-
-		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
-
-
-//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	}
-
-	else if(calc.touch_selected==4)
-	{
-		//cout<<"Receiver is selected";
-		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	*/
-	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	*/
-
-		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-		
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
-		cout<<sw<<endl;
-
-		Reciever_model_origin[0]=sw.x;
-		Reciever_model_origin[1]=sw.y;
-		Reciever_model_origin[2]=1;
-
-		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
-
-
-
-	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	}
-
-
-	}
-
-	else something_touch_selected=0;
-
+//	if(ofToInt(result[0])==1&&gestureType==1)
+//	{
+//	
+//	//find which model is selected	;
+//	if(!beginSelection)
+//	{	
+//		last_single_touch[0]=(ofToFloat(result[1]));
+//		last_single_touch[1]=(ofToFloat(result[2]));
+//
+//		beginSelection=!beginSelection;
+//	}
+//		
+//	if(calc.touch_selected==1)
+//	{
+//		//cout<<"BBay is selected";
+//		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	
+//
+//		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+//		//cout<<sw<<endl;
+//
+//		//Bbaymodel_origin[0]=sw.x;
+//		//Bbaymodel_origin[1]=sw.y;
+//
+//		////Bbaymodel_origin[2]=sw.z;
+//
+//		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+//
+//		//Bbaymodel_translate[2]=sw.z;
+//
+//		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+//		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==2)
+//	{
+//		cout<<"Destination is selected";
+//		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	
+//		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+//		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==3)
+//	{
+//		//cout<<"Destination is selected";
+//		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	
+////		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+//	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==4)
+//	{
+//		//cout<<"Receiver is selected";
+//		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	
+//	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+//		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+//	}
+//	
+//	}
+//
+//	else  if(ofToInt(result[0])==2&&gestureType==2)
+//	{
+//
+//		//find which model is selected	;
+//	if(!beginSelection)
+//	{	
+//		
+//		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//
+//		beginSelection=!beginSelection;
+//	}
+//		
+//	if(calc.touch_selected==1)
+//	{
+//		//cout<<"BBay is selected";
+//		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
+//	
+//		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//		
+//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
+//		cout<<sw<<endl;
+//
+//		Bbaymodel_origin[0]=sw.x;
+//		Bbaymodel_origin[1]=sw.y;
+//		Bbaymodel_origin[2]=10;
+//
+//		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+//
+//		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+//		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==2)
+//	{
+//		cout<<"Destination is selected";
+//		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//		
+//
+//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
+//		cout<<sw<<endl;
+//
+//		Destination_origin[0]=sw.x;
+//		Destination_origin[1]=sw.y;
+//		Destination_origin[2]=1;
+//
+//		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
+//
+//
+//		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+//		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==3)
+//	{
+//		//cout<<"Destination is selected";
+//		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	
+//		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//		
+//		
+//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
+//		cout<<sw<<endl;
+//
+//		Friend_model_origin[0]=sw.x;
+//		Friend_model_origin[1]=sw.y;
+//		Friend_model_origin[2]=1;
+//
+//		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+//
+//
+////		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+//	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+//	}
+//
+//	else if(calc.touch_selected==4)
+//	{
+//		//cout<<"Receiver is selected";
+//		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+//	*/
+//	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//	*/
+//
+//		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+//		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+//		
+//		
+//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
+//		cout<<sw<<endl;
+//
+//		Reciever_model_origin[0]=sw.x;
+//		Reciever_model_origin[1]=sw.y;
+//		Reciever_model_origin[2]=1;
+//
+//		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+//
+//
+//
+//	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+//		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+//	}
+//
+//
+//	}
+//
+//	else gestureType=0;
+//
 }
 
 void testApp::set_model_initial_position()
@@ -1005,5 +975,275 @@ void testApp::updateModelPositions()
 			Reciever_model_translate[1]=0;
 
 			calc.updateReceiverModelOrigin(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2]);
+	}
+}
+
+void testApp::drawCrosshair()
+{
+	ofEnableAlphaBlending();
+	ofSetColor(255);
+	crosshair.draw(ofGetWidth()/2-crosshair.width/2,ofGetHeight()/2-crosshair.height/2 );
+	ofDisableAlphaBlending();
+}
+
+string testApp::Receive_Message()
+{		
+		char udpMessage[100000];
+		udpReceiveConnection.Receive(udpMessage,100000);
+		return ofToString(udpMessage);
+}
+
+void testApp::drawTouchImpressions(vector <string>message)
+{
+	
+	if(ofToInt(message[0])==1)
+	{
+		ofFill();
+		ofSetColor(0,255,0,90);
+
+		ofEnableAlphaBlending();
+		ofCircle(ofGetWidth()*ofToFloat(message[1])/1280,ofGetHeight()*ofToFloat(message[2])/720,0,40);
+	
+		ofDisableAlphaBlending();
+	}
+
+	else if(ofToInt(message[0])==2)
+	{
+		ofFill();
+		ofSetColor(0,255,0,90);
+
+		ofEnableAlphaBlending();
+		ofCircle(ofGetWidth()*ofToFloat(message[1])/1280,ofGetHeight()*ofToFloat(message[2])/720,0,40);
+		ofCircle(ofGetWidth()*ofToFloat(message[3])/1280,ofGetHeight()*ofToFloat(message[4])/720,0,40);
+	
+		ofDisableAlphaBlending();
+	}
+}
+
+
+void testApp::translateModel(vector <string>message)
+{
+	if(ofToInt(message[0])==1&&gestureType==1)
+	{
+	
+	//find which model is selected	;
+	if(!beginSelection)
+	{	
+		last_single_touch[0]=(ofToFloat(message[1]));
+		last_single_touch[1]=(ofToFloat(message[2]));
+
+		beginSelection=!beginSelection;
+	}
+		
+	if(calc.touch_selected==1)
+	{
+		//cout<<"BBay is selected";
+		Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	
+
+		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+		//cout<<sw<<endl;
+
+		//Bbaymodel_origin[0]=sw.x;
+		//Bbaymodel_origin[1]=sw.y;
+
+		////Bbaymodel_origin[2]=sw.z;
+
+		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+
+		//Bbaymodel_translate[2]=sw.z;
+
+		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==2)
+	{
+		cout<<"Destination is selected";
+		Destination_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Destination_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	
+		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==3)
+	{
+		//cout<<"Destination is selected";
+		Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	
+//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==4)
+	{
+		//cout<<"Receiver is selected";
+		Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	
+	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	}
+	
+	}
+
+	else  if(ofToInt(message[0])==2&&gestureType==2)
+	{
+
+		//find which model is selected	;
+	if(!beginSelection)
+	{	
+		
+		last_single_touch[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		last_single_touch[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+
+		beginSelection=!beginSelection;
+	}
+		
+	if(calc.touch_selected==1)
+	{
+		//cout<<"BBay is selected";
+		/*Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);*/
+	
+		Bbaymodel_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		Bbaymodel_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Bbaymodel_origin[0]=sw.x;
+		Bbaymodel_origin[1]=sw.y;
+		Bbaymodel_origin[2]=10;
+
+		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+
+		//cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+		//cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==2)
+	{
+		cout<<"Destination is selected";
+		Destination_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		Destination_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+		
+
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Destination_origin[0]=sw.x;
+		Destination_origin[1]=sw.y;
+		Destination_origin[2]=1;
+
+		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
+
+
+		//cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+		//cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==3)
+	{
+		//cout<<"Destination is selected";
+		//Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		//Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	
+		Friend_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		Friend_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+		
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Friend_model_origin[0]=sw.x;
+		Friend_model_origin[1]=sw.y;
+		Friend_model_origin[2]=1;
+
+		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+
+
+//		cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	}
+
+	else if(calc.touch_selected==4)
+	{
+		//cout<<"Receiver is selected";
+		/*Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+		Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+	*/
+	/*	Reciever_model_translate[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		Reciever_model_translate[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+	*/
+
+		Reciever_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+		Reciever_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+		
+		
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
+		cout<<sw<<endl;
+
+		Reciever_model_origin[0]=sw.x;
+		Reciever_model_origin[1]=sw.y;
+		Reciever_model_origin[2]=1;
+
+		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+
+
+
+	/*	cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+		cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	}
+
+
+	}
+
+	else gestureType=0;
+
+}
+
+void testApp::storeFingerPosition(vector<string> components)
+{
+	/* If its one finger */
+	 
+	if(ofToFloat(components[0])==1)
+	{
+		last_single_touch[1]=ofToFloat(components[1]);
+		last_single_touch[2]=ofToFloat(components[2]);
+     	ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/1280, windowHeight*ofToFloat(components[2])/720,  0.965f ) );  
+		cout<<sw<<endl;
+	}
+
+	/* If its 2 fingers */ 
+
+	else if(ofToFloat(components[0])==2)
+	{
+		last_single_touch[1]=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+		last_single_touch[2]=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
+	}
+
+}
+
+
+void testApp::Check_if_Finger_Intersects_3DModel(vector <string>components)
+{
+	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
+	{ 		 
+		ofCircle(ofGetWidth()*ofToFloat(components[i])/1280,ofGetHeight()*ofToFloat(components[i+1])/720,0,20);
+		
+		if(ofToInt(components[0])==1)
+		calc.check_touch_intersection(ofVec2f(ofGetWidth()*ofToFloat(components[i])/1280-ofGetWidth()/2,ofGetHeight()*ofToFloat(components[i+1])/720-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+		else if (ofToInt(components[0])==2) 
+		{
+			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
+
+			calc.check_touch_intersection(ofVec2f(ofGetWidth()*midPoint_x/1280-ofGetWidth()/2,ofGetHeight()*midPoint_y/720-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+		}
+
 	}
 }
