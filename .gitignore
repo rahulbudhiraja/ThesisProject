@@ -27,3 +27,13 @@
 *.ilk
 *.tlog
 *.obj
+bin/Thesis_Project.exe
+bin/Thesis_Project.exp
+bin/Thesis_Project.lib
+obj/Release/main.obj
+obj/Release/testApp.obj
+obj/Release/Thesis_Project.log
+obj/Release/Thesis_Project.write.1.tlog
+*.exe
+*.exe
+*.exe

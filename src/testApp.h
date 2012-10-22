@@ -189,6 +189,14 @@ public:
 	float Bbaymodel_origin[3],Destination_origin[3],Friend_model_origin[3],Reciever_model_origin[3];
 	float Bbaymodel_translate[3],Destination_translate[3],Friend_model_translate[3],Reciever_model_translate[3];
 	
+	float Bbaymodel_rotation,Destination_rotation,Friend_rotation,Receiver_rotation;
+	ofVec3f Bbaymodel_rotAxis,Destination_rotAxis,Friend_rotAxis,Receiver_rotAxis;
+	ofVec3f Bbaymodel_UpdatedSceneMax,Bbaymodel_UpdatedSceneMin,Destination_UpdatedSceneMax,Destination_UpdatedSceneMin,Friend_UpdatedSceneMax,Friend_UpdatedSceneMin,Receiver_UpdatedSceneMax,Receiver_UpdatedSceneMin;
+	
+
+
+	void updateScreenMaxandMin();
+
 
 	void set_model_initial_position();
 	void setupFonts();
@@ -204,8 +212,18 @@ public:
     void translateModel(vector <string>);
 	void storeFingerPosition(vector<string>);
 	void Check_if_Finger_Intersects_3DModel(vector <string>);
+	
+	float scalexPosition,scaleyPosition,scaleFactor;
+	
+	vector <float> convertedTouchPoints;
+	
+	int Check_for_Finger_Intersections();
+	bool intersect_model(ofVec3f ,ofVec3f ,vector <float>);
 
-	float scalexPosition,scaleyPosition;
+	void convertPhonetoScreenCoordinates(string rawTouchPoints);
+
+
+	void temp_calculateMaxandMin();
 
 };
 
