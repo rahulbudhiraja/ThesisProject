@@ -141,7 +141,8 @@ long time_begin_crossDimSelection=0;
 
 void testApp::setup()
 {
-	gestureType=0;
+	last_gesture_selected=gestureType=0;
+
 
 	setupTracker();
 	setupModels();
@@ -155,7 +156,7 @@ void testApp::setup()
 	glEnable (GL_DEPTH_TEST);
 	glShadeModel (GL_SMOOTH);
 
-	
+
 	glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
 	glEnable (GL_COLOR_MATERIAL);
 
@@ -167,7 +168,11 @@ void testApp::setup()
 	UpdateTracking();
 	initialyaw=g_fYaw;
 	last_time_select=0;
+	crosshair_selected=0;
 
+	loadModelsfromXML();
+
+	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720;
 }
 
 //--------------------------------------------------------------
@@ -204,6 +209,7 @@ void testApp::draw()
 		drawAxes();
 		drawPlane();
 		drawModels();
+		//drawModelsXML();
 
 		ofSetColor(255, 255, 255);
 		ofFill();
@@ -222,81 +228,68 @@ void testApp::draw()
 
 
 		string message=Receive_Message();
-		
+
 
 		if(message.length()>0)
-		////cout<<"\n\n UDP received Message"<<message;
-		
+			;//cout<<"\n\n UDP received Message"<<message;
+
 		if(message.compare("Left Swipe")==0&&gestureType==4&&(ofGetSystemTime()-time_begin_crossDimSelection)<2000)
-			{
-				//cout<<"Left Swipe";
-				string sendMessage="sAct,"+ofToString(crossDimObjSelected);
-				//cout<<sendMessage<<"\n\n";
-				int sent = udpSendConnection.Send(sendMessage.c_str(),6);
-			}
+		{
+			//cout<<"Left Swipe";
+			string sendMessage="sAct,"+ofToString(crossDimObjSelected);
+			cout<<sendMessage<<"\n\n";
+			int sent = udpSendConnection.Send(sendMessage.c_str(),6);
+		}
 
 		else if(message.length()>0)
 			convertPhonetoScreenCoordinates(message);
-		
-		
+
+
 		////cout<<ofGetSystemTime()<<endl;
 
 
 		//ofEnableAlphaBlending();
-		
-		ofVec3f bbay_screen=(cam.worldToScreen(ofVec3f(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2])));
-		//cout<<"\n\n"<<bbay_screen[0]<<"   "<<bbay_screen[1]<<"    "<<bbay_screen[2];
-		//ofCircle(bbay_screen.x,bbay_screen.y,10);
-
-		bbay_screen=(cam.worldToScreen(ofVec3f(bb_model.getPosition().x+Bbaymodel_origin[0],bb_model.getPosition().y+Bbaymodel_origin[1],bb_model.getPosition().z+Bbaymodel_origin[2])));
-
-		//ofCircle(bbay_screen.x,bbay_screen.y,10);
-
-		bbay_screen=(cam.worldToScreen(ofVec3f(bb_model.getSceneCenter().x,bb_model.getSceneCenter().y+Bbaymodel_origin[1],bb_model.getSceneCenter().z+Bbaymodel_origin[2])));
-
-		//ofCircle(bbay_screen.x,bbay_screen.y,40);
-
-		bbay_screen=(cam.worldToScreen(bb_model.getSceneMax()));
-		
-		//ofCircle(bbay_screen.x,bbay_screen.y,40);
-	
-		bbay_screen=(cam.worldToScreen(bb_model.getSceneMin()));
-		
-		//ofCircle(bbay_screen.x,bbay_screen.y,40);
-
-		cout<<"Position"<<lr_model.getPosition()<<"\n SCene Center\t"<<lr_model.getSceneCenter()<<"\nSCene Max\t"<<lr_model.getSceneMax(true)<<"\nSCene Min\t"<<lr_model.getSceneMin(true)<<"\n\n";
-
 
 
 		//ofDisableAlphaBlending();
-
-		if(gestureType>=1&&gestureType<4)
+		if(gestureType==0&&last_gesture_selected&&convertedTouchPoints[0]==1)
 		{
 
-			    translate_3D_Model(message);
-				//updateModelPositions();
-				////cout<<"With Sticky"<<ofGetSystemTime()<<"\n\n";
+			gestureType=1;
+			last_gesture_selected=!last_gesture_selected;
+		}
+
+
+
+		else if(gestureType>=1&&gestureType<4)
+		{
+
+			translate_3D_Model(message);
+			//updateModelPositions();
+			////cout<<"With Sticky"<<ofGetSystemTime()<<"\n\n";
 		}
 
 		else {	
-			
-	        
+
+
 			beginSelection=false;
 
 			updateModelPositions();
-
 			UDPReceive();
 
-				////cout<<"Without Sticky"<<ofGetSystemTime()<<"\n\n";
+			////cout<<"Without Sticky"<<ofGetSystemTime()<<"\n\n";
 
 			calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),calc.convertDegreestoRadians(g_fPitch),scenes);
 
-			if(message.length()>0)
+
+
+			if(message.length()>0&&message.compare("Left Swipe")!=0)
 			{
 				drawTouches(message);
 			}
 
 			else calc.touch_selected=0;
+
 
 		}
 
@@ -309,24 +302,30 @@ void testApp::draw()
 	}
 
 
+	/*if(Check_for_crosshair_model_intersection())
+	ofDrawBitmapString("Selected",ofGetWidth()-430,430);
+	else 
+	*/
 	if(convertedTouchPoints.size()>0)
 	{		ofDrawBitmapString(ofToString(Check_for_Finger_Intersections()),ofGetWidth()-430,30);
-			convertedTouchPoints.clear();
+	convertedTouchPoints.clear();
 	}
 
+
 	/* cout<<"\n\n\n\n BBay Screen	"<<cam.worldToScreen(ofVec3f(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2])+bb_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2])+bb_model.getSceneMin(true))<<endl;
-	 cout<<" \nLocation Receiver	"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMin(true))<<endl;
+	cout<<" \nLocation Receiver	"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMin(true))<<endl;
 	cout<<" \nFriend Model	"<<cam.worldToScreen(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMin(true))<<endl;;
 	cout<<" \nReceiver Model	"<<cam.worldToScreen(ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMin(true))<<endl;
-*/
-		 cout<<"Width	"<<ofGetWidth()<<"Height	"<<ofGetHeight();
+	*/
+	// cout<<"Width	"<<ofGetWidth()<<"Height	"<<ofGetHeight();
 	drawCrosshair();
+
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 
-		yaw++;
+	yaw++;
 }
 
 // --------------------------------------------------------------. 
@@ -406,22 +405,22 @@ void testApp::UpdateTracking(){
 void testApp::setupModels()
 {
 
-	
+
 	Bbaymodel_rotation=0.0;Destination_rotation=90.0;Friend_rotation=90.0;Receiver_rotation=90.0;
 	Bbaymodel_rotAxis=ofVec3f(0,0,0);Friend_rotAxis=ofVec3f(1,0,0);Destination_rotAxis=ofVec3f(1,0,0);Receiver_rotAxis=ofVec3f(1,0,0);
 
 	//cout<<"\nLoading 3D Models \n";
-	
+
 	// This is the most irritiating thing about Assimp,It enables Automatic Scale Normalization which scales models automatically .This is not good because the mesh and Bounding box dimensions get screwed up.
 	// Setting the default parameters of the models ..
 	bb_model.loadModel("3Dmodels/bb/model.obj",1);  
 	//bb_model.setScale(0.25,0.25,0.25);
 	bb_model.setScaleNomalization(false);
 	bb_model.setScale(10,10,10);
-	
+
 	ofPoint Scene_Center=bb_model.getSceneCenter();
 	bb_model.setPosition(-Scene_Center.x,-Scene_Center.y,-Scene_Center.z);
-    	
+
 
 	cr_model.loadModel("3Dmodels/cr/model.dae", 1);  
 	cr_model.setScaleNomalization(false);
@@ -468,37 +467,37 @@ void testApp::drawModels()
 
 	ofSetColor(255,255,255);
 
-	
+
 	if(calc.touch_selected==1)
-    ofSetColor(0,0,255);
+		ofSetColor(0,0,255);
 
 	ofPushMatrix();
-	
+
 	updateScreenMaxandMin();
-	
+
 	//ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMin(true),2);
 	//ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneCenter()+lr_model.getSceneMin(true),5);
 	//ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getPosition(),5);
 
 	/*ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2]),40);
 	*/
-	
+
 	ofTranslate(Bbaymodel_origin[0]+Bbaymodel_translate[0],Bbaymodel_origin[1]+Bbaymodel_translate[1],Bbaymodel_origin[2]+Bbaymodel_translate[2]);
-	
+
 	ofRotateZ(rotAngle);
-	
+
 	ofMesh test=bb_model.getMesh(0);
 
 	//cout<<"\n\nNormalized Scale"<<bb_model.getNormalizedScale();
 	//cout<<"\n\nScale"<<bb_model.getScale();
-	
+
 	////cout<<test.getNumVertices()<<"\n\n";
 	//for(int i=0;i<test.getNumVertices();i++)
 	//	;////cout<<test.getVertex(i)<<"\n\n";
 
 
 	//test.drawFaces();
-	
+
 	bb_model.drawFaces();
 	//ofSphere(1.25,1.25,5,10);
 	test.drawWireframe();
@@ -506,9 +505,9 @@ void testApp::drawModels()
 	//temp_calculateMaxandMin();
 
 	ofPopMatrix();
-		
+
 	ofPushMatrix();
-	
+
 	ofSetColor(255,255,255);
 
 	ofTranslate(Friend_model_origin[0]+Friend_model_translate[0],Friend_model_origin[1]+Friend_model_translate[1],Friend_model_origin[2]+Friend_model_translate[2]);
@@ -516,11 +515,11 @@ void testApp::drawModels()
 	ofRotateZ(rotAngle);
 
 	if(calc.touch_selected==3)
-    cr_model.drawWireframe();
-	
+		cr_model.drawWireframe();
+
 	else cr_model.drawFaces();
 	//cr_model.drawVertices();
-	
+
 	ofPopMatrix();
 
 	ofPushMatrix();
@@ -532,7 +531,7 @@ void testApp::drawModels()
 
 
 	ofRotateZ(rotAngle);
-	
+
 	//temp_calculateMaxandMin();
 
 
@@ -551,13 +550,13 @@ void testApp::drawModels()
 
 	ofPushMatrix();
 
-	
+
 	ofSetColor(255,255,255);
 
-	
+
 	ofTranslate(Reciever_model_origin[0]+Reciever_model_translate[0],Reciever_model_origin[1]+Reciever_model_translate[1],Reciever_model_origin[2]+Reciever_model_translate[2]);
 
-	
+
 	ofRotateZ(rotAngle);
 
 	if(calc.touch_selected==4)
@@ -566,7 +565,7 @@ void testApp::drawModels()
 	else sr_model.drawFaces();
 
 
-	
+
 
 	ofPopMatrix();
 
@@ -743,7 +742,7 @@ void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textCol
 void testApp::drawTouches(string udpMessage)
 {
 	vector<string> components= ofSplitString(udpMessage,",");
-	
+
 	ofSetColor(255,0,0,90);
 
 	storeFingerPosition(components);
@@ -753,24 +752,26 @@ void testApp::drawTouches(string udpMessage)
 
 	Check_if_Finger_Intersects_3DModel(components);
 
-	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
-	{ 		 
-		ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
-		
-		if(ofToInt(components[0])==1)
-		calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
-		else if (ofToInt(components[0])==2) 
-		{
-			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
-			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
+	Check_for_Finger_Intersections();
 
-			calc.check_touch_intersection(ofVec2f(windowWidth*midPoint_x/1280-windowWidth/2,windowHeight*midPoint_y/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
-			
-			//if(
-		
-		}
+	//for(int i=1;i<=2*ofToInt(components[0]);i+=2)
+	//{ 		 
+	//	ofCircle(windowWidth*ofToFloat(components[i])/1280,windowHeight*ofToFloat(components[i+1])/720,0,20);
+	//	
+	//	if(ofToInt(components[0])==1)
+	//	calc.check_touch_intersection(ofVec2f(windowWidth*ofToFloat(components[i])/1280-windowWidth/2,windowHeight*ofToFloat(components[i+1])/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
+	//	else if (ofToInt(components[0])==2) 
+	//	{
+	//		midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+	//		midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
 
-	}
+	//		calc.check_touch_intersection(ofVec2f(windowWidth*midPoint_x/1280-windowWidth/2,windowHeight*midPoint_y/720-windowHeight/2),windowWidth,windowHeight,calc.convertDegreestoRadians(g_fYaw));
+	//		
+	//		//if(
+	//	
+	//	}
+
+	//}
 
 	////cout<<"           "<<components[components.size()-2]<<endl;
 
@@ -803,21 +804,21 @@ void testApp::drawTouches(string udpMessage)
 		time_begin_crossDimSelection=ofGetSystemTime();
 		crossDimObjSelected=calc.touch_selected;
 
-	/*	if(!beginCrossDimSelection)
+		/*	if(!beginCrossDimSelection)
 		{
-			beginCrossDimSelection=true;crossDimObjSelected=calc.touch_selected;
-			time_begin_crossDimSelection=ofGetSystemTime();
+		beginCrossDimSelection=true;crossDimObjSelected=calc.touch_selected;
+		time_begin_crossDimSelection=ofGetSystemTime();
 		}
 
 		else if(calc.touch_selected==crossDimObjSelected)
 		{
-			if(ofGetSystemTime()-time_begin_crossDimSelection>3000)
-			  keepCrossDimSelected=true;
-			//cout<<"Cross Dimensional \n\n";
+		if(ofGetSystemTime()-time_begin_crossDimSelection>3000)
+		keepCrossDimSelected=true;
+		//cout<<"Cross Dimensional \n\n";
 		}*/
 	}
 
-	
+
 	////cout<<"g-Fyaw"<<g_fYaw<<endl;
 
 	components.clear();
@@ -834,190 +835,190 @@ void testApp::translate_3D_Model(string message)
 	result=ofSplitString(ofToString(message),",");
 
 	drawTouchImpressions(result);
-	//translateModel(result);
-	
+	translateModel(result);
 
-//	if(ofToInt(result[0])==1&&gestureType==1)
-//	{
-//	
-//	//find which model is selected	;
-//	if(!beginSelection)
-//	{	
-//		last_single_touch[0]=(ofToFloat(result[1]));
-//		last_single_touch[1]=(ofToFloat(result[2]));
-//
-//		beginSelection=!beginSelection;
-//	}
-//		
-//	if(calc.touch_selected==1)
-//	{
-//		////cout<<"BBay is selected";
-//		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	
-//
-//		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
-//		////cout<<sw<<endl;
-//
-//		//Bbaymodel_origin[0]=sw.x;
-//		//Bbaymodel_origin[1]=sw.y;
-//
-//		////Bbaymodel_origin[2]=sw.z;
-//
-//		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-//
-//		//Bbaymodel_translate[2]=sw.z;
-//
-//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==2)
-//	{
-//		//cout<<"Destination is selected";
-//		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	
-//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==3)
-//	{
-//		////cout<<"Destination is selected";
-//		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	
-////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==4)
-//	{
-//		////cout<<"Receiver is selected";
-//		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	
-//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-//	}
-//	
-//	}
-//
-//	else  if(ofToInt(result[0])==2&&gestureType==2)
-//	{
-//
-//		//find which model is selected	;
-//	if(!beginSelection)
-//	{	
-//		
-//		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//
-//		beginSelection=!beginSelection;
-//	}
-//		
-//	if(calc.touch_selected==1)
-//	{
-//		////cout<<"BBay is selected";
-//		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
-//	
-//		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//		
-//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
-//		//cout<<sw<<endl;
-//
-//		Bbaymodel_origin[0]=sw.x;
-//		Bbaymodel_origin[1]=sw.y;
-//		Bbaymodel_origin[2]=10;
-//
-//		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-//
-//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==2)
-//	{
-//		//cout<<"Destination is selected";
-//		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//		
-//
-//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
-//		//cout<<sw<<endl;
-//
-//		Destination_origin[0]=sw.x;
-//		Destination_origin[1]=sw.y;
-//		Destination_origin[2]=1;
-//
-//		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
-//
-//
-//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==3)
-//	{
-//		////cout<<"Destination is selected";
-//		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	
-//		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//		
-//		
-//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
-//		//cout<<sw<<endl;
-//
-//		Friend_model_origin[0]=sw.x;
-//		Friend_model_origin[1]=sw.y;
-//		Friend_model_origin[2]=1;
-//
-//		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
-//
-//
-////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-//	}
-//
-//	else if(calc.touch_selected==4)
-//	{
-//		////cout<<"Receiver is selected";
-//		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-//	*/
-//	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//	*/
-//
-//		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-//		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-//		
-//		
-//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
-//		//cout<<sw<<endl;
-//
-//		Reciever_model_origin[0]=sw.x;
-//		Reciever_model_origin[1]=sw.y;
-//		Reciever_model_origin[2]=1;
-//
-//		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
-//
-//
-//
-//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-//	}
-//
-//
-//	}
-//
-//	else gestureType=0;
-//
+
+	//	if(ofToInt(result[0])==1&&gestureType==1)
+	//	{
+	//	
+	//	//find which model is selected	;
+	//	if(!beginSelection)
+	//	{	
+	//		last_single_touch[0]=(ofToFloat(result[1]));
+	//		last_single_touch[1]=(ofToFloat(result[2]));
+	//
+	//		beginSelection=!beginSelection;
+	//	}
+	//		
+	//	if(calc.touch_selected==1)
+	//	{
+	//		////cout<<"BBay is selected";
+	//		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	
+	//
+	//		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+	//		////cout<<sw<<endl;
+	//
+	//		//Bbaymodel_origin[0]=sw.x;
+	//		//Bbaymodel_origin[1]=sw.y;
+	//
+	//		////Bbaymodel_origin[2]=sw.z;
+	//
+	//		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+	//
+	//		//Bbaymodel_translate[2]=sw.z;
+	//
+	//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+	//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==2)
+	//	{
+	//		//cout<<"Destination is selected";
+	//		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	
+	//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+	//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==3)
+	//	{
+	//		////cout<<"Destination is selected";
+	//		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	
+	////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==4)
+	//	{
+	//		////cout<<"Receiver is selected";
+	//		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	
+	//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+	//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	//	}
+	//	
+	//	}
+	//
+	//	else  if(ofToInt(result[0])==2&&gestureType==2)
+	//	{
+	//
+	//		//find which model is selected	;
+	//	if(!beginSelection)
+	//	{	
+	//		
+	//		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//
+	//		beginSelection=!beginSelection;
+	//	}
+	//		
+	//	if(calc.touch_selected==1)
+	//	{
+	//		////cout<<"BBay is selected";
+	//		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
+	//	
+	//		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//		
+	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
+	//		//cout<<sw<<endl;
+	//
+	//		Bbaymodel_origin[0]=sw.x;
+	//		Bbaymodel_origin[1]=sw.y;
+	//		Bbaymodel_origin[2]=10;
+	//
+	//		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+	//
+	//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+	//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==2)
+	//	{
+	//		//cout<<"Destination is selected";
+	//		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//		
+	//
+	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
+	//		//cout<<sw<<endl;
+	//
+	//		Destination_origin[0]=sw.x;
+	//		Destination_origin[1]=sw.y;
+	//		Destination_origin[2]=1;
+	//
+	//		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
+	//
+	//
+	//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+	//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==3)
+	//	{
+	//		////cout<<"Destination is selected";
+	//		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	
+	//		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//		
+	//		
+	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
+	//		//cout<<sw<<endl;
+	//
+	//		Friend_model_origin[0]=sw.x;
+	//		Friend_model_origin[1]=sw.y;
+	//		Friend_model_origin[2]=1;
+	//
+	//		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+	//
+	//
+	////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+	//	}
+	//
+	//	else if(calc.touch_selected==4)
+	//	{
+	//		////cout<<"Receiver is selected";
+	//		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
+	//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
+	//	*/
+	//	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//	*/
+	//
+	//		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
+	//		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
+	//		
+	//		
+	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
+	//		//cout<<sw<<endl;
+	//
+	//		Reciever_model_origin[0]=sw.x;
+	//		Reciever_model_origin[1]=sw.y;
+	//		Reciever_model_origin[2]=1;
+	//
+	//		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+	//
+	//
+	//
+	//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+	//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+	//	}
+	//
+	//
+	//	}
+	//
+	//	else gestureType=0;
+	//
 }
 
 void testApp::set_model_initial_position()
@@ -1081,44 +1082,44 @@ void testApp::updateModelPositions()
 {
 	if(Bbaymodel_translate[0]||Bbaymodel_translate[1])
 	{
-			Bbaymodel_origin[0]+=Bbaymodel_translate[0];
-	        Bbaymodel_translate[0]=0;
-			Bbaymodel_origin[1]+=Bbaymodel_translate[1];
-	        Bbaymodel_translate[1]=0;
-	
-			calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2]);
+		Bbaymodel_origin[0]+=Bbaymodel_translate[0];
+		Bbaymodel_translate[0]=0;
+		Bbaymodel_origin[1]+=Bbaymodel_translate[1];
+		Bbaymodel_translate[1]=0;
+
+		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2]);
 	}
-	
+
 	if(Destination_translate[0]||Destination_translate[1])
 	{
-			Destination_origin[0]+=Destination_translate[0];
-			Destination_translate[0]=0;	
-			Destination_origin[1]+=Destination_translate[1];
-			Destination_translate[1]=0;
+		Destination_origin[0]+=Destination_translate[0];
+		Destination_translate[0]=0;	
+		Destination_origin[1]+=Destination_translate[1];
+		Destination_translate[1]=0;
 
-			calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],Destination_origin[2]);
+		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],Destination_origin[2]);
 	}
-	
+
 	if(Friend_model_translate[0]||Friend_model_translate[1])
 	{
-			Friend_model_origin[0]+=Friend_model_translate[0];
-			Friend_model_translate[0]=0;
+		Friend_model_origin[0]+=Friend_model_translate[0];
+		Friend_model_translate[0]=0;
 
-			Friend_model_origin[1]+=Friend_model_translate[1];
-			Friend_model_translate[1]=0;
+		Friend_model_origin[1]+=Friend_model_translate[1];
+		Friend_model_translate[1]=0;
 
-			calc.updateFriendModelOrigin(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2]);
+		calc.updateFriendModelOrigin(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2]);
 	}
-	
+
 	if(Reciever_model_translate[0]||Reciever_model_translate[1])
 	{
-			Reciever_model_origin[0]+=Reciever_model_translate[0];
-			Reciever_model_translate[0]=0;
+		Reciever_model_origin[0]+=Reciever_model_translate[0];
+		Reciever_model_translate[0]=0;
 
-			Reciever_model_origin[1]+=Reciever_model_translate[1];
-			Reciever_model_translate[1]=0;
+		Reciever_model_origin[1]+=Reciever_model_translate[1];
+		Reciever_model_translate[1]=0;
 
-			calc.updateReceiverModelOrigin(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2]);
+		calc.updateReceiverModelOrigin(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2]);
 	}
 }
 
@@ -1132,23 +1133,23 @@ void testApp::drawCrosshair()
 
 string testApp::Receive_Message()
 {		
-		char udpMessage[100000];
-		udpReceiveConnection.Receive(udpMessage,100000);
-		
-		return ofToString(udpMessage);
+	char udpMessage[100000];
+	udpReceiveConnection.Receive(udpMessage,100000);
+
+	return ofToString(udpMessage);
 }
 
 void testApp::drawTouchImpressions(vector <string>message)
 {
-	
+
 	if(ofToInt(message[0])==1)
 	{
 		ofFill();
 		ofSetColor(0,255,0,90);
 
 		ofEnableAlphaBlending();
-		ofCircle(ofGetWidth()*ofToFloat(message[1])/1280,ofGetHeight()*ofToFloat(message[2])/720,0,40);
-	
+		ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
+
 		ofDisableAlphaBlending();
 	}
 
@@ -1158,9 +1159,9 @@ void testApp::drawTouchImpressions(vector <string>message)
 		ofSetColor(0,255,0,90);
 
 		ofEnableAlphaBlending();
-		ofCircle(ofGetWidth()*ofToFloat(message[1])/1280,ofGetHeight()*ofToFloat(message[2])/720,0,40);
-		ofCircle(ofGetWidth()*ofToFloat(message[3])/1280,ofGetHeight()*ofToFloat(message[4])/720,0,40);
-	
+		ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
+		ofCircle(ofGetWidth()*ofToFloat(message[3])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[4])/AndroidPhoneResHeight,0,40);
+
 		ofDisableAlphaBlending();
 	}
 }
@@ -1168,181 +1169,193 @@ void testApp::drawTouchImpressions(vector <string>message)
 
 void testApp::translateModel(vector <string>message)
 {
+
+
+
+	/* if(ofToInt(message[0])==1&&gestureType==2)
+	{
+	gestureType=1;
+	cout<<"Changed from Two Fingers to One Finger"<<"";
+	}*////
+	if(gestureType==2)
+		last_gesture_selected=true;
+
+
 	if(ofToInt(message[0])==1&&gestureType==1)
 	{
-	
-	//find which model is selected	;
-	if(!beginSelection)
-	{	
-		last_single_touch[0]=(ofToFloat(message[1]));
-		last_single_touch[1]=(ofToFloat(message[2]));
 
-		beginSelection=!beginSelection;
-	}
-		
-	if(calc.touch_selected==1)
-	{
-		////cout<<"BBay is selected";
-		Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-		Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
-	
+		//find which model is selected	;
+		if(!beginSelection)
+		{	
+			last_single_touch[0]=(ofToFloat(message[1]));
+			last_single_touch[1]=(ofToFloat(message[2]));
 
-		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
-		////cout<<sw<<endl;
+			beginSelection=!beginSelection;
+		}
 
-		//Bbaymodel_origin[0]=sw.x;
-		//Bbaymodel_origin[1]=sw.y;
+		if(calc.touch_selected==1)
+		{
+			////cout<<"BBay is selected";
+			Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
+			Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
 
-		////Bbaymodel_origin[2]=sw.z;
 
-		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+			//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+			////cout<<sw<<endl;
 
-		//Bbaymodel_translate[2]=sw.z;
+			//Bbaymodel_origin[0]=sw.x;
+			//Bbaymodel_origin[1]=sw.y;
 
-		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	}
+			////Bbaymodel_origin[2]=sw.z;
 
-	else if(calc.touch_selected==2)
-	{
-		//cout<<"Destination is selected";
-		Destination_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-		Destination_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
-	
-		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	}
+			//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
 
-	else if(calc.touch_selected==3)
-	{
-		////cout<<"Destination is selected";
-		Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-		Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
-	
-//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	}
+			//Bbaymodel_translate[2]=sw.z;
 
-	else if(calc.touch_selected==4)
-	{
-		////cout<<"Receiver is selected";
-		Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-		Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
-	
-	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	}
-	
+			////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+			////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+		}
+
+		else if(calc.touch_selected==2)
+		{
+			//cout<<"Destination is selected";
+			Destination_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
+			Destination_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+
+			////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+			////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+		}
+
+		else if(calc.touch_selected==3)
+		{
+			////cout<<"Destination is selected";
+			Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
+			Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+
+			//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+			//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+		}
+
+		else if(calc.touch_selected==4)
+		{
+			////cout<<"Receiver is selected";
+			Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
+			Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+
+			/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+			//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+		}
+
 	}
 
 	else  if(ofToInt(message[0])==2&&gestureType==2)
 	{
 
 		//find which model is selected	;
-	if(!beginSelection)
-	{	
-		
-		last_single_touch[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		last_single_touch[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+		if(!beginSelection)
+		{	
 
-		beginSelection=!beginSelection;
-	}
-		
-	if(calc.touch_selected==1)
-	{
-		////cout<<"BBay is selected";
-		/*Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-		Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);*/
-	
-		Bbaymodel_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		Bbaymodel_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
-		//cout<<sw<<endl;
+			last_single_touch[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			last_single_touch[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
 
-		Bbaymodel_origin[0]=sw.x;
-		Bbaymodel_origin[1]=sw.y;
-		Bbaymodel_origin[2]=10;
+			beginSelection=!beginSelection;
+		}
 
-		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
+		if(calc.touch_selected==1)
+		{
+			////cout<<"BBay is selected";
+			/*Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+			Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);*/
 
-		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	}
+			Bbaymodel_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			Bbaymodel_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
 
-	else if(calc.touch_selected==2)
-	{
-		//cout<<"Destination is selected";
-		Destination_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		Destination_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-		
+			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/AndroidPhoneResWidth, windowHeight*Bbaymodel_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
+			//cout<<sw<<endl;
 
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
-		//cout<<sw<<endl;
+			Bbaymodel_origin[0]=sw.x;
+			Bbaymodel_origin[1]=sw.y;
+			Bbaymodel_origin[2]=10;
 
-		Destination_origin[0]=sw.x;
-		Destination_origin[1]=sw.y;
-		Destination_origin[2]=1;
+			calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
 
-		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
+			////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+			////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+		}
+
+		else if(calc.touch_selected==2)
+		{
+			//cout<<"Destination is selected";
+			Destination_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			Destination_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
 
 
-		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	}
+			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/AndroidPhoneResWidth, windowHeight*Destination_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
+			//cout<<sw<<endl;
 
-	else if(calc.touch_selected==3)
-	{
-		////cout<<"Destination is selected";
-		//Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-		//Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
-	
-		Friend_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		Friend_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-		
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
-		//cout<<sw<<endl;
+			Destination_origin[0]=sw.x;
+			Destination_origin[1]=sw.y;
+			Destination_origin[2]=1;
 
-		Friend_model_origin[0]=sw.x;
-		Friend_model_origin[1]=sw.y;
-		Friend_model_origin[2]=1;
-
-		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+			calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
 
 
-//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	}
+			////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+			////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+		}
 
-	else if(calc.touch_selected==4)
-	{
-		////cout<<"Receiver is selected";
-		/*Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-		Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
-	*/
-	/*	Reciever_model_translate[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		Reciever_model_translate[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-	*/
+		else if(calc.touch_selected==3)
+		{
+			////cout<<"Destination is selected";
+			//Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+			//Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
 
-		Reciever_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-		Reciever_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-		
-		
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
-		//cout<<sw<<endl;
-
-		Reciever_model_origin[0]=sw.x;
-		Reciever_model_origin[1]=sw.y;
-		Reciever_model_origin[2]=1;
-
-		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+			Friend_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			Friend_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
 
 
+			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/AndroidPhoneResWidth, windowHeight*Friend_model_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
+			//cout<<sw<<endl;
 
-	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	}
+			Friend_model_origin[0]=sw.x;
+			Friend_model_origin[1]=sw.y;
+			Friend_model_origin[2]=1;
+
+			calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
+
+
+			//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+			//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+		}
+
+		else if(calc.touch_selected==4)
+		{
+			////cout<<"Receiver is selected";
+			/*Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
+			Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
+			*/
+			/*	Reciever_model_translate[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			Reciever_model_translate[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+			*/
+
+			Reciever_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
+			Reciever_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
+
+
+			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/AndroidPhoneResWidth, windowHeight*Reciever_model_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
+			//cout<<sw<<endl;
+
+			Reciever_model_origin[0]=sw.x;
+			Reciever_model_origin[1]=sw.y;
+			Reciever_model_origin[2]=1;
+
+			calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
+
+
+
+			/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+			//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+		}
 
 
 	}
@@ -1351,23 +1364,36 @@ void testApp::translateModel(vector <string>message)
 	{
 		if(calc.touch_selected==1&&ofToFloat(message[message.size()-1])>0.1)
 			bb_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
-	
+		else if(calc.touch_selected==2&&ofToFloat(message[message.size()-1])>0.1)
+			lr_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
+		else if(calc.touch_selected==3&&ofToFloat(message[message.size()-1])>0.1)
+			cr_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
+		else if(calc.touch_selected==4&&ofToFloat(message[message.size()-1])>0.1)
+			rc_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
 
-}
+		
+
+	}
+
+
 
 	else gestureType=0;
 
+
+
+
+	cout<<gestureType<<"\n\n";
 }
 
 void testApp::storeFingerPosition(vector<string> components)
 {
 	/* If its one finger */
-	 
+
 	if(ofToFloat(components[0])==1)
 	{
 		last_single_touch[1]=ofToFloat(components[1]);
 		last_single_touch[2]=ofToFloat(components[2]);
-     	ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/1280, windowHeight*ofToFloat(components[2])/720,  0.965f ) );  
+		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/AndroidPhoneResWidth, windowHeight*ofToFloat(components[2])/AndroidPhoneResHeight,  0.965f ) );  
 		////cout<<sw<<endl;
 	}
 
@@ -1382,23 +1408,47 @@ void testApp::storeFingerPosition(vector<string> components)
 }
 
 
-void testApp:: Check_if_Finger_Intersects_3DModel(vector <string>components)
+void testApp::Check_if_Finger_Intersects_3DModel(vector <string>components)
 {
 	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
 	{ 		 
-		ofCircle(ofGetWidth()*ofToFloat(components[i])/1280,ofGetHeight()*ofToFloat(components[i+1])/720,0,20);
-		
+		ofCircle(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight,0,20);
+
 		if(ofToInt(components[0])==1)
-		calc.check_touch_intersection(ofVec2f(ofGetWidth()*ofToFloat(components[i])/1280-ofGetWidth()/2,ofGetHeight()*ofToFloat(components[i+1])/720-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+			calc.check_touch_intersection(ofVec2f(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
 		else if (ofToInt(components[0])==2) 
 		{
 			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
 			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
 
-			calc.check_touch_intersection(ofVec2f(ofGetWidth()*midPoint_x/1280-ofGetWidth()/2,ofGetHeight()*midPoint_y/720-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+			calc.check_touch_intersection(ofVec2f(ofGetWidth()*midPoint_x/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*midPoint_y/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
 		}
 
 	}
+}
+
+int testApp:: Check_for_crosshair_model_intersection()
+{
+
+	Crosshair_coords.push_back(1);
+	Crosshair_coords.push_back(ofGetWidth()/2);
+	Crosshair_coords.push_back(ofGetHeight()/2);
+
+	crosshair_selected=0;
+
+	if(intersect_model(cam.worldToScreen(Bbaymodel_UpdatedSceneMax),cam.worldToScreen(Bbaymodel_UpdatedSceneMin),Crosshair_coords))
+		crosshair_selected=1;
+	else if(intersect_model(cam.worldToScreen(Destination_UpdatedSceneMax),cam.worldToScreen(Destination_UpdatedSceneMin),Crosshair_coords))
+		crosshair_selected=2;
+	else if(intersect_model(cam.worldToScreen(Friend_UpdatedSceneMax),cam.worldToScreen(Friend_UpdatedSceneMin),Crosshair_coords))
+		crosshair_selected=3;
+	else if(intersect_model(cam.worldToScreen(Receiver_UpdatedSceneMax),cam.worldToScreen(Receiver_UpdatedSceneMin),Crosshair_coords))
+		crosshair_selected=4;
+
+	Crosshair_coords.clear();
+
+	return crosshair_selected;
+
 }
 
 
@@ -1408,20 +1458,17 @@ int testApp::Check_for_Finger_Intersections()
 	int selection=0;
 
 	if(intersect_model(cam.worldToScreen(Bbaymodel_UpdatedSceneMax),cam.worldToScreen(Bbaymodel_UpdatedSceneMin),convertedTouchPoints))
-		selection=1;
+		calc.touch_selected=1;
 	else if(intersect_model(cam.worldToScreen(Destination_UpdatedSceneMax),cam.worldToScreen(Destination_UpdatedSceneMin),convertedTouchPoints))
-		selection=2;
+		calc.touch_selected=2;
 	else if(intersect_model(cam.worldToScreen(Friend_UpdatedSceneMax),cam.worldToScreen(Friend_UpdatedSceneMin),convertedTouchPoints))
-		selection=3;
+		calc.touch_selected=3;
 	else if(intersect_model(cam.worldToScreen(Receiver_UpdatedSceneMax),cam.worldToScreen(Receiver_UpdatedSceneMin),convertedTouchPoints))
-		selection=4;
-
-
-	
+		calc.touch_selected=4;
 
 	//cout<<"\n\nSelected			"<<selection;
-	
-	return selection;
+
+	return calc.touch_selected;
 
 
 }
@@ -1438,8 +1485,6 @@ bool testApp::intersect_model(ofVec3f pt1,ofVec3f pt2,vector <float>Touches)
 			intersect= true;
 	}
 
-
-	
 	if(pt1.z>1||pt2.z>1)
 	{intersect=false;/*cout<<"zzzzzzz "<<pt1.z<<"\t\t"<<pt2.z<<"\n\n\n\n";*/}
 
@@ -1450,21 +1495,21 @@ void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
 {
 	vector<string> splitComponents= ofSplitString(rawTouchPoints,",");
 
-//cout<<"Pass 1 "<<splitComponents[0];
-	
-	
-	
+	//cout<<"Pass 1 "<<splitComponents[0];
+
+
+
 	//convertedTouchPoints[0]=ofToInt(splitComponents[0]);
-	
+
 	convertedTouchPoints.push_back(ofToInt(splitComponents[0]));
-	
-	////cout<<"Pass 2 ";
+
+	//	cout<<"Pass 2 ";
 	for(int i=1;i<=2*convertedTouchPoints[0];i+=2)
 	{
-		convertedTouchPoints.push_back(ofGetWidth()*ofToFloat(splitComponents[i])/1280);
-		convertedTouchPoints.push_back(ofGetHeight()*ofToFloat(splitComponents[i+1])/720);
+		convertedTouchPoints.push_back(ofGetWidth()*ofToFloat(splitComponents[i])/AndroidPhoneResWidth);
+		convertedTouchPoints.push_back(ofGetHeight()*ofToFloat(splitComponents[i+1])/AndroidPhoneResHeight);
 	}
-	////cout<<"Pass 3 "<<convertedTouchPoints.size();
+	//cout<<"Pass 3 "<<convertedTouchPoints.size();
 
 }
 
@@ -1481,23 +1526,23 @@ void testApp::temp_calculateMaxandMin()
 	ofVec3f maxX,maxY,maxZ;
 
 	for(int i=0;i<test.getNumVertices();i++)
-		{
-			if(i==0||test.getVertex(i).x>maxX.x)
+	{
+		if(i==0||test.getVertex(i).x>maxX.x)
 			maxX=test.getVertex(i);
 
-			if(i==0||test.getVertex(i).y>maxX.y)
+		if(i==0||test.getVertex(i).y>maxX.y)
 			maxY=test.getVertex(i);
 
-			if(i==0||test.getVertex(i).z>maxX.z)
+		if(i==0||test.getVertex(i).z>maxX.z)
 			maxZ=test.getVertex(i);
 
-		}
+	}
 
 
-
+	/*
 	ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+maxX,29);
 	ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+maxY,20);
-	ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+maxZ,14);
+	ofSphere(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+maxZ,14);*/
 }
 
 
@@ -1509,26 +1554,26 @@ void testApp::updateScreenMaxandMin()
 
 	Friend_UpdatedSceneMax=ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMax(true).rotate(Friend_rotation,Friend_rotAxis);
 	Friend_UpdatedSceneMin=ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMin(true).rotate(Friend_rotation,Friend_rotAxis);
-	
+
 	Destination_UpdatedSceneMax=ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMax(true).rotate(Destination_rotation,Destination_rotAxis);
 	Destination_UpdatedSceneMin=ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMin(true).rotate(Destination_rotation,Destination_rotAxis);
-	
+
 	Receiver_UpdatedSceneMax=ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMax(true).rotate(Receiver_rotation,Receiver_rotAxis);
 	Receiver_UpdatedSceneMin=ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMin(true).rotate(Receiver_rotation,Receiver_rotAxis);
-	
-	ofSphere(Bbaymodel_UpdatedSceneMax,40);
+
+	/*ofSphere(Bbaymodel_UpdatedSceneMax,40);
 	ofSphere(Bbaymodel_UpdatedSceneMin,40);
 
 	ofSphere(Receiver_UpdatedSceneMax,40);
 	ofSphere(Receiver_UpdatedSceneMin,40);
-	
+
 	ofSphere(Destination_UpdatedSceneMax,40);
 	ofSphere(Destination_UpdatedSceneMin,40);
 
 	ofSphere(Friend_UpdatedSceneMax,40);
-	ofSphere(Friend_UpdatedSceneMin,40);
+	ofSphere(Friend_UpdatedSceneMin,40);*/
 
-	
+
 	//ofSphere(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMax(true).rotate(90,ofVec3f(1,0,0)),40);
 	//ofSphere(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMin(true).rotate(90,ofVec3f(1,0,0)),40);
 
@@ -1541,7 +1586,47 @@ void testApp::updateScreenMaxandMin()
 
 }
 
-void convertScreenCoordinates()
+void testApp::loadModelsfromXML()
 {
+
+	ModelsFile.loadFile("Models.xml");	
+	ModelsFile.pushTag("ModelsList");
+
+	//cout<<ModelsFile.getNumTags("Model");
+	for(int i=0;i<ModelsFile.getNumTags("Model");i++)
+	{
+		ModelsFile.pushTag("Model",i);
+
+		Models model_object;
+
+		model_object.setPath(ModelsFile.getValue("Path","",0));
+		model_object.setId(ModelsFile.getValue("Id",0,0));
+		model_object.setScale(ModelsFile.getValue("Scale::x",0.0,0),ModelsFile.getValue("Scale::y",0.0,0),ModelsFile.getValue("Scale::z",0.0,0));
+		model_object.setRotationAxisandAngle(ModelsFile.getValue("Rotation::Angle",0.0,0),ModelsFile.getValue("Rotation::Axis::x",0.0,0),ModelsFile.getValue("Rotation::Axis::y",0.0,0),ModelsFile.getValue("Rotation::Axis::z",0.0,0));
+		model_object.setPosition(ModelsFile.getValue("Position::x",0.0,0),ModelsFile.getValue("Position::y",0.0,0),ModelsFile.getValue("Position::z",0.0,0));
+		ModelsFile.popTag();
+
+		model_object.loadandSetupModels();
+
+		
+		ModelsList.push_back(model_object);
+
+		cout<<model_object.Position<<"\t\t"<<model_object.RotationAxis;
+		
+
+	}
+
+
+
+
+}
+
+void testApp::drawModelsXML()
+{
+	
+	for(int i=0;i<ModelsList.size();i++)
+		ModelsList[i].drawModel();
+
+
 
 }

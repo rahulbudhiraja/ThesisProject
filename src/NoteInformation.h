@@ -1,5 +1,7 @@
 #include <string>
 
+
+
 #ifndef NoteInformation_h
 #define NoteInformation_h
 

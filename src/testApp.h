@@ -32,6 +32,9 @@
 
 #include"Calculations.h"
 #include"NoteInformation.h"
+#include "ofxXmlSettings.h"
+#include <list>
+#include <Models.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class testApp
@@ -172,6 +175,7 @@ public:
 	int windowWidth,windowHeight;
 
 	int gestureType;
+	bool last_gesture_selected;
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \fn void testApp::translate_3D_Model(string);
@@ -225,6 +229,18 @@ public:
 
 	void temp_calculateMaxandMin();
 
+	vector<float>Crosshair_coords;
+	int Check_for_crosshair_model_intersection();
+	int crosshair_selected;
+
+	ofxXmlSettings ModelsFile;
+	vector<Models> ModelsList;
+	void loadModelsfromXML();
+
+	/// Draws the models Loaded from the XML.
+	void drawModelsXML();
+
+	int AndroidPhoneResWidth,AndroidPhoneResHeight;
 };
 
 #endif

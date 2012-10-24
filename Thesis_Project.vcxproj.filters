@@ -28,6 +28,21 @@
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpModelLoader.cpp">
       <Filter>src\Addons\Assimp</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Models.cpp">
+      <Filter>src\CustomClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -53,6 +68,9 @@
     </Filter>
     <Filter Include="src\Addons\Assimp">
       <UniqueIdentifier>{9d8a55e5-2793-44b8-8f8b-bf6556c54909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Addons\ofxXml">
+      <UniqueIdentifier>{3aee3a71-2128-437d-933e-76e53a0115a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +145,15 @@
     </ClInclude>
     <ClInclude Include="Network.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h">
+      <Filter>src\Addons\ofxXml</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Models.h">
+      <Filter>src\CustomClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

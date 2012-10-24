@@ -80,7 +80,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat />
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxThread\libs;..\..\..\addons\ofxThread\src;..\..\..\addons\ofx3DModelLoader\libs;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;src\TrackerStuff;src\VuzixSDK\inc;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxObjLoader\glm;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxNetwork\libs;..\..\..\addons\ofxNetwork\src;..\..\..\addons\ofxThread\libs;..\..\..\addons\ofxThread\src;..\..\..\addons\ofx3DModelLoader\libs;..\..\..\addons\ofx3DModelLoader\src;..\..\..\addons\ofx3DModelLoader\src\3DS;src\TrackerStuff;src\VuzixSDK\inc;..\..\..\addons\ofxVectorMath\src;..\..\..\addons\ofxObjLoader\src;..\..\..\addons\ofxObjLoader\glm;..\..\..\addons\ofxAssimpModelLoader\src;..\..\..\addons\ofxAssimpModelLoader\libs\assimp\include;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -105,7 +105,12 @@
     <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPManager.cpp" />
     <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.cpp" />
     <ClCompile Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Models.cpp" />
     <ClCompile Include="src\testApp.cpp" />
     <ClCompile Include="src\TrackerStuff\IWRFilterTracking.cpp" />
     <ClCompile Include="src\TrackerStuff\IWRsdk.c" />
@@ -121,9 +126,12 @@
     <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxTCPServer.h" />
     <ClInclude Include="..\..\..\addons\ofxNetwork\src\ofxUDPManager.h" />
     <ClInclude Include="..\..\..\addons\ofxThread\src\ofxThread.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+    <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="src\Calculations.h" />
     <ClInclude Include="src\GUIStuff.h" />
+    <ClInclude Include="src\Models.h" />
     <ClInclude Include="src\NoteInformation.h" />
     <ClInclude Include="src\POIS.h" />
     <ClInclude Include="src\ProcessReceivedData.h" />

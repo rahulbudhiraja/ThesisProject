@@ -1,0 +1,105 @@
+<ModelsList>
+<Model>
+<Id>1</Id>
+<Path>3Dmodels/bb/model.obj</Path>
+<Position> 
+	<x>116.747</x>
+	<y>-163.28</y>
+	<z>1</z>
+</Position>
+
+<Rotation>
+	<Angle>0</Angle>
+	<Axis>
+		<x>0</x>
+		<y>0</y>
+		<z>0</z>
+	</Axis>
+</Rotation>
+
+<Scale>
+		<x>10</x>
+		<y>10</y>
+		<z>10</z>
+		</Scale>
+</Model>
+
+<Model>
+<Id>2</Id>
+<Path>3Dmodels/lr/model.dae</Path>
+<Position> 
+	
+	<x>-250</x>
+	<y>-300</y>
+	<z>1</z>
+	
+</Position>
+<Rotation>
+	<Angle>90</Angle>
+	<Axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</Axis>
+</Rotation>
+
+<Scale>
+		<x>10</x>
+		<y>10</y>
+		<z>10</z>
+		</Scale>
+</Model>
+
+<Model>
+<Id>3</Id>
+<Path>3Dmodels/cr/model.dae</Path>
+<Position> 
+	
+	<x>280.72705</x>
+	<y>244.184</y>
+	<z>1</z>
+	
+</Position>
+<Rotation>
+	<Angle>90</Angle>
+	<Axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</Axis>
+</Rotation>
+
+<Scale>
+		<x>10</x>
+		<y>10</y>
+		<z>10</z>
+</Scale>
+</Model>
+
+<Model>
+<Id>4</Id>
+<Path>3Dmodels/rc/model.dae</Path>
+<Position> 
+	
+	<x>-100.23</x>
+	<y>129.49</y>
+	<z>1</z>
+	
+</Position>
+<Rotation>
+	<Angle>90</Angle>
+	<Axis>
+		<x>1</x>
+		<y>1</y>
+		<z>1</z>
+	</Axis>
+</Rotation>
+
+<Scale>
+		<x>10</x>
+		<y>10</y>
+		<z>10</z>
+		</Scale>
+</Model>
+
+</ModelsList>
