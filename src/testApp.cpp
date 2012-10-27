@@ -64,7 +64,7 @@ using namespace std;
 HMODULE hMod;
 
 //GUIStuff gui;
-ofCamera cam;
+ofCamera cam,dummy;
 
 /// -- Processing ...
 
@@ -172,7 +172,9 @@ void testApp::setup()
 
 	loadModelsfromXML();
 
-	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720;
+	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720; /// Galaxy S3
+
+	bbay_previousScale,dest_prevscale,friend_prevscale,recv_prevscale=10;
 }
 
 //--------------------------------------------------------------
@@ -208,8 +210,8 @@ void testApp::draw()
 
 		drawAxes();
 		drawPlane();
-		drawModels();
-		//drawModelsXML();
+		//drawModels();
+		drawModelsXML();
 
 		ofSetColor(255, 255, 255);
 		ofFill();
@@ -273,15 +275,16 @@ void testApp::draw()
 
 
 			beginSelection=false;
-
+			calc.touch_selected=0;
+			resetModelVariables();
 			updateModelPositions();
 			UDPReceive();
 
 			////cout<<"Without Sticky"<<ofGetSystemTime()<<"\n\n";
 
-			calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),calc.convertDegreestoRadians(g_fPitch),scenes);
+			//calc.check_intersection(calc.convertDegreestoRadians(g_fYaw),calc.convertDegreestoRadians(g_fPitch),scenes);
 
-
+			Check_for_crosshair_model_intersection();
 
 			if(message.length()>0&&message.compare("Left Swipe")!=0)
 			{
@@ -311,12 +314,6 @@ void testApp::draw()
 	convertedTouchPoints.clear();
 	}
 
-
-	/* cout<<"\n\n\n\n BBay Screen	"<<cam.worldToScreen(ofVec3f(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2])+bb_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Bbaymodel_origin[0],Bbaymodel_origin[1],Bbaymodel_origin[2])+bb_model.getSceneMin(true))<<endl;
-	cout<<" \nLocation Receiver	"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Destination_origin[0],Destination_origin[1],Destination_origin[2])+lr_model.getSceneMin(true))<<endl;
-	cout<<" \nFriend Model	"<<cam.worldToScreen(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Friend_model_origin[0],Friend_model_origin[1],Friend_model_origin[2])+cr_model.getSceneMin(true))<<endl;;
-	cout<<" \nReceiver Model	"<<cam.worldToScreen(ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMax(true))<<"\n Minimum"<<cam.worldToScreen(ofVec3f(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2])+sr_model.getSceneMin(true))<<endl;
-	*/
 	// cout<<"Width	"<<ofGetWidth()<<"Height	"<<ofGetHeight();
 	drawCrosshair();
 
@@ -411,7 +408,7 @@ void testApp::setupModels()
 
 	//cout<<"\nLoading 3D Models \n";
 
-	// This is the most irritiating thing about Assimp,It enables Automatic Scale Normalization which scales models automatically .This is not good because the mesh and Bounding box dimensions get screwed up.
+	// This is the most irritating thing about Assimp,It enables Automatic Scale Normalization which scales models automatically .This is not good because the mesh and Bounding box dimensions get screwed up.
 	// Setting the default parameters of the models ..
 	bb_model.loadModel("3Dmodels/bb/model.obj",1);  
 	//bb_model.setScale(0.25,0.25,0.25);
@@ -750,8 +747,8 @@ void testApp::drawTouches(string udpMessage)
 
 	ofEnableAlphaBlending();
 
-	Check_if_Finger_Intersects_3DModel(components);
-
+	//Check_if_Finger_Intersects_3DModel(components);
+	drawTouchImpressions(components,false);
 	Check_for_Finger_Intersections();
 
 	//for(int i=1;i<=2*ofToInt(components[0]);i+=2)
@@ -792,7 +789,7 @@ void testApp::drawTouches(string udpMessage)
 	if(ofToInt(components[0])==2&&components[components.size()-2]=="SF"&&calc.touch_selected!=0)
 	{
 		gestureType=3;
-		//cout<<"\n Scaling Gesture";
+		cout<<"\n Scaling Gesture";
 		time_begin_crossDimSelection=10000;
 	}
 
@@ -834,191 +831,10 @@ void testApp::translate_3D_Model(string message)
 {
 	result=ofSplitString(ofToString(message),",");
 
-	drawTouchImpressions(result);
+	drawTouchImpressions(result,true);
 	translateModel(result);
 
 
-	//	if(ofToInt(result[0])==1&&gestureType==1)
-	//	{
-	//	
-	//	//find which model is selected	;
-	//	if(!beginSelection)
-	//	{	
-	//		last_single_touch[0]=(ofToFloat(result[1]));
-	//		last_single_touch[1]=(ofToFloat(result[2]));
-	//
-	//		beginSelection=!beginSelection;
-	//	}
-	//		
-	//	if(calc.touch_selected==1)
-	//	{
-	//		////cout<<"BBay is selected";
-	//		Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	
-	//
-	//		//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
-	//		////cout<<sw<<endl;
-	//
-	//		//Bbaymodel_origin[0]=sw.x;
-	//		//Bbaymodel_origin[1]=sw.y;
-	//
-	//		////Bbaymodel_origin[2]=sw.z;
-	//
-	//		//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-	//
-	//		//Bbaymodel_translate[2]=sw.z;
-	//
-	//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-	//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==2)
-	//	{
-	//		//cout<<"Destination is selected";
-	//		Destination_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Destination_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	
-	//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-	//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==3)
-	//	{
-	//		////cout<<"Destination is selected";
-	//		Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	
-	////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==4)
-	//	{
-	//		////cout<<"Receiver is selected";
-	//		Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	
-	//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-	//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	//	}
-	//	
-	//	}
-	//
-	//	else  if(ofToInt(result[0])==2&&gestureType==2)
-	//	{
-	//
-	//		//find which model is selected	;
-	//	if(!beginSelection)
-	//	{	
-	//		
-	//		last_single_touch[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		last_single_touch[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//
-	//		beginSelection=!beginSelection;
-	//	}
-	//		
-	//	if(calc.touch_selected==1)
-	//	{
-	//		////cout<<"BBay is selected";
-	//		/*Bbaymodel_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Bbaymodel_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);*/
-	//	
-	//		Bbaymodel_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		Bbaymodel_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//		
-	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/1280, windowHeight*Bbaymodel_origin[1]/720,  0.975f ) );  
-	//		//cout<<sw<<endl;
-	//
-	//		Bbaymodel_origin[0]=sw.x;
-	//		Bbaymodel_origin[1]=sw.y;
-	//		Bbaymodel_origin[2]=10;
-	//
-	//		calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-	//
-	//		////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-	//		////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==2)
-	//	{
-	//		//cout<<"Destination is selected";
-	//		Destination_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		Destination_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//		
-	//
-	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/1280, windowHeight*Destination_origin[1]/720,  0.975f ) );  
-	//		//cout<<sw<<endl;
-	//
-	//		Destination_origin[0]=sw.x;
-	//		Destination_origin[1]=sw.y;
-	//		Destination_origin[2]=1;
-	//
-	//		calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
-	//
-	//
-	//		////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-	//		////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==3)
-	//	{
-	//		////cout<<"Destination is selected";
-	//		//Friend_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		//Friend_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	
-	//		Friend_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		Friend_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//		
-	//		
-	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/1280, windowHeight*Friend_model_origin[1]/720,  0.975f ) );  
-	//		//cout<<sw<<endl;
-	//
-	//		Friend_model_origin[0]=sw.x;
-	//		Friend_model_origin[1]=sw.y;
-	//		Friend_model_origin[2]=1;
-	//
-	//		calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
-	//
-	//
-	////		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-	//	}
-	//
-	//	else if(calc.touch_selected==4)
-	//	{
-	//		////cout<<"Receiver is selected";
-	//		/*Reciever_model_translate[0]=(ofToFloat(result[1])-last_single_touch[0]);
-	//		Reciever_model_translate[1]=(ofToFloat(result[2])-last_single_touch[1]);
-	//	*/
-	//	/*	Reciever_model_translate[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		Reciever_model_translate[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//	*/
-	//
-	//		Reciever_model_origin[0]=(ofToFloat(result[1])+ofToFloat(result[3]))/2;
-	//		Reciever_model_origin[1]=(ofToFloat(result[2])+ofToFloat(result[4]))/2;
-	//		
-	//		
-	//		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/1280, windowHeight*Reciever_model_origin[1]/720,  0.975f ) );  
-	//		//cout<<sw<<endl;
-	//
-	//		Reciever_model_origin[0]=sw.x;
-	//		Reciever_model_origin[1]=sw.y;
-	//		Reciever_model_origin[2]=1;
-	//
-	//		calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
-	//
-	//
-	//
-	//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-	//		//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-	//	}
-	//
-	//
-	//	}
-	//
-	//	else gestureType=0;
-	//
 }
 
 void testApp::set_model_initial_position()
@@ -1121,6 +937,10 @@ void testApp::updateModelPositions()
 
 		calc.updateReceiverModelOrigin(Reciever_model_origin[0],Reciever_model_origin[1],Reciever_model_origin[2]);
 	}
+
+
+	for(int i=0;i<ModelsList.size();i++)
+		ModelsList[i].updatePosition();
 }
 
 void testApp::drawCrosshair()
@@ -1139,29 +959,50 @@ string testApp::Receive_Message()
 	return ofToString(udpMessage);
 }
 
-void testApp::drawTouchImpressions(vector <string>message)
+void testApp::drawTouchImpressions(vector <string>message,bool somethingSelected=false)
 {
 
 	if(ofToInt(message[0])==1)
 	{
 		ofFill();
-		ofSetColor(0,255,0,90);
-
 		ofEnableAlphaBlending();
-		ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
 
+
+		if(somethingSelected)
+		{
+			ofSetColor(0,255,0,90);
+			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
+		}
+		else 
+		{
+			ofSetColor(255,0,0,90);
+			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,20);
+
+		}
 		ofDisableAlphaBlending();
 	}
 
 	else if(ofToInt(message[0])==2)
 	{
 		ofFill();
-		ofSetColor(0,255,0,90);
-
 		ofEnableAlphaBlending();
-		ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
-		ofCircle(ofGetWidth()*ofToFloat(message[3])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[4])/AndroidPhoneResHeight,0,40);
 
+		if(somethingSelected)
+		{
+			ofSetColor(0,255,0,90);
+
+
+			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,40);
+			ofCircle(ofGetWidth()*ofToFloat(message[3])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[4])/AndroidPhoneResHeight,0,40);
+		}
+
+		else 
+		{
+			ofSetColor(255,0,0,90);
+			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,20);
+			ofCircle(ofGetWidth()*ofToFloat(message[3])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[4])/AndroidPhoneResHeight,0,20);
+
+		}
 		ofDisableAlphaBlending();
 	}
 }
@@ -1183,7 +1024,7 @@ void testApp::translateModel(vector <string>message)
 
 	if(ofToInt(message[0])==1&&gestureType==1)
 	{
-
+		cout<<"Passing";
 		//find which model is selected	;
 		if(!beginSelection)
 		{	
@@ -1193,58 +1034,75 @@ void testApp::translateModel(vector <string>message)
 			beginSelection=!beginSelection;
 		}
 
-		if(calc.touch_selected==1)
+		for(int i=0;i<ModelsList.size();i++)
 		{
-			////cout<<"BBay is selected";
-			Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-			Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
-
-
-			//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
-			////cout<<sw<<endl;
-
-			//Bbaymodel_origin[0]=sw.x;
-			//Bbaymodel_origin[1]=sw.y;
-
-			////Bbaymodel_origin[2]=sw.z;
-
-			//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-
-			//Bbaymodel_translate[2]=sw.z;
-
-			////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-			////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+			/// Have to add the other calc.touch_selected because deleting it will cause multiple objects to be dragged along and translated ..
+			if(ModelsList[i].touch_selected&&calc.touch_selected==i+1)
+					ModelsList[i].translateModel(message,last_single_touch,1,dummy);
 		}
 
-		else if(calc.touch_selected==2)
-		{
-			//cout<<"Destination is selected";
-			Destination_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-			Destination_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+		//if(calc.touch_selected==1)
+		//{
+		//	////cout<<"BBay is selected";
+		//	/*Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
+		//	Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;*/
 
-			////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-			////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-		}
+		//ModelsList[0].translateModel(message,last_single_touch,1,dummy);
+		//	//ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(result[1])/1280, windowHeight*ofToFloat(result[2])/720,  0.975f ) );  
+		//	////cout<<sw<<endl;
 
-		else if(calc.touch_selected==3)
-		{
-			////cout<<"Destination is selected";
-			Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-			Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+		//	//Bbaymodel_origin[0]=sw.x;
+		//	//Bbaymodel_origin[1]=sw.y;
 
-			//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-			//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-		}
+		//	////Bbaymodel_origin[2]=sw.z;
 
-		else if(calc.touch_selected==4)
-		{
-			////cout<<"Receiver is selected";
-			Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/3;
-			Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/3;
+		//	//	calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
 
-			/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-			//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-		}
+		//	//Bbaymodel_translate[2]=sw.z;
+
+		//	////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
+		//	////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+		//}
+
+		//else if(calc.touch_selected==2)
+		//{
+		//	//cout<<"Destination is selected";
+		//	Destination_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/2;
+		//	Destination_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/2;
+
+		//	ModelsList[1].translateModel(message,last_single_touch,1,dummy);
+		//	////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
+		//	////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
+		//}
+
+		//else if(calc.touch_selected==3)
+		//{
+		//	////cout<<"Destination is selected";
+		//	Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/2;
+		//	Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/2;
+
+
+		//	cout<<"Position Friend"<<Friend_model_translate<<"\n\n";
+		//	ModelsList[2].translateModel(message,last_single_touch,1,dummy);
+
+		//	//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+		//	//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
+		//}
+
+		//else if(calc.touch_selected==4)
+		//{
+		//	////cout<<"Receiver is selected";
+		//	//Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0])/2;
+		//	//Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1])/2;
+
+
+		//	ModelsList[3].translateModel(message,last_single_touch,1,dummy);
+
+		//	/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
+		//	//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
+		//}
+
+		
 
 	}
 
@@ -1261,117 +1119,33 @@ void testApp::translateModel(vector <string>message)
 			beginSelection=!beginSelection;
 		}
 
-		if(calc.touch_selected==1)
+
+		for(int i=0;i<ModelsList.size();i++)
 		{
-			////cout<<"BBay is selected";
-			/*Bbaymodel_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-			Bbaymodel_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);*/
 
-			Bbaymodel_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-			Bbaymodel_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-
-			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Bbaymodel_origin[0]/AndroidPhoneResWidth, windowHeight*Bbaymodel_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
-			//cout<<sw<<endl;
-
-			Bbaymodel_origin[0]=sw.x;
-			Bbaymodel_origin[1]=sw.y;
-			Bbaymodel_origin[2]=10;
-
-			calc.updateBBayOrigin(Bbaymodel_origin[0],Bbaymodel_origin[1],10);
-
-			////cout<<"BlackBay Model"<<Bbaymodel_translate[0]<<"      "<<Bbaymodel_translate[1]<<"\n\n";
-			////cout<<"BlackBay Model Origin"<<Bbaymodel_origin[0]<<"      "<<Bbaymodel_origin[1]<<"\n\n";
+			if(ModelsList[i].touch_selected&&calc.touch_selected==i+1)
+				ModelsList[i].translateModel(message,last_single_touch,2,cam,windowWidth,windowHeight,AndroidPhoneResWidth,AndroidPhoneResHeight);
 		}
-
-		else if(calc.touch_selected==2)
-		{
-			//cout<<"Destination is selected";
-			Destination_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-			Destination_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-
-
-			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Destination_origin[0]/AndroidPhoneResWidth, windowHeight*Destination_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
-			//cout<<sw<<endl;
-
-			Destination_origin[0]=sw.x;
-			Destination_origin[1]=sw.y;
-			Destination_origin[2]=1;
-
-			calc.updateDestinationOrigin(Destination_origin[0],Destination_origin[1],1);
-
-
-			////cout<<"Destination Model"<<Destination_translate[0]<<"      "<<Destination_translate[1]<<"\n\n";
-			////cout<<"Destination Model Origin"<<Destination_origin[0]<<"      "<<Destination_origin[1]<<"\n\n";
-		}
-
-		else if(calc.touch_selected==3)
-		{
-			////cout<<"Destination is selected";
-			//Friend_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-			//Friend_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
-
-			Friend_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-			Friend_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-
-
-			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Friend_model_origin[0]/AndroidPhoneResWidth, windowHeight*Friend_model_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
-			//cout<<sw<<endl;
-
-			Friend_model_origin[0]=sw.x;
-			Friend_model_origin[1]=sw.y;
-			Friend_model_origin[2]=1;
-
-			calc.updateDestinationOrigin(Friend_model_origin[0],Friend_model_origin[1],1);
-
-
-			//		//cout<<"Friend Model"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-			//	//cout<<"Friend Model Origin"<<Friend_model_translate[0]<<"      "<<Friend_model_translate[1]<<"\n\n";
-		}
-
-		else if(calc.touch_selected==4)
-		{
-			////cout<<"Receiver is selected";
-			/*Reciever_model_translate[0]=(ofToFloat(message[1])-last_single_touch[0]);
-			Reciever_model_translate[1]=(ofToFloat(message[2])-last_single_touch[1]);
-			*/
-			/*	Reciever_model_translate[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-			Reciever_model_translate[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-			*/
-
-			Reciever_model_origin[0]=(ofToFloat(message[1])+ofToFloat(message[3]))/2;
-			Reciever_model_origin[1]=(ofToFloat(message[2])+ofToFloat(message[4]))/2;
-
-
-			ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*Reciever_model_origin[0]/AndroidPhoneResWidth, windowHeight*Reciever_model_origin[1]/AndroidPhoneResHeight,  0.975f ) );  
-			//cout<<sw<<endl;
-
-			Reciever_model_origin[0]=sw.x;
-			Reciever_model_origin[1]=sw.y;
-			Reciever_model_origin[2]=1;
-
-			calc.updateDestinationOrigin(Reciever_model_origin[0],Reciever_model_origin[1],1);
-
-
-
-			/*	//cout<<"Reciever Model"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";
-			//cout<<"Reciever Model Origin"<<Reciever_model_translate[0]<<"      "<<Reciever_model_translate[1]<<"\n\n";*/
-		}
+		
 
 
 	}
 
 	else if(ofToInt(message[0])==2&&gestureType==3)
 	{
-		if(calc.touch_selected==1&&ofToFloat(message[message.size()-1])>0.1)
-			bb_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
-		else if(calc.touch_selected==2&&ofToFloat(message[message.size()-1])>0.1)
-			lr_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
-		else if(calc.touch_selected==3&&ofToFloat(message[message.size()-1])>0.1)
-			cr_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
-		else if(calc.touch_selected==4&&ofToFloat(message[message.size()-1])>0.1)
-			rc_model.setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
 
-		
+		cout<<bb_model.getScale()<<"\n Message"<<message[message.size()-1];
+
+
+		for(int i=0;i<ModelsList.size();i++)
+		{
+			if(calc.touch_selected==i+1)
+
+			ModelsList[i].setScale(ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]),ofToFloat(message[message.size()-1]));
+			if(ModelsList[i].getModel().getScale().x<1.2)
+				ModelsList[i].setPreviousScale();
+			else ModelsList[i].updateScale();
+		}
 
 	}
 
@@ -1382,7 +1156,7 @@ void testApp::translateModel(vector <string>message)
 
 
 
-	cout<<gestureType<<"\n\n";
+	//cout<<gestureType<<"\n\n";
 }
 
 void testApp::storeFingerPosition(vector<string> components)
@@ -1393,8 +1167,7 @@ void testApp::storeFingerPosition(vector<string> components)
 	{
 		last_single_touch[1]=ofToFloat(components[1]);
 		last_single_touch[2]=ofToFloat(components[2]);
-		ofVec3f sw = cam.screenToWorld( ofVec3f( windowWidth*ofToFloat(components[1])/AndroidPhoneResWidth, windowHeight*ofToFloat(components[2])/AndroidPhoneResHeight,  0.965f ) );  
-		////cout<<sw<<endl;
+			////cout<<sw<<endl;
 	}
 
 	/* If its 2 fingers */ 
@@ -1408,24 +1181,7 @@ void testApp::storeFingerPosition(vector<string> components)
 }
 
 
-void testApp::Check_if_Finger_Intersects_3DModel(vector <string>components)
-{
-	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
-	{ 		 
-		ofCircle(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight,0,20);
 
-		if(ofToInt(components[0])==1)
-			calc.check_touch_intersection(ofVec2f(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
-		else if (ofToInt(components[0])==2) 
-		{
-			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
-			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
-
-			calc.check_touch_intersection(ofVec2f(ofGetWidth()*midPoint_x/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*midPoint_y/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
-		}
-
-	}
-}
 
 int testApp:: Check_for_crosshair_model_intersection()
 {
@@ -1457,39 +1213,20 @@ int testApp::Check_for_Finger_Intersections()
 
 	int selection=0;
 
-	if(intersect_model(cam.worldToScreen(Bbaymodel_UpdatedSceneMax),cam.worldToScreen(Bbaymodel_UpdatedSceneMin),convertedTouchPoints))
-		calc.touch_selected=1;
-	else if(intersect_model(cam.worldToScreen(Destination_UpdatedSceneMax),cam.worldToScreen(Destination_UpdatedSceneMin),convertedTouchPoints))
-		calc.touch_selected=2;
-	else if(intersect_model(cam.worldToScreen(Friend_UpdatedSceneMax),cam.worldToScreen(Friend_UpdatedSceneMin),convertedTouchPoints))
-		calc.touch_selected=3;
-	else if(intersect_model(cam.worldToScreen(Receiver_UpdatedSceneMax),cam.worldToScreen(Receiver_UpdatedSceneMin),convertedTouchPoints))
-		calc.touch_selected=4;
-
-	//cout<<"\n\nSelected			"<<selection;
+	for (int i=0;i<ModelsList.size();i++)
+	{
+		if(ModelsList[i].intersect_model(convertedTouchPoints,cam)&&calc.touch_selected==0)
+			{	ModelsList[i].touch_selected=true;
+				calc.touch_selected=i+1;
+			}
+	}
+	//cout<<"\n\nSelected	"<<selection;
 
 	return calc.touch_selected;
 
 
 }
 
-bool testApp::intersect_model(ofVec3f pt1,ofVec3f pt2,vector <float>Touches)
-{
-	bool intersect=false;
-
-	//cout<<"\n\n    "<<pt1<<"     "<<pt2;
-
-	for(int i=1;i<=2*Touches[0];i+=2)
-	{ 	
-		if(Touches[i]>min(pt1.x,pt2.x)&&Touches[i]<max(pt1.x,pt2.x)&&Touches[i+1]>min(pt1.y,pt2.y)&&Touches[i+1]<max(pt1.y,pt2.y))
-			intersect= true;
-	}
-
-	if(pt1.z>1||pt2.z>1)
-	{intersect=false;/*cout<<"zzzzzzz "<<pt1.z<<"\t\t"<<pt2.z<<"\n\n\n\n";*/}
-
-	return intersect;
-}
 
 void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
 {
@@ -1518,6 +1255,67 @@ void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
 //	if(MaxVector)
 //		model.getSceneMax(true).rotate(
 //}
+
+
+void testApp::loadModelsfromXML()
+{
+
+	ModelsFile.loadFile("Models.xml");	
+	ModelsFile.pushTag("ModelsList");
+
+	//cout<<ModelsFile.getNumTags("Model");
+	for(int i=0;i<ModelsFile.getNumTags("Model");i++)
+	{
+		ModelsFile.pushTag("Model",i);
+
+		Models model_object;
+
+		model_object.setPath(ModelsFile.getValue("Path","",0));
+		model_object.setId(ModelsFile.getValue("Id",0,0));
+		model_object.setScale(ModelsFile.getValue("Scale::x",0.0,0),ModelsFile.getValue("Scale::y",0.0,0),ModelsFile.getValue("Scale::z",0.0,0));
+		model_object.setRotationAxisandAngle(ModelsFile.getValue("Rotation::Angle",0.0,0),ModelsFile.getValue("Rotation::Axis::x",0.0,0),ModelsFile.getValue("Rotation::Axis::y",0.0,0),ModelsFile.getValue("Rotation::Axis::z",0.0,0));
+		model_object.setPosition(ModelsFile.getValue("Position::x",0.0,0),ModelsFile.getValue("Position::y",0.0,0),ModelsFile.getValue("Position::z",0.0,0));
+		ModelsFile.popTag();
+
+		model_object.loadandSetupModels();
+
+
+		ModelsList.push_back(model_object);
+
+		cout<<model_object.Position<<"\t\t"<<model_object.RotationAxis;
+
+
+	}
+
+
+
+
+}
+
+void testApp::drawModelsXML()
+{
+
+	for(int i=0;i<ModelsList.size();i++)
+		ModelsList[i].drawModel();
+
+
+
+}
+
+void testApp::resetModelVariables()
+{
+	/// Just to reset the touch_selected variable of the models ,to show that nothing selected ..
+
+	for(int i=0;i<ModelsList.size();i++)
+		ModelsList[i].touch_selected=false;
+}
+
+
+///////////////////////////////////////////////////////
+/// Unused Functions ...
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 void testApp::temp_calculateMaxandMin()
 {
@@ -1586,47 +1384,57 @@ void testApp::updateScreenMaxandMin()
 
 }
 
-void testApp::loadModelsfromXML()
+bool testApp::intersect_model(ofVec3f pt1,ofVec3f pt2,vector <float>Touches)
 {
+	bool intersect=false;
 
-	ModelsFile.loadFile("Models.xml");	
-	ModelsFile.pushTag("ModelsList");
+	//cout<<"\n\n    "<<pt1<<"     "<<pt2;
 
-	//cout<<ModelsFile.getNumTags("Model");
-	for(int i=0;i<ModelsFile.getNumTags("Model");i++)
+	//for(int i=1;i<=2*Touches[0];i+=2)
+	//{ 	
+	//	if(Touches[i]>min(pt1.x,pt2.x)&&Touches[i]<max(pt1.x,pt2.x)&&Touches[i+1]>min(pt1.y,pt2.y)&&Touches[i+1]<max(pt1.y,pt2.y))
+	//		intersect= true;
+	//}
+
+	if(Touches[0]==2)
 	{
-		ModelsFile.pushTag("Model",i);
+		ofVec2f MidPoint;
+		MidPoint.x=(Touches[1]+Touches[3])/2;
+		MidPoint.y=(Touches[2]+Touches[4])/2;
 
-		Models model_object;
-
-		model_object.setPath(ModelsFile.getValue("Path","",0));
-		model_object.setId(ModelsFile.getValue("Id",0,0));
-		model_object.setScale(ModelsFile.getValue("Scale::x",0.0,0),ModelsFile.getValue("Scale::y",0.0,0),ModelsFile.getValue("Scale::z",0.0,0));
-		model_object.setRotationAxisandAngle(ModelsFile.getValue("Rotation::Angle",0.0,0),ModelsFile.getValue("Rotation::Axis::x",0.0,0),ModelsFile.getValue("Rotation::Axis::y",0.0,0),ModelsFile.getValue("Rotation::Axis::z",0.0,0));
-		model_object.setPosition(ModelsFile.getValue("Position::x",0.0,0),ModelsFile.getValue("Position::y",0.0,0),ModelsFile.getValue("Position::z",0.0,0));
-		ModelsFile.popTag();
-
-		model_object.loadandSetupModels();
-
-		
-		ModelsList.push_back(model_object);
-
-		cout<<model_object.Position<<"\t\t"<<model_object.RotationAxis;
-		
+		if(MidPoint.x>min(pt1.x,pt2.x)&&MidPoint.x<max(pt1.x,pt2.x)&&MidPoint.y>min(pt1.y,pt2.y)&&MidPoint.y<max(pt1.y,pt2.y))
+			intersect= true;
 
 	}
 
+	else if(Touches[0]==1)
+	{
+		if(Touches[1]>min(pt1.x,pt2.x)&&Touches[1]<max(pt1.x,pt2.x)&&Touches[2]>min(pt1.y,pt2.y)&&Touches[2]<max(pt1.y,pt2.y))
+			intersect= true;
+	}
 
 
+	if(pt1.z>1||pt2.z>1)
+	{intersect=false;/*cout<<"zzzzzzz "<<pt1 .z<<"\t\t"<<pt2.z<<"\n\n\n\n";*/}
 
+	return intersect;
 }
 
-void testApp::drawModelsXML()
+void testApp::Check_if_Finger_Intersects_3DModel(vector <string>components)
 {
-	
-	for(int i=0;i<ModelsList.size();i++)
-		ModelsList[i].drawModel();
+	for(int i=1;i<=2*ofToInt(components[0]);i+=2)
+	{ 		 
+		ofCircle(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight,0,20);
 
+		if(ofToInt(components[0])==1)
+			calc.check_touch_intersection(ofVec2f(ofGetWidth()*ofToFloat(components[i])/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*ofToFloat(components[i+1])/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+		else if (ofToInt(components[0])==2) 
+		{
+			midPoint_x=(ofToFloat(components[1])+ofToFloat(components[3]))/2;
+			midPoint_y=(ofToFloat(components[2])+ofToFloat(components[4]))/2;
 
+			calc.check_touch_intersection(ofVec2f(ofGetWidth()*midPoint_x/AndroidPhoneResWidth-ofGetWidth()/2,ofGetHeight()*midPoint_y/AndroidPhoneResHeight-ofGetHeight()/2),ofGetWidth(),ofGetHeight(),calc.convertDegreestoRadians(g_fYaw));
+		}
 
+	}
 }

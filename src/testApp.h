@@ -197,7 +197,7 @@ public:
 	ofVec3f Bbaymodel_rotAxis,Destination_rotAxis,Friend_rotAxis,Receiver_rotAxis;
 	ofVec3f Bbaymodel_UpdatedSceneMax,Bbaymodel_UpdatedSceneMin,Destination_UpdatedSceneMax,Destination_UpdatedSceneMin,Friend_UpdatedSceneMax,Friend_UpdatedSceneMin,Receiver_UpdatedSceneMax,Receiver_UpdatedSceneMin;
 	
-
+	float bbay_previousScale,dest_prevscale,friend_prevscale,recv_prevscale;
 
 	void updateScreenMaxandMin();
 
@@ -212,10 +212,11 @@ public:
 
 	void drawCrosshair();
 	string Receive_Message();
-	void drawTouchImpressions(vector <string>message);
+	void drawTouchImpressions(vector <string>message,bool);
     void translateModel(vector <string>);
 	void storeFingerPosition(vector<string>);
 	void Check_if_Finger_Intersects_3DModel(vector <string>);
+	void resetModelVariables();
 	
 	float scalexPosition,scaleyPosition,scaleFactor;
 	
@@ -225,7 +226,6 @@ public:
 	bool intersect_model(ofVec3f ,ofVec3f ,vector <float>);
 
 	void convertPhonetoScreenCoordinates(string rawTouchPoints);
-
 
 	void temp_calculateMaxandMin();
 
