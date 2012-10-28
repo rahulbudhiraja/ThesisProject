@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,15 +105,18 @@ Inheritance diagram for testApp:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad431db15b6150b965cd52bcba8e16e11"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ad431db15b6150b965cd52bcba8e16e11">setup</a> ()</td></tr>
-<tr class="memdesc:ad431db15b6150b965cd52bcba8e16e11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setups this object.  <a href="#ad431db15b6150b965cd52bcba8e16e11"></a><br/></td></tr>
+<tr class="memitem:ad431db15b6150b965cd52bcba8e16e11"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad431db15b6150b965cd52bcba8e16e11"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ad431db15b6150b965cd52bcba8e16e11">setup</a> ()</td></tr>
+<tr class="memdesc:ad431db15b6150b965cd52bcba8e16e11"><td class="mdescLeft">&#160;</td><td class="mdescRight">OpenFrameworks First method that is called at the beginning of the program.Initialize all Variables Here. <br/></td></tr>
 <tr class="separator:ad431db15b6150b965cd52bcba8e16e11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb39d201aec71a295b7609876bf7d0c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb39d201aec71a295b7609876bf7d0c6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> ()</td></tr>
 <tr class="separator:afb39d201aec71a295b7609876bf7d0c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af869cba67b1dab8481f8d0e216d59dcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#af869cba67b1dab8481f8d0e216d59dcd">draw</a> ()</td></tr>
+<tr class="memitem:af869cba67b1dab8481f8d0e216d59dcd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af869cba67b1dab8481f8d0e216d59dcd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>draw</b> ()</td></tr>
 <tr class="separator:af869cba67b1dab8481f8d0e216d59dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a904d147c7e532cb92656d5dd4895cd26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a904d147c7e532cb92656d5dd4895cd26">keyPressed</a> (int key)</td></tr>
+<tr class="memitem:a904d147c7e532cb92656d5dd4895cd26"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a904d147c7e532cb92656d5dd4895cd26"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>keyPressed</b> (int key)</td></tr>
 <tr class="separator:a904d147c7e532cb92656d5dd4895cd26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1116a10088e4932f6d482efe723cd45e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1116a10088e4932f6d482efe723cd45e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>keyReleased</b> (int key)</td></tr>
@@ -127,40 +130,88 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>mouseDragged</b> (int
 <tr class="memitem:a3f200702ce91859cac2872a39302679d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a3f200702ce91859cac2872a39302679d">mousePressed</a> (int x, int y, int button)</td></tr>
 <tr class="memdesc:a3f200702ce91859cac2872a39302679d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse pressed.  <a href="#a3f200702ce91859cac2872a39302679d"></a><br/></td></tr>
 <tr class="separator:a3f200702ce91859cac2872a39302679d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3680ffc782b1e5c451289817f20c9c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aa3680ffc782b1e5c451289817f20c9c6">mouseReleased</a> (int x, int y, int button)</td></tr>
-<tr class="memdesc:aa3680ffc782b1e5c451289817f20c9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mouse released.  <a href="#aa3680ffc782b1e5c451289817f20c9c6"></a><br/></td></tr>
+<tr class="memitem:aa3680ffc782b1e5c451289817f20c9c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3680ffc782b1e5c451289817f20c9c6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>mouseReleased</b> (int x, int y, int button)</td></tr>
 <tr class="separator:aa3680ffc782b1e5c451289817f20c9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a428b7df9c64352d6e7cb234fc297e6c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a428b7df9c64352d6e7cb234fc297e6c9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>windowResized</b> (int w, int h)</td></tr>
 <tr class="separator:a428b7df9c64352d6e7cb234fc297e6c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a853bbabdab3e7d2f207bb5a2028990bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a853bbabdab3e7d2f207bb5a2028990bd">UpdateTracking</a> ()</td></tr>
-<tr class="memdesc:a853bbabdab3e7d2f207bb5a2028990bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the tracking.  <a href="#a853bbabdab3e7d2f207bb5a2028990bd"></a><br/></td></tr>
+<tr class="memdesc:a853bbabdab3e7d2f207bb5a2028990bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the tracking received from the Vuzix i-Wear Tracker.  <a href="#a853bbabdab3e7d2f207bb5a2028990bd"></a><br/></td></tr>
 <tr class="separator:a853bbabdab3e7d2f207bb5a2028990bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a4db7a6a914fc4899763fc94bfca4b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a4db7a6a914fc4899763fc94bfca4b7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setupTracker</b> ()</td></tr>
+<tr class="memitem:a6a4db7a6a914fc4899763fc94bfca4b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a6a4db7a6a914fc4899763fc94bfca4b7">setupTracker</a> ()</td></tr>
+<tr class="memdesc:a6a4db7a6a914fc4899763fc94bfca4b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the tracker.  <a href="#a6a4db7a6a914fc4899763fc94bfca4b7"></a><br/></td></tr>
 <tr class="separator:a6a4db7a6a914fc4899763fc94bfca4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af88f7715b2e0a9692b4ec947fad63c31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#af88f7715b2e0a9692b4ec947fad63c31">setupModels</a> ()</td></tr>
-<tr class="separator:af88f7715b2e0a9692b4ec947fad63c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78bdea262a12308cb6f9f9243bdb3db9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a78bdea262a12308cb6f9f9243bdb3db9">drawModels</a> ()</td></tr>
-<tr class="separator:a78bdea262a12308cb6f9f9243bdb3db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa2fcbae31171ba366d4c0fcaf44149f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gaa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a> ()</td></tr>
-<tr class="separator:gaa2fcbae31171ba366d4c0fcaf44149f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47747729f6d0d84c36ef0ec9fca01303"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga47747729f6d0d84c36ef0ec9fca01303">drawPlane</a> ()</td></tr>
-<tr class="memdesc:ga47747729f6d0d84c36ef0ec9fca01303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw plane.  <a href="group___int_variables.html#ga47747729f6d0d84c36ef0ec9fca01303"></a><br/></td></tr>
-<tr class="separator:ga47747729f6d0d84c36ef0ec9fca01303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae18e12d5025a2167ebd63ca019468cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a> ()</td></tr>
-<tr class="separator:gae18e12d5025a2167ebd63ca019468cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1d58aa9130d8d7526eb407f13f7a833"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#gaa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a> (string)</td></tr>
-<tr class="separator:gaa1d58aa9130d8d7526eb407f13f7a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga689f3b0cf0b38217152da7f5ce0d609f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga689f3b0cf0b38217152da7f5ce0d609f"></a>
+<tr class="memitem:ae18e12d5025a2167ebd63ca019468cc0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ae18e12d5025a2167ebd63ca019468cc0">UDPReceive</a> ()</td></tr>
+<tr class="memdesc:ae18e12d5025a2167ebd63ca019468cc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">UDP receive.ip%.  <a href="#ae18e12d5025a2167ebd63ca019468cc0"></a><br/></td></tr>
+<tr class="separator:ae18e12d5025a2167ebd63ca019468cc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1d58aa9130d8d7526eb407f13f7a833"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aa1d58aa9130d8d7526eb407f13f7a833">addObjecttoScene</a> (string)</td></tr>
+<tr class="separator:aa1d58aa9130d8d7526eb407f13f7a833"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a689f3b0cf0b38217152da7f5ce0d609f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a689f3b0cf0b38217152da7f5ce0d609f"></a>
 ofColor&#160;</td><td class="memItemRight" valign="bottom"><b>Returncolor</b> (string)</td></tr>
-<tr class="separator:ga689f3b0cf0b38217152da7f5ce0d609f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34646de458b0af33bc02457c9b8583df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga34646de458b0af33bc02457c9b8583df">drawAugmentedPlane</a> (float, float, ofColor, ofColor, int, string, string)</td></tr>
-<tr class="memdesc:ga34646de458b0af33bc02457c9b8583df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw augmented plane.  <a href="group___int_variables.html#ga34646de458b0af33bc02457c9b8583df"></a><br/></td></tr>
-<tr class="separator:ga34646de458b0af33bc02457c9b8583df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16036c3aa23c1747e315a3e18105cf45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga16036c3aa23c1747e315a3e18105cf45">drawTouches</a> (string udpMessage)</td></tr>
-<tr class="memdesc:ga16036c3aa23c1747e315a3e18105cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.  <a href="group___int_variables.html#ga16036c3aa23c1747e315a3e18105cf45"></a><br/></td></tr>
-<tr class="separator:ga16036c3aa23c1747e315a3e18105cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a689f3b0cf0b38217152da7f5ce0d609f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34646de458b0af33bc02457c9b8583df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a34646de458b0af33bc02457c9b8583df">drawAugmentedPlane</a> (float, float, ofColor, ofColor, int, string, string)</td></tr>
+<tr class="memdesc:a34646de458b0af33bc02457c9b8583df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes information from Handheld Phone and draws augmented plane in the AR view.  <a href="#a34646de458b0af33bc02457c9b8583df"></a><br/></td></tr>
+<tr class="separator:a34646de458b0af33bc02457c9b8583df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ee24f0c2bec5965519deef1a14da16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ae9ee24f0c2bec5965519deef1a14da16">translate_3D_Model</a> (string)</td></tr>
+<tr class="memdesc:ae9ee24f0c2bec5965519deef1a14da16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate 3 d model.ip%.  <a href="#ae9ee24f0c2bec5965519deef1a14da16"></a><br/></td></tr>
+<tr class="separator:ae9ee24f0c2bec5965519deef1a14da16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga210397e42daad5b2ded2b80598905827"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_u_i.html#ga210397e42daad5b2ded2b80598905827">setupFonts</a> ()</td></tr>
+<tr class="memdesc:ga210397e42daad5b2ded2b80598905827"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the fonts These are not used much but can be used during debugging when you want to check which model is selected ..The selected model will appear on upper-middle part.  <a href="group___g_u_i.html#ga210397e42daad5b2ded2b80598905827"></a><br/></td></tr>
+<tr class="separator:ga210397e42daad5b2ded2b80598905827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12fd724a9073e84f1367d01f97d222d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_u_i.html#ga12fd724a9073e84f1367d01f97d222d8">drawTouchImpressions</a> (vector&lt; string &gt;message, bool)</td></tr>
+<tr class="memdesc:ga12fd724a9073e84f1367d01f97d222d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw touch impressions.  <a href="group___g_u_i.html#ga12fd724a9073e84f1367d01f97d222d8"></a><br/></td></tr>
+<tr class="separator:ga12fd724a9073e84f1367d01f97d222d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d5c58a4c1ebdb291618b34d5237f77b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d5c58a4c1ebdb291618b34d5237f77b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setupUDPConnections</b> ()</td></tr>
+<tr class="separator:a0d5c58a4c1ebdb291618b34d5237f77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae96728967b563fab5b52350915829b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae96728967b563fab5b52350915829b7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setupCrosshair</b> ()</td></tr>
+<tr class="separator:aae96728967b563fab5b52350915829b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0adc57489b13878194958d0f2da032"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f0adc57489b13878194958d0f2da032"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateModelPositions</b> ()</td></tr>
+<tr class="separator:a4f0adc57489b13878194958d0f2da032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d57148d51d852b0fe1051ee150f0fc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d57148d51d852b0fe1051ee150f0fc0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawCrosshair</b> ()</td></tr>
+<tr class="separator:a9d57148d51d852b0fe1051ee150f0fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9388efd101d9850bdf41ed036861e369"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9388efd101d9850bdf41ed036861e369"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>Receive_Message</b> ()</td></tr>
+<tr class="separator:a9388efd101d9850bdf41ed036861e369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8afafb31eb516994348caaf54bdea6bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a8afafb31eb516994348caaf54bdea6bb">translateModel</a> (vector&lt; string &gt;)</td></tr>
+<tr class="separator:a8afafb31eb516994348caaf54bdea6bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff620776a9cf806d8555de9a501fdcee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff620776a9cf806d8555de9a501fdcee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>storeFingerPosition</b> (vector&lt; string &gt;)</td></tr>
+<tr class="separator:aff620776a9cf806d8555de9a501fdcee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5631a4b034f1558b451fed3868480222"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5631a4b034f1558b451fed3868480222"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Check_if_Finger_Intersects_3DModel</b> (vector&lt; string &gt;)</td></tr>
+<tr class="separator:a5631a4b034f1558b451fed3868480222"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac374af2c9d11d72f27d79e16f3902b95"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#ac374af2c9d11d72f27d79e16f3902b95">resetModelVariables</a> ()</td></tr>
+<tr class="separator:ac374af2c9d11d72f27d79e16f3902b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2397b9317004e36fb25ca77bb7f99d50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2397b9317004e36fb25ca77bb7f99d50"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Check_for_Finger_Intersections</b> ()</td></tr>
+<tr class="separator:a2397b9317004e36fb25ca77bb7f99d50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4304932dc358f431608e54b243f74e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#af4304932dc358f431608e54b243f74e5">convertPhonetoScreenCoordinates</a> (string rawTouchPoints)</td></tr>
+<tr class="memdesc:af4304932dc358f431608e54b243f74e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert phoneto screen coordinates.ip%.  <a href="#af4304932dc358f431608e54b243f74e5"></a><br/></td></tr>
+<tr class="separator:af4304932dc358f431608e54b243f74e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae813833c1d2e4917d75984d1828f0c30"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae813833c1d2e4917d75984d1828f0c30"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>temp_calculateMaxandMin</b> ()</td></tr>
+<tr class="separator:ae813833c1d2e4917d75984d1828f0c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acff4b4d2d795806c8586f83602457ed7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acff4b4d2d795806c8586f83602457ed7"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Check_for_crosshair_model_intersection</b> ()</td></tr>
+<tr class="separator:acff4b4d2d795806c8586f83602457ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr><td colspan="2"><div class="groupHeader">GUI stuff ..</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>GUIFunctions</p>
+<p>These Functions can be easily replaced as OpenFrameWorks already has functions for the same ,but I am keeping them here for now .. </p>
+</div></td></tr>
+<tr class="memitem:aa2fcbae31171ba366d4c0fcaf44149f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aa2fcbae31171ba366d4c0fcaf44149f4">drawAxes</a> ()</td></tr>
+<tr class="memdesc:aa2fcbae31171ba366d4c0fcaf44149f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw axes.  <a href="#aa2fcbae31171ba366d4c0fcaf44149f4"></a><br/></td></tr>
+<tr class="separator:aa2fcbae31171ba366d4c0fcaf44149f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47747729f6d0d84c36ef0ec9fca01303"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47747729f6d0d84c36ef0ec9fca01303"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawPlane</b> ()</td></tr>
+<tr class="separator:a47747729f6d0d84c36ef0ec9fca01303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16036c3aa23c1747e315a3e18105cf45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a16036c3aa23c1747e315a3e18105cf45">drawTouches</a> (string udpMessage)</td></tr>
+<tr class="memdesc:a16036c3aa23c1747e315a3e18105cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.  <a href="#a16036c3aa23c1747e315a3e18105cf45"></a><br/></td></tr>
+<tr class="separator:a16036c3aa23c1747e315a3e18105cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -178,129 +229,231 @@ ofxUDPManager&#160;</td><td class="memItemRight" valign="bottom"><a class="el" h
 <tr class="separator:a630d5b8b53aee0c07dc79db616f4eb48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bcefa3afb830941451f72174a36b722"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bcefa3afb830941451f72174a36b722"></a>
 ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a9bcefa3afb830941451f72174a36b722">mono</a></td></tr>
-<tr class="memdesc:a9bcefa3afb830941451f72174a36b722"><td class="mdescLeft">&#160;</td><td class="mdescRight">The mono. <br/></td></tr>
+<tr class="memdesc:a9bcefa3afb830941451f72174a36b722"><td class="mdescLeft">&#160;</td><td class="mdescRight">The Font Variable,Will store the fonts used for debugging... <br/></td></tr>
 <tr class="separator:a9bcefa3afb830941451f72174a36b722"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc42ad25d37b1292d27d783380249424"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afc42ad25d37b1292d27d783380249424"></a>
 ofTrueTypeFont&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#afc42ad25d37b1292d27d783380249424">monosm</a></td></tr>
 <tr class="memdesc:afc42ad25d37b1292d27d783380249424"><td class="mdescLeft">&#160;</td><td class="mdescRight">The monosm. <br/></td></tr>
 <tr class="separator:afc42ad25d37b1292d27d783380249424"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ed611377cd46f5148a3a3d538e96484"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9ed611377cd46f5148a3a3d538e96484"></a>
+<tr class="memitem:a9ed611377cd46f5148a3a3d538e96484"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ed611377cd46f5148a3a3d538e96484"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>windowWidth</b></td></tr>
-<tr class="separator:ga9ed611377cd46f5148a3a3d538e96484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31efaa85f8a900bb659a537d56c73e03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03">windowHeight</a></td></tr>
-<tr class="memdesc:ga31efaa85f8a900bb659a537d56c73e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the height of the window.  <a href="group___int_variables.html#ga31efaa85f8a900bb659a537d56c73e03"></a><br/></td></tr>
-<tr class="separator:ga31efaa85f8a900bb659a537d56c73e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">The AssimpModelLoader Variables ..</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>BlackBay <a class="el" href="class_models.html">Models</a> ..</p>
-<p>These Variables will load all the <a class="el" href="class_models.html">Models</a> that were used for the BlackBayAR demo . </p>
-</div></td></tr>
-<tr class="memitem:ga55051db1203331adb5556373b1f93194"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55051db1203331adb5556373b1f93194"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>bb_model</b></td></tr>
-<tr class="separator:ga55051db1203331adb5556373b1f93194"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0226f29cac900da4a7d1a698b1b5b9d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0226f29cac900da4a7d1a698b1b5b9d3"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>cr_model</b></td></tr>
-<tr class="separator:ga0226f29cac900da4a7d1a698b1b5b9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75d1f2c61d9e27b0f639a2632de94ed0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga75d1f2c61d9e27b0f639a2632de94ed0"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>lr_model</b></td></tr>
-<tr class="separator:ga75d1f2c61d9e27b0f639a2632de94ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab7fc48fde55ff01601e7ec704685fda7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab7fc48fde55ff01601e7ec704685fda7"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>ls_model</b></td></tr>
-<tr class="separator:gab7fc48fde55ff01601e7ec704685fda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80f171a105bccdb3e505d438462d089a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga80f171a105bccdb3e505d438462d089a"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pgn_model</b></td></tr>
-<tr class="separator:ga80f171a105bccdb3e505d438462d089a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf98c6967c563936d418bf048a7d392b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf98c6967c563936d418bf048a7d392b7"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pgy_model</b></td></tr>
-<tr class="separator:gaf98c6967c563936d418bf048a7d392b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga28a2622b1304d4096d4fefc1a46759b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga28a2622b1304d4096d4fefc1a46759b3"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>pog_model</b></td></tr>
-<tr class="separator:ga28a2622b1304d4096d4fefc1a46759b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24711bff00befce43455ad79653d388d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga24711bff00befce43455ad79653d388d"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>rc_model</b></td></tr>
-<tr class="separator:ga24711bff00befce43455ad79653d388d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74279f23511603111eb4126414556b1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga74279f23511603111eb4126414556b1b"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>sr_model</b></td></tr>
-<tr class="separator:ga74279f23511603111eb4126414556b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56819e740669b8f1b443bdee23851442"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56819e740669b8f1b443bdee23851442"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>tbox_model</b></td></tr>
-<tr class="separator:ga56819e740669b8f1b443bdee23851442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6319a81becbadfcdd229bf2c98a7f930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6319a81becbadfcdd229bf2c98a7f930"></a>
-ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squirrelModel</b></td></tr>
-<tr class="separator:ga6319a81becbadfcdd229bf2c98a7f930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a9ed611377cd46f5148a3a3d538e96484"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31efaa85f8a900bb659a537d56c73e03"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a31efaa85f8a900bb659a537d56c73e03">windowHeight</a></td></tr>
+<tr class="memdesc:a31efaa85f8a900bb659a537d56c73e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the width and height of the window.  <a href="#a31efaa85f8a900bb659a537d56c73e03"></a><br/></td></tr>
+<tr class="separator:a31efaa85f8a900bb659a537d56c73e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0db6626782419f4340a3186e51788074"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0db6626782419f4340a3186e51788074"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>gestureType</b></td></tr>
+<tr class="separator:a0db6626782419f4340a3186e51788074"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75ac9dc8ee1df4ae07b93a9b74131924"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75ac9dc8ee1df4ae07b93a9b74131924"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>last_gesture_selected</b></td></tr>
+<tr class="separator:a75ac9dc8ee1df4ae07b93a9b74131924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2d09c9954dc56b2aaacc99d05948885"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa2d09c9954dc56b2aaacc99d05948885"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>beginSelection</b></td></tr>
+<tr class="separator:aa2d09c9954dc56b2aaacc99d05948885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea17ef4df91c9cd446cd99f9b8e2ddb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afea17ef4df91c9cd446cd99f9b8e2ddb"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>scalexPosition</b></td></tr>
+<tr class="separator:afea17ef4df91c9cd446cd99f9b8e2ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e86476934494e86dd955d5888333795"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e86476934494e86dd955d5888333795"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>scaleyPosition</b></td></tr>
+<tr class="separator:a9e86476934494e86dd955d5888333795"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862943de1cd06690befd3740f6711762"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a862943de1cd06690befd3740f6711762"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>scaleFactor</b></td></tr>
+<tr class="separator:a862943de1cd06690befd3740f6711762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4764bd1bead24898cc3858707ee14ed9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4764bd1bead24898cc3858707ee14ed9"></a>
+vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>convertedTouchPoints</b></td></tr>
+<tr class="separator:a4764bd1bead24898cc3858707ee14ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9a8da39f01ebe05efbaef7dc2744ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d9a8da39f01ebe05efbaef7dc2744ea"></a>
+vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Crosshair_coords</b></td></tr>
+<tr class="separator:a0d9a8da39f01ebe05efbaef7dc2744ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd2b58403a31a721e2201c3012d3b4e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd2b58403a31a721e2201c3012d3b4e3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>crosshair_selected</b></td></tr>
+<tr class="separator:abd2b58403a31a721e2201c3012d3b4e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4930c7e7ecb7783261349fd2f2e22f8b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4930c7e7ecb7783261349fd2f2e22f8b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a4930c7e7ecb7783261349fd2f2e22f8b">AndroidPhoneResWidth</a></td></tr>
+<tr class="memdesc:a4930c7e7ecb7783261349fd2f2e22f8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width of the Android Phone's Screen Resolution. <br/></td></tr>
+<tr class="separator:a4930c7e7ecb7783261349fd2f2e22f8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9389fab48c7bd5896f26d494fa238535"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9389fab48c7bd5896f26d494fa238535"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a9389fab48c7bd5896f26d494fa238535">AndroidPhoneResHeight</a></td></tr>
+<tr class="memdesc:a9389fab48c7bd5896f26d494fa238535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Height of the Android Phone's Screen Resolution. <br/></td></tr>
+<tr class="separator:a9389fab48c7bd5896f26d494fa238535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+XML Stuff</h2></td></tr>
+<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp30ed6d911a1420be854691672138b449"></a>Takes care of loading the <a class="el" href="class_models.html">Models</a> from the XML file,Storage,Displaying and Checking if the fingers touch the Model. </p>
+</td></tr>
+<tr class="memitem:aa20473a935d49170d16dd7da21124056"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa20473a935d49170d16dd7da21124056"></a>
+ofxXmlSettings&#160;</td><td class="memItemRight" valign="bottom"><b>ModelsFile</b></td></tr>
+<tr class="separator:aa20473a935d49170d16dd7da21124056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bfb9be4aa89d5b89983defa2d235113"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1bfb9be4aa89d5b89983defa2d235113"></a>
+vector&lt; <a class="el" href="class_models.html">Models</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ModelsList</b></td></tr>
+<tr class="separator:a1bfb9be4aa89d5b89983defa2d235113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307def5df81c899db2107fa85ef6a081"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a307def5df81c899db2107fa85ef6a081"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#a307def5df81c899db2107fa85ef6a081">loadModelsfromXML</a> ()</td></tr>
+<tr class="memdesc:a307def5df81c899db2107fa85ef6a081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <a class="el" href="class_models.html">Models</a> from the XML file. <br/></td></tr>
+<tr class="separator:a307def5df81c899db2107fa85ef6a081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca7cf2d8efb6d7ccecadf86bb97afc2b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca7cf2d8efb6d7ccecadf86bb97afc2b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtest_app.html#aca7cf2d8efb6d7ccecadf86bb97afc2b">drawModelsXML</a> ()</td></tr>
+<tr class="memdesc:aca7cf2d8efb6d7ccecadf86bb97afc2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the models Loaded from the XML file (Default:data/Models.xml). <br/></td></tr>
+<tr class="separator:aca7cf2d8efb6d7ccecadf86bb97afc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Test application. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="af869cba67b1dab8481f8d0e216d59dcd"></a>
+<a class="anchor" id="aa1d58aa9130d8d7526eb407f13f7a833"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void testApp::draw </td>
+          <td class="memname">void testApp::addObjecttoScene </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructor.</p>
+
+</div>
+</div>
+<a class="anchor" id="af4304932dc358f431608e54b243f74e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testApp::convertPhonetoScreenCoordinates </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>rawTouchPoints</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert phoneto screen coordinates.ip%. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/28/2012</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">parameter1</td><td>The first parameter.</td></tr>
+    <tr><td class="paramname">rawTouchPoints</td><td>The raw touch points. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a78bdea262a12308cb6f9f9243bdb3db9"></a>
+<a class="anchor" id="a34646de458b0af33bc02457c9b8583df"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void testApp::drawModels </td>
+          <td class="memname">void testApp::drawAugmentedPlane </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>xPosition</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Constructor.</p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">parameter1</td><td>The first parameter. </td></tr>
-    <tr><td class="paramname">parameter2</td><td>The second parameter.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="a904d147c7e532cb92656d5dd4895cd26"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void testApp::keyPressed </td>
-          <td>(</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>yPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ofColor&#160;</td>
+          <td class="paramname"><em>textColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ofColor&#160;</td>
+          <td class="paramname"><em>bgColor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>note_heading</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>note_text</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Takes information from Handheld Phone and draws augmented plane in the AR view. </p>
+<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>9/28/2012</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xPosition</td><td>The x-position. </td></tr>
+    <tr><td class="paramname">yPosition</td><td>The y-position. </td></tr>
+    <tr><td class="paramname">textColor</td><td>The color of the text written on the plane. </td></tr>
+    <tr><td class="paramname">bgColor</td><td>The background color of the plane. </td></tr>
+    <tr><td class="paramname">i</td><td>Index,Which Plane is being changed. </td></tr>
+    <tr><td class="paramname">note_heading</td><td>The note heading. </td></tr>
+    <tr><td class="paramname">note_text</td><td>The note text. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa2fcbae31171ba366d4c0fcaf44149f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testApp::drawAxes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Key released.</p>
+
+<p>Draw axes. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/28/2012 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a16036c3aa23c1747e315a3e18105cf45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testApp::drawTouches </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>udpMessage</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view. </p>
+<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>9/28/2012</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>The key.</td></tr>
+    <tr><td class="paramname">udpMessage</td><td>The Message received though UDP .. </td></tr>
   </table>
   </dd>
 </dl>
@@ -338,7 +491,6 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squir
 </div><div class="memdoc">
 
 <p>Mouse pressed. </p>
-<p>This function will be called when the mouse is pressed</p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -352,56 +504,28 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squir
 
 </div>
 </div>
-<a class="anchor" id="aa3680ffc782b1e5c451289817f20c9c6"></a>
+<a class="anchor" id="ac374af2c9d11d72f27d79e16f3902b95"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void testApp::mouseReleased </td>
+          <td class="memname">void testApp::resetModelVariables </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>button</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Mouse released. </p>
-<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>The x coordinate. </td></tr>
-    <tr><td class="paramname">y</td><td>The y coordinate. </td></tr>
-    <tr><td class="paramname">button</td><td>The button. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Just to reset the touch_selected variable of the models ,to show that nothing selected .. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad431db15b6150b965cd52bcba8e16e11"></a>
+<a class="anchor" id="a6a4db7a6a914fc4899763fc94bfca4b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void testApp::setup </td>
+          <td class="memname">void testApp::setupTracker </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -409,44 +533,80 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squir
       </table>
 </div><div class="memdoc">
 
-<p>Setups this object. </p>
+<p>Sets up the tracker. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
-<p>Constructor.</p>
+<dl class="section date"><dt>Date</dt><dd>10/28/2012 </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ae9ee24f0c2bec5965519deef1a14da16"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testApp::translate_3D_Model </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Translate 3 d model.ip%. </p>
+<p>This function will translate the 3D Model depending on users finger movement on the touch screen ...</p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/28/2012</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">parameter1</td><td>The first parameter.</td></tr>
+    <tr><td class="paramname">message</td><td>The message.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>10/6/2012</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>The UDP string that was Received .. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="af88f7715b2e0a9692b4ec947fad63c31"></a>
+<a class="anchor" id="a8afafb31eb516994348caaf54bdea6bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void testApp::setupModels </td>
+          <td class="memname">void testApp::translateModel </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Have to add the other calc.touch_selected because deleting it will cause multiple objects to be dragged along and translated .. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae18e12d5025a2167ebd63ca019468cc0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void testApp::UDPReceive </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructor.</p>
+
+<p>UDP receive.ip%. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>9/21/2012</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">parameter1</td><td>The first parameter. </td></tr>
-    <tr><td class="paramname">parameter2</td><td>The second parameter. </td></tr>
-    <tr><td class="paramname">parameter3</td><td>The third parameter.</td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section date"><dt>Date</dt><dd>10/28/2012 </dd></dl>
 
 </div>
 </div>
@@ -463,9 +623,25 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squir
       </table>
 </div><div class="memdoc">
 
-<p>Updates the tracking. </p>
+<p>Updates the tracking received from the Vuzix i-Wear Tracker. </p>
 <dl class="section author"><dt>Author</dt><dd>Rahul </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>9/21/2012 </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a31efaa85f8a900bb659a537d56c73e03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int windowWidth testApp::windowHeight</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the width and height of the window. </p>
+<p>The height of the window. </p>
 
 </div>
 </div>
@@ -476,7 +652,7 @@ ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>squir
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 3 2012 00:38:51 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 28 2012 06:36:38 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

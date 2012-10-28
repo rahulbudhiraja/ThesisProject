@@ -90,8 +90,8 @@
 	<Angle>90</Angle>
 	<Axis>
 		<x>1</x>
-		<y>1</y>
-		<z>1</z>
+		<y>0</y>
+		<z>0</z>
 	</Axis>
 </Rotation>
 

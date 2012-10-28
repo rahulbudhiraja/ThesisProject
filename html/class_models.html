@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -92,23 +92,111 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad04102fde8b617095c1b124166083698"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad04102fde8b617095c1b124166083698"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ModelsDraw</b> ()</td></tr>
-<tr class="separator:ad04102fde8b617095c1b124166083698"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdc05877ebd15ede3efeda3935e84d37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdc05877ebd15ede3efeda3935e84d37"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPath</b> (string path)</td></tr>
+<tr class="separator:abdc05877ebd15ede3efeda3935e84d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad367f36aa2f40d7fa2307e13ed173b09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad367f36aa2f40d7fa2307e13ed173b09"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setId</b> (int)</td></tr>
+<tr class="separator:ad367f36aa2f40d7fa2307e13ed173b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a501e84d868f70f12f2b56942ab58c8a2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a501e84d868f70f12f2b56942ab58c8a2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setRotationAxisandAngle</b> (float, float, float, float)</td></tr>
+<tr class="separator:a501e84d868f70f12f2b56942ab58c8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad701bb5644501c8174aab84256fb4240"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad701bb5644501c8174aab84256fb4240"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setScale</b> (float, float, float)</td></tr>
+<tr class="separator:ad701bb5644501c8174aab84256fb4240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f630623ba8b6076ba5020a2ee5d325"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72f630623ba8b6076ba5020a2ee5d325"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadandSetupModels</b> ()</td></tr>
+<tr class="separator:a72f630623ba8b6076ba5020a2ee5d325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8de77c9dc8890acd5a560d6c0f2de2e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8de77c9dc8890acd5a560d6c0f2de2e3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drawModel</b> ()</td></tr>
+<tr class="separator:a8de77c9dc8890acd5a560d6c0f2de2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf29e46cf7611b8cd90fc70de6775058"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf29e46cf7611b8cd90fc70de6775058"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPosition</b> (float, float, float)</td></tr>
+<tr class="separator:aaf29e46cf7611b8cd90fc70de6775058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42e598829b2e6add55531aa97acd2071"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42e598829b2e6add55531aa97acd2071"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>calculateSceneMaxandMin</b> ()</td></tr>
+<tr class="separator:a42e598829b2e6add55531aa97acd2071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a475c8c61cf3e7109f6cc452a67911dec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a475c8c61cf3e7109f6cc452a67911dec"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>checkifFingersTouchModel</b> (vector&lt; float &gt;)</td></tr>
+<tr class="separator:a475c8c61cf3e7109f6cc452a67911dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a632c8e7e02ce8a2517e1c14f3a89d0dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a632c8e7e02ce8a2517e1c14f3a89d0dd"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>intersect_model</b> (vector&lt; float &gt;, ofCamera)</td></tr>
+<tr class="separator:a632c8e7e02ce8a2517e1c14f3a89d0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae50be1dc201f4588591d1730ad037586"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae50be1dc201f4588591d1730ad037586"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>translateModel</b> (vector&lt; string &gt;, float[2], int, ofCamera, float windowWidth=0, float windowHeight=0, float AndroidPhoneResWidth=0, float AndroidPhoneResHeight=0)</td></tr>
+<tr class="separator:ae50be1dc201f4588591d1730ad037586"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd1b0fa533ac2a311147826e90c7269"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fd1b0fa533ac2a311147826e90c7269"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updatePosition</b> ()</td></tr>
+<tr class="separator:a2fd1b0fa533ac2a311147826e90c7269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c32fc17c18d9633ef5e7aa4c2b8a12d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c32fc17c18d9633ef5e7aa4c2b8a12d"></a>
+ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>getModel</b> ()</td></tr>
+<tr class="separator:a2c32fc17c18d9633ef5e7aa4c2b8a12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04cc8e225838e9f9d9c0afbefb218457"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04cc8e225838e9f9d9c0afbefb218457"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPreviousScale</b> ()</td></tr>
+<tr class="separator:a04cc8e225838e9f9d9c0afbefb218457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd86176c58ba4385d015040cd66fa183"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd86176c58ba4385d015040cd66fa183"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateScale</b> ()</td></tr>
+<tr class="separator:afd86176c58ba4385d015040cd66fa183"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a216bd71f0a133ff9349b5e656f7d8f80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a216bd71f0a133ff9349b5e656f7d8f80"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>y</b></td></tr>
-<tr class="separator:a216bd71f0a133ff9349b5e656f7d8f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08e4a1ce46570a4e8bb5eda491931497"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08e4a1ce46570a4e8bb5eda491931497"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>Id</b></td></tr>
+<tr class="separator:a08e4a1ce46570a4e8bb5eda491931497"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318677972a173564ff5bd87a5aa8e559"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a318677972a173564ff5bd87a5aa8e559"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>_path</b></td></tr>
+<tr class="separator:a318677972a173564ff5bd87a5aa8e559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac655be81daf8db2592fa0fc993d21513"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac655be81daf8db2592fa0fc993d21513"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>Position</b></td></tr>
+<tr class="separator:ac655be81daf8db2592fa0fc993d21513"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30df459a3cdecfcb022a249bf0d7c7a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30df459a3cdecfcb022a249bf0d7c7a1"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>RotationAxis</b></td></tr>
+<tr class="separator:a30df459a3cdecfcb022a249bf0d7c7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b2355cae5df009b8e88afc2ca884b4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b2355cae5df009b8e88afc2ca884b4c"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>_RotationAngle</b></td></tr>
+<tr class="separator:a9b2355cae5df009b8e88afc2ca884b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418140d6d6ea774f93b2662f57c3492e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a418140d6d6ea774f93b2662f57c3492e"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>rotZ</b></td></tr>
+<tr class="separator:a418140d6d6ea774f93b2662f57c3492e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a379e4114791b1b42d199e7bb1666756f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a379e4114791b1b42d199e7bb1666756f"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>Scale</b> [3]</td></tr>
+<tr class="separator:a379e4114791b1b42d199e7bb1666756f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a472e734e92b5f7d207f8199293c5239f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a472e734e92b5f7d207f8199293c5239f"></a>
+ofxAssimpModelLoader&#160;</td><td class="memItemRight" valign="bottom"><b>Model</b></td></tr>
+<tr class="separator:a472e734e92b5f7d207f8199293c5239f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad416782a76759101ac4cb224f374ddb0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad416782a76759101ac4cb224f374ddb0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>touch_selected</b></td></tr>
+<tr class="separator:ad416782a76759101ac4cb224f374ddb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4402f6001c440d9a6821f7907cc86a82"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4402f6001c440d9a6821f7907cc86a82"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>UpdatedSceneMax</b></td></tr>
+<tr class="separator:a4402f6001c440d9a6821f7907cc86a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a799f8ef19589c6531f370fa8de6265a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a799f8ef19589c6531f370fa8de6265a5"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>UpdatedSceneMin</b></td></tr>
+<tr class="separator:a799f8ef19589c6531f370fa8de6265a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a644a4cf3266f40d65ca50e3ea660c523"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a644a4cf3266f40d65ca50e3ea660c523"></a>
+ofVec2f&#160;</td><td class="memItemRight" valign="bottom"><b>MidPoint</b></td></tr>
+<tr class="separator:a644a4cf3266f40d65ca50e3ea660c523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5e2e9369a10579ea65c401cc656c4d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5e2e9369a10579ea65c401cc656c4d2"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>UpdatedSceneMax_screencoods</b></td></tr>
+<tr class="separator:aa5e2e9369a10579ea65c401cc656c4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee6eafadecdad479a74c8d7615448c36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee6eafadecdad479a74c8d7615448c36"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>UpdatedSceneMin_screencoods</b></td></tr>
+<tr class="separator:aee6eafadecdad479a74c8d7615448c36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb58bd908bd175c0497e5f260cbb67a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbb58bd908bd175c0497e5f260cbb67a"></a>
+ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>temp_translate</b></td></tr>
+<tr class="separator:adbb58bd908bd175c0497e5f260cbb67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d8271cf0fea4ee10493613fdb4494cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d8271cf0fea4ee10493613fdb4494cd"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>Previous_Scale</b> [3]</td></tr>
+<tr class="separator:a8d8271cf0fea4ee10493613fdb4494cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="_models_8h_source.html">Models.h</a></li>
+<li>src/Models.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 3 2012 00:38:50 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 28 2012 06:36:38 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

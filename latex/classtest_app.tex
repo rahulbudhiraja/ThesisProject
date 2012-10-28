@@ -19,14 +19,17 @@ Inheritance diagram for test\-App\-:\begin{figure}[H]
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classtest_app_ad431db15b6150b965cd52bcba8e16e11}{setup} ()
-\begin{DoxyCompactList}\small\item\em Setups this object. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_ad431db15b6150b965cd52bcba8e16e11}{void \hyperlink{classtest_app_ad431db15b6150b965cd52bcba8e16e11}{setup} ()}\label{classtest_app_ad431db15b6150b965cd52bcba8e16e11}
+
+\begin{DoxyCompactList}\small\item\em Open\-Frameworks First method that is called at the beginning of the program.\-Initialize all Variables Here. \end{DoxyCompactList}\item 
 \hypertarget{classtest_app_afb39d201aec71a295b7609876bf7d0c6}{void {\bfseries update} ()}\label{classtest_app_afb39d201aec71a295b7609876bf7d0c6}
 
 \item 
-void \hyperlink{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}{draw} ()
+\hypertarget{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}{void {\bfseries draw} ()}\label{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}
+
 \item 
-void \hyperlink{classtest_app_a904d147c7e532cb92656d5dd4895cd26}{key\-Pressed} (int key)
+\hypertarget{classtest_app_a904d147c7e532cb92656d5dd4895cd26}{void {\bfseries key\-Pressed} (int key)}\label{classtest_app_a904d147c7e532cb92656d5dd4895cd26}
+
 \item 
 \hypertarget{classtest_app_a1116a10088e4932f6d482efe723cd45e}{void {\bfseries key\-Released} (int key)}\label{classtest_app_a1116a10088e4932f6d482efe723cd45e}
 
@@ -39,35 +42,80 @@ void \hyperlink{classtest_app_a904d147c7e532cb92656d5dd4895cd26}{key\-Pressed} (
 \item 
 void \hyperlink{classtest_app_a3f200702ce91859cac2872a39302679d}{mouse\-Pressed} (int x, int y, int button)
 \begin{DoxyCompactList}\small\item\em Mouse pressed. \end{DoxyCompactList}\item 
-void \hyperlink{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}{mouse\-Released} (int x, int y, int button)
-\begin{DoxyCompactList}\small\item\em Mouse released. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}{void {\bfseries mouse\-Released} (int x, int y, int button)}\label{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}
+
+\item 
 \hypertarget{classtest_app_a428b7df9c64352d6e7cb234fc297e6c9}{void {\bfseries window\-Resized} (int w, int h)}\label{classtest_app_a428b7df9c64352d6e7cb234fc297e6c9}
 
 \item 
 void \hyperlink{classtest_app_a853bbabdab3e7d2f207bb5a2028990bd}{Update\-Tracking} ()
-\begin{DoxyCompactList}\small\item\em Updates the tracking. \end{DoxyCompactList}\item 
-\hypertarget{classtest_app_a6a4db7a6a914fc4899763fc94bfca4b7}{void {\bfseries setup\-Tracker} ()}\label{classtest_app_a6a4db7a6a914fc4899763fc94bfca4b7}
+\begin{DoxyCompactList}\small\item\em Updates the tracking received from the Vuzix i-\/\-Wear Tracker. \end{DoxyCompactList}\item 
+void \hyperlink{classtest_app_a6a4db7a6a914fc4899763fc94bfca4b7}{setup\-Tracker} ()
+\begin{DoxyCompactList}\small\item\em Sets up the tracker. \end{DoxyCompactList}\item 
+void \hyperlink{classtest_app_ae18e12d5025a2167ebd63ca019468cc0}{U\-D\-P\-Receive} ()
+\begin{DoxyCompactList}\small\item\em U\-D\-P receive.ip\%. \end{DoxyCompactList}\item 
+void \hyperlink{classtest_app_aa1d58aa9130d8d7526eb407f13f7a833}{add\-Objectto\-Scene} (string)
+\item 
+\hypertarget{classtest_app_a689f3b0cf0b38217152da7f5ce0d609f}{of\-Color {\bfseries Returncolor} (string)}\label{classtest_app_a689f3b0cf0b38217152da7f5ce0d609f}
 
 \item 
-void \hyperlink{classtest_app_af88f7715b2e0a9692b4ec947fad63c31}{setup\-Models} ()
-\item 
-void \hyperlink{classtest_app_a78bdea262a12308cb6f9f9243bdb3db9}{draw\-Models} ()
-\item 
-void \hyperlink{group___int_variables_gaa2fcbae31171ba366d4c0fcaf44149f4}{draw\-Axes} ()
-\item 
-void \hyperlink{group___int_variables_ga47747729f6d0d84c36ef0ec9fca01303}{draw\-Plane} ()
-\begin{DoxyCompactList}\small\item\em Draw plane. \end{DoxyCompactList}\item 
-void \hyperlink{group___int_variables_gae18e12d5025a2167ebd63ca019468cc0}{U\-D\-P\-Receive} ()
-\item 
-void \hyperlink{group___int_variables_gaa1d58aa9130d8d7526eb407f13f7a833}{add\-Objectto\-Scene} (string)
-\item 
-\hypertarget{group___int_variables_ga689f3b0cf0b38217152da7f5ce0d609f}{of\-Color {\bfseries Returncolor} (string)}\label{group___int_variables_ga689f3b0cf0b38217152da7f5ce0d609f}
+void \hyperlink{classtest_app_a34646de458b0af33bc02457c9b8583df}{draw\-Augmented\-Plane} (float, float, of\-Color, of\-Color, int, string, string)
+\begin{DoxyCompactList}\small\item\em Takes information from Handheld Phone and draws augmented plane in the A\-R view. \end{DoxyCompactList}\item 
+void \hyperlink{classtest_app_ae9ee24f0c2bec5965519deef1a14da16}{translate\-\_\-3\-D\-\_\-\-Model} (string)
+\begin{DoxyCompactList}\small\item\em Translate 3 d model.ip\%. \end{DoxyCompactList}\item 
+void \hyperlink{group___g_u_i_ga210397e42daad5b2ded2b80598905827}{setup\-Fonts} ()
+\begin{DoxyCompactList}\small\item\em Sets up the fonts These are not used much but can be used during debugging when you want to check which model is selected ..The selected model will appear on upper-\/middle part. \end{DoxyCompactList}\item 
+void \hyperlink{group___g_u_i_ga12fd724a9073e84f1367d01f97d222d8}{draw\-Touch\-Impressions} (vector$<$ string $>$message, bool)
+\begin{DoxyCompactList}\small\item\em Draw touch impressions. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a0d5c58a4c1ebdb291618b34d5237f77b}{void {\bfseries setup\-U\-D\-P\-Connections} ()}\label{classtest_app_a0d5c58a4c1ebdb291618b34d5237f77b}
 
 \item 
-void \hyperlink{group___int_variables_ga34646de458b0af33bc02457c9b8583df}{draw\-Augmented\-Plane} (float, float, of\-Color, of\-Color, int, string, string)
-\begin{DoxyCompactList}\small\item\em Draw augmented plane. \end{DoxyCompactList}\item 
-void \hyperlink{group___int_variables_ga16036c3aa23c1747e315a3e18105cf45}{draw\-Touches} (string udp\-Message)
+\hypertarget{classtest_app_aae96728967b563fab5b52350915829b7}{void {\bfseries setup\-Crosshair} ()}\label{classtest_app_aae96728967b563fab5b52350915829b7}
+
+\item 
+\hypertarget{classtest_app_a4f0adc57489b13878194958d0f2da032}{void {\bfseries update\-Model\-Positions} ()}\label{classtest_app_a4f0adc57489b13878194958d0f2da032}
+
+\item 
+\hypertarget{classtest_app_a9d57148d51d852b0fe1051ee150f0fc0}{void {\bfseries draw\-Crosshair} ()}\label{classtest_app_a9d57148d51d852b0fe1051ee150f0fc0}
+
+\item 
+\hypertarget{classtest_app_a9388efd101d9850bdf41ed036861e369}{string {\bfseries Receive\-\_\-\-Message} ()}\label{classtest_app_a9388efd101d9850bdf41ed036861e369}
+
+\item 
+void \hyperlink{classtest_app_a8afafb31eb516994348caaf54bdea6bb}{translate\-Model} (vector$<$ string $>$)
+\item 
+\hypertarget{classtest_app_aff620776a9cf806d8555de9a501fdcee}{void {\bfseries store\-Finger\-Position} (vector$<$ string $>$)}\label{classtest_app_aff620776a9cf806d8555de9a501fdcee}
+
+\item 
+\hypertarget{classtest_app_a5631a4b034f1558b451fed3868480222}{void {\bfseries Check\-\_\-if\-\_\-\-Finger\-\_\-\-Intersects\-\_\-3\-D\-Model} (vector$<$ string $>$)}\label{classtest_app_a5631a4b034f1558b451fed3868480222}
+
+\item 
+void \hyperlink{classtest_app_ac374af2c9d11d72f27d79e16f3902b95}{reset\-Model\-Variables} ()
+\item 
+\hypertarget{classtest_app_a2397b9317004e36fb25ca77bb7f99d50}{int {\bfseries Check\-\_\-for\-\_\-\-Finger\-\_\-\-Intersections} ()}\label{classtest_app_a2397b9317004e36fb25ca77bb7f99d50}
+
+\item 
+void \hyperlink{classtest_app_af4304932dc358f431608e54b243f74e5}{convert\-Phoneto\-Screen\-Coordinates} (string raw\-Touch\-Points)
+\begin{DoxyCompactList}\small\item\em Convert phoneto screen coordinates.ip\%. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_ae813833c1d2e4917d75984d1828f0c30}{void {\bfseries temp\-\_\-calculate\-Maxand\-Min} ()}\label{classtest_app_ae813833c1d2e4917d75984d1828f0c30}
+
+\item 
+\hypertarget{classtest_app_acff4b4d2d795806c8586f83602457ed7}{int {\bfseries Check\-\_\-for\-\_\-crosshair\-\_\-model\-\_\-intersection} ()}\label{classtest_app_acff4b4d2d795806c8586f83602457ed7}
+
+\end{DoxyCompactItemize}
+\begin{Indent}{\bf G\-U\-I stuff ..}\par
+{\em G\-U\-I\-Functions
+
+These Functions can be easily replaced as Open\-Frame\-Works already has functions for the same ,but I am keeping them here for now .. }\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classtest_app_aa2fcbae31171ba366d4c0fcaf44149f4}{draw\-Axes} ()
+\begin{DoxyCompactList}\small\item\em Draw axes. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a47747729f6d0d84c36ef0ec9fca01303}{void {\bfseries draw\-Plane} ()}\label{classtest_app_a47747729f6d0d84c36ef0ec9fca01303}
+
+\item 
+void \hyperlink{classtest_app_a16036c3aa23c1747e315a3e18105cf45}{draw\-Touches} (string udp\-Message)
 \begin{DoxyCompactList}\small\item\em If the Handheld is being used a controller,This function will take the touch information and draw it on the A\-R view. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -82,54 +130,64 @@ void \hyperlink{group___int_variables_ga16036c3aa23c1747e315a3e18105cf45}{draw\-
 \begin{DoxyCompactList}\small\item\em The U\-D\-P receive connection. \end{DoxyCompactList}\item 
 \hypertarget{classtest_app_a9bcefa3afb830941451f72174a36b722}{of\-True\-Type\-Font \hyperlink{classtest_app_a9bcefa3afb830941451f72174a36b722}{mono}}\label{classtest_app_a9bcefa3afb830941451f72174a36b722}
 
-\begin{DoxyCompactList}\small\item\em The mono. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em The Font Variable,Will store the fonts used for debugging... \end{DoxyCompactList}\item 
 \hypertarget{classtest_app_afc42ad25d37b1292d27d783380249424}{of\-True\-Type\-Font \hyperlink{classtest_app_afc42ad25d37b1292d27d783380249424}{monosm}}\label{classtest_app_afc42ad25d37b1292d27d783380249424}
 
 \begin{DoxyCompactList}\small\item\em The monosm. \end{DoxyCompactList}\item 
-\hypertarget{group___int_variables_ga9ed611377cd46f5148a3a3d538e96484}{int {\bfseries window\-Width}}\label{group___int_variables_ga9ed611377cd46f5148a3a3d538e96484}
+\hypertarget{classtest_app_a9ed611377cd46f5148a3a3d538e96484}{int {\bfseries window\-Width}}\label{classtest_app_a9ed611377cd46f5148a3a3d538e96484}
 
 \item 
-int \hyperlink{group___int_variables_ga31efaa85f8a900bb659a537d56c73e03}{window\-Height}
-\begin{DoxyCompactList}\small\item\em Gets the height of the window. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\begin{Indent}{\bf The Assimp\-Model\-Loader Variables ..}\par
-{\em Black\-Bay \hyperlink{class_models}{Models} ..
-
-These Variables will load all the \hyperlink{class_models}{Models} that were used for the Black\-Bay\-A\-R demo . }\begin{DoxyCompactItemize}
-\item 
-\hypertarget{group___int_variables_ga55051db1203331adb5556373b1f93194}{ofx\-Assimp\-Model\-Loader {\bfseries bb\-\_\-model}}\label{group___int_variables_ga55051db1203331adb5556373b1f93194}
+int \hyperlink{classtest_app_a31efaa85f8a900bb659a537d56c73e03}{window\-Height}
+\begin{DoxyCompactList}\small\item\em Gets the width and height of the window. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a0db6626782419f4340a3186e51788074}{int {\bfseries gesture\-Type}}\label{classtest_app_a0db6626782419f4340a3186e51788074}
 
 \item 
-\hypertarget{group___int_variables_ga0226f29cac900da4a7d1a698b1b5b9d3}{ofx\-Assimp\-Model\-Loader {\bfseries cr\-\_\-model}}\label{group___int_variables_ga0226f29cac900da4a7d1a698b1b5b9d3}
+\hypertarget{classtest_app_a75ac9dc8ee1df4ae07b93a9b74131924}{bool {\bfseries last\-\_\-gesture\-\_\-selected}}\label{classtest_app_a75ac9dc8ee1df4ae07b93a9b74131924}
 
 \item 
-\hypertarget{group___int_variables_ga75d1f2c61d9e27b0f639a2632de94ed0}{ofx\-Assimp\-Model\-Loader {\bfseries lr\-\_\-model}}\label{group___int_variables_ga75d1f2c61d9e27b0f639a2632de94ed0}
+\hypertarget{classtest_app_aa2d09c9954dc56b2aaacc99d05948885}{bool {\bfseries begin\-Selection}}\label{classtest_app_aa2d09c9954dc56b2aaacc99d05948885}
 
 \item 
-\hypertarget{group___int_variables_gab7fc48fde55ff01601e7ec704685fda7}{ofx\-Assimp\-Model\-Loader {\bfseries ls\-\_\-model}}\label{group___int_variables_gab7fc48fde55ff01601e7ec704685fda7}
+\hypertarget{classtest_app_afea17ef4df91c9cd446cd99f9b8e2ddb}{float {\bfseries scalex\-Position}}\label{classtest_app_afea17ef4df91c9cd446cd99f9b8e2ddb}
 
 \item 
-\hypertarget{group___int_variables_ga80f171a105bccdb3e505d438462d089a}{ofx\-Assimp\-Model\-Loader {\bfseries pgn\-\_\-model}}\label{group___int_variables_ga80f171a105bccdb3e505d438462d089a}
+\hypertarget{classtest_app_a9e86476934494e86dd955d5888333795}{float {\bfseries scaley\-Position}}\label{classtest_app_a9e86476934494e86dd955d5888333795}
 
 \item 
-\hypertarget{group___int_variables_gaf98c6967c563936d418bf048a7d392b7}{ofx\-Assimp\-Model\-Loader {\bfseries pgy\-\_\-model}}\label{group___int_variables_gaf98c6967c563936d418bf048a7d392b7}
+\hypertarget{classtest_app_a862943de1cd06690befd3740f6711762}{float {\bfseries scale\-Factor}}\label{classtest_app_a862943de1cd06690befd3740f6711762}
 
 \item 
-\hypertarget{group___int_variables_ga28a2622b1304d4096d4fefc1a46759b3}{ofx\-Assimp\-Model\-Loader {\bfseries pog\-\_\-model}}\label{group___int_variables_ga28a2622b1304d4096d4fefc1a46759b3}
+\hypertarget{classtest_app_a4764bd1bead24898cc3858707ee14ed9}{vector$<$ float $>$ {\bfseries converted\-Touch\-Points}}\label{classtest_app_a4764bd1bead24898cc3858707ee14ed9}
 
 \item 
-\hypertarget{group___int_variables_ga24711bff00befce43455ad79653d388d}{ofx\-Assimp\-Model\-Loader {\bfseries rc\-\_\-model}}\label{group___int_variables_ga24711bff00befce43455ad79653d388d}
+\hypertarget{classtest_app_a0d9a8da39f01ebe05efbaef7dc2744ea}{vector$<$ float $>$ {\bfseries Crosshair\-\_\-coords}}\label{classtest_app_a0d9a8da39f01ebe05efbaef7dc2744ea}
 
 \item 
-\hypertarget{group___int_variables_ga74279f23511603111eb4126414556b1b}{ofx\-Assimp\-Model\-Loader {\bfseries sr\-\_\-model}}\label{group___int_variables_ga74279f23511603111eb4126414556b1b}
+\hypertarget{classtest_app_abd2b58403a31a721e2201c3012d3b4e3}{int {\bfseries crosshair\-\_\-selected}}\label{classtest_app_abd2b58403a31a721e2201c3012d3b4e3}
 
 \item 
-\hypertarget{group___int_variables_ga56819e740669b8f1b443bdee23851442}{ofx\-Assimp\-Model\-Loader {\bfseries tbox\-\_\-model}}\label{group___int_variables_ga56819e740669b8f1b443bdee23851442}
+\hypertarget{classtest_app_a4930c7e7ecb7783261349fd2f2e22f8b}{int \hyperlink{classtest_app_a4930c7e7ecb7783261349fd2f2e22f8b}{Android\-Phone\-Res\-Width}}\label{classtest_app_a4930c7e7ecb7783261349fd2f2e22f8b}
+
+\begin{DoxyCompactList}\small\item\em Width of the Android Phone's Screen Resolution. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_a9389fab48c7bd5896f26d494fa238535}{int \hyperlink{classtest_app_a9389fab48c7bd5896f26d494fa238535}{Android\-Phone\-Res\-Height}}\label{classtest_app_a9389fab48c7bd5896f26d494fa238535}
+
+\begin{DoxyCompactList}\small\item\em Height of the Android Phone's Screen Resolution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{X\-M\-L Stuff}
+\label{_amgrp30ed6d911a1420be854691672138b449}%
+Takes care of loading the \hyperlink{class_models}{Models} from the X\-M\-L file,Storage,Displaying and Checking if the fingers touch the Model. \begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtest_app_aa20473a935d49170d16dd7da21124056}{ofx\-Xml\-Settings {\bfseries Models\-File}}\label{classtest_app_aa20473a935d49170d16dd7da21124056}
 
 \item 
-\hypertarget{group___int_variables_ga6319a81becbadfcdd229bf2c98a7f930}{ofx\-Assimp\-Model\-Loader {\bfseries squirrel\-Model}}\label{group___int_variables_ga6319a81becbadfcdd229bf2c98a7f930}
+\hypertarget{classtest_app_a1bfb9be4aa89d5b89983defa2d235113}{vector$<$ \hyperlink{class_models}{Models} $>$ {\bfseries Models\-List}}\label{classtest_app_a1bfb9be4aa89d5b89983defa2d235113}
 
-\end{DoxyCompactItemize}
-\end{Indent}
+\item 
+\hypertarget{classtest_app_a307def5df81c899db2107fa85ef6a081}{void \hyperlink{classtest_app_a307def5df81c899db2107fa85ef6a081}{load\-Modelsfrom\-X\-M\-L} ()}\label{classtest_app_a307def5df81c899db2107fa85ef6a081}
+
+\begin{DoxyCompactList}\small\item\em Load \hyperlink{class_models}{Models} from the X\-M\-L file. \end{DoxyCompactList}\item 
+\hypertarget{classtest_app_aca7cf2d8efb6d7ccecadf86bb97afc2b}{void \hyperlink{classtest_app_aca7cf2d8efb6d7ccecadf86bb97afc2b}{draw\-Models\-X\-M\-L} ()}\label{classtest_app_aca7cf2d8efb6d7ccecadf86bb97afc2b}
+
+\begin{DoxyCompactList}\small\item\em Draws the models Loaded from the X\-M\-L file (Default\-:data/\-Models.\-xml). \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -144,66 +202,112 @@ Rahul
 
 
 \subsection{Member Function Documentation}
-\hypertarget{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}{\index{test\-App@{test\-App}!draw@{draw}}
-\index{draw@{draw}!testApp@{test\-App}}
-\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::draw (
+\hypertarget{classtest_app_aa1d58aa9130d8d7526eb407f13f7a833}{\index{test\-App@{test\-App}!add\-Objectto\-Scene@{add\-Objectto\-Scene}}
+\index{add\-Objectto\-Scene@{add\-Objectto\-Scene}!testApp@{test\-App}}
+\subsubsection[{add\-Objectto\-Scene}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::add\-Objectto\-Scene (
+\begin{DoxyParamCaption}
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_aa1d58aa9130d8d7526eb407f13f7a833}
+\hypertarget{classtest_app_af4304932dc358f431608e54b243f74e5}{\index{test\-App@{test\-App}!convert\-Phoneto\-Screen\-Coordinates@{convert\-Phoneto\-Screen\-Coordinates}}
+\index{convert\-Phoneto\-Screen\-Coordinates@{convert\-Phoneto\-Screen\-Coordinates}!testApp@{test\-App}}
+\subsubsection[{convert\-Phoneto\-Screen\-Coordinates}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::convert\-Phoneto\-Screen\-Coordinates (
+\begin{DoxyParamCaption}
+\item[{string}]{raw\-Touch\-Points}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_af4304932dc358f431608e54b243f74e5}
+
+
+Convert phoneto screen coordinates.ip\%. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10/28/2012
+\end{DoxyDate}
+
+\begin{DoxyParams}{Parameters}
+{\em raw\-Touch\-Points} & The raw touch points. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtest_app_a34646de458b0af33bc02457c9b8583df}{\index{test\-App@{test\-App}!draw\-Augmented\-Plane@{draw\-Augmented\-Plane}}
+\index{draw\-Augmented\-Plane@{draw\-Augmented\-Plane}!testApp@{test\-App}}
+\subsubsection[{draw\-Augmented\-Plane}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::draw\-Augmented\-Plane (
+\begin{DoxyParamCaption}
+\item[{float}]{x\-Position, }
+\item[{float}]{y\-Position, }
+\item[{of\-Color}]{text\-Color, }
+\item[{of\-Color}]{bg\-Color, }
+\item[{int}]{i, }
+\item[{string}]{note\-\_\-heading, }
+\item[{string}]{note\-\_\-text}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_a34646de458b0af33bc02457c9b8583df}
+
+
+Takes information from Handheld Phone and draws augmented plane in the A\-R view. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+9/28/2012
+\end{DoxyDate}
+
+\begin{DoxyParams}{Parameters}
+{\em x\-Position} & The x-\/position. \\
+\hline
+{\em y\-Position} & The y-\/position. \\
+\hline
+{\em text\-Color} & The color of the text written on the plane. \\
+\hline
+{\em bg\-Color} & The background color of the plane. \\
+\hline
+{\em i} & Index,Which Plane is being changed. \\
+\hline
+{\em note\-\_\-heading} & The note heading. \\
+\hline
+{\em note\-\_\-text} & The note text. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtest_app_aa2fcbae31171ba366d4c0fcaf44149f4}{\index{test\-App@{test\-App}!draw\-Axes@{draw\-Axes}}
+\index{draw\-Axes@{draw\-Axes}!testApp@{test\-App}}
+\subsubsection[{draw\-Axes}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::draw\-Axes (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classtest_app_af869cba67b1dab8481f8d0e216d59dcd}
-Constructor.
+)}}\label{classtest_app_aa2fcbae31171ba366d4c0fcaf44149f4}
+
+
+Draw axes. 
 
 \begin{DoxyAuthor}{Author}
 Rahul 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-9/21/2012
+10/28/2012 
 \end{DoxyDate}
-
-\begin{DoxyParams}{Parameters}
-{\em parameter1} & The first parameter.\\
-\hline
-\end{DoxyParams}
-\hypertarget{classtest_app_a78bdea262a12308cb6f9f9243bdb3db9}{\index{test\-App@{test\-App}!draw\-Models@{draw\-Models}}
-\index{draw\-Models@{draw\-Models}!testApp@{test\-App}}
-\subsubsection[{draw\-Models}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::draw\-Models (
+\hypertarget{classtest_app_a16036c3aa23c1747e315a3e18105cf45}{\index{test\-App@{test\-App}!draw\-Touches@{draw\-Touches}}
+\index{draw\-Touches@{draw\-Touches}!testApp@{test\-App}}
+\subsubsection[{draw\-Touches}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::draw\-Touches (
 \begin{DoxyParamCaption}
-{}
+\item[{string}]{udp\-Message}
 \end{DoxyParamCaption}
-)}}\label{classtest_app_a78bdea262a12308cb6f9f9243bdb3db9}
-Constructor.
+)}}\label{classtest_app_a16036c3aa23c1747e315a3e18105cf45}
+
+
+If the Handheld is being used a controller,This function will take the touch information and draw it on the A\-R view. 
 
 \begin{DoxyAuthor}{Author}
 Rahul 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-9/21/2012
+9/28/2012
 \end{DoxyDate}
 
 \begin{DoxyParams}{Parameters}
-{\em parameter1} & The first parameter. \\
-\hline
-{\em parameter2} & The second parameter.\\
-\hline
-\end{DoxyParams}
-\hypertarget{classtest_app_a904d147c7e532cb92656d5dd4895cd26}{\index{test\-App@{test\-App}!key\-Pressed@{key\-Pressed}}
-\index{key\-Pressed@{key\-Pressed}!testApp@{test\-App}}
-\subsubsection[{key\-Pressed}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::key\-Pressed (
-\begin{DoxyParamCaption}
-\item[{int}]{key}
-\end{DoxyParamCaption}
-)}}\label{classtest_app_a904d147c7e532cb92656d5dd4895cd26}
-Key released.
-
-\begin{DoxyAuthor}{Author}
-Rahul 
-\end{DoxyAuthor}
-\begin{DoxyDate}{Date}
-9/21/2012
-\end{DoxyDate}
-
-\begin{DoxyParams}{Parameters}
-{\em key} & The key.\\
+{\em udp\-Message} & The Message received though U\-D\-P .. \\
 \hline
 \end{DoxyParams}
 \hypertarget{classtest_app_a3f200702ce91859cac2872a39302679d}{\index{test\-App@{test\-App}!mouse\-Pressed@{mouse\-Pressed}}
@@ -219,8 +323,6 @@ Rahul
 
 Mouse pressed. 
 
-This function will be called when the mouse is pressed
-
 \begin{DoxyAuthor}{Author}
 Rahul 
 \end{DoxyAuthor}
@@ -236,88 +338,89 @@ Rahul
 {\em button} & The button. \\
 \hline
 \end{DoxyParams}
-\hypertarget{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}{\index{test\-App@{test\-App}!mouse\-Released@{mouse\-Released}}
-\index{mouse\-Released@{mouse\-Released}!testApp@{test\-App}}
-\subsubsection[{mouse\-Released}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::mouse\-Released (
-\begin{DoxyParamCaption}
-\item[{int}]{x, }
-\item[{int}]{y, }
-\item[{int}]{button}
-\end{DoxyParamCaption}
-)}}\label{classtest_app_aa3680ffc782b1e5c451289817f20c9c6}
-
-
-Mouse released. 
-
-\begin{DoxyAuthor}{Author}
-Rahul 
-\end{DoxyAuthor}
-\begin{DoxyDate}{Date}
-9/21/2012
-\end{DoxyDate}
-
-\begin{DoxyParams}{Parameters}
-{\em x} & The x coordinate. \\
-\hline
-{\em y} & The y coordinate. \\
-\hline
-{\em button} & The button. \\
-\hline
-\end{DoxyParams}
-\hypertarget{classtest_app_ad431db15b6150b965cd52bcba8e16e11}{\index{test\-App@{test\-App}!setup@{setup}}
-\index{setup@{setup}!testApp@{test\-App}}
-\subsubsection[{setup}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::setup (
+\hypertarget{classtest_app_ac374af2c9d11d72f27d79e16f3902b95}{\index{test\-App@{test\-App}!reset\-Model\-Variables@{reset\-Model\-Variables}}
+\index{reset\-Model\-Variables@{reset\-Model\-Variables}!testApp@{test\-App}}
+\subsubsection[{reset\-Model\-Variables}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::reset\-Model\-Variables (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classtest_app_ad431db15b6150b965cd52bcba8e16e11}
-
-
-Setups this object. 
-
-\begin{DoxyAuthor}{Author}
-Rahul 
-\end{DoxyAuthor}
-\begin{DoxyDate}{Date}
-9/21/2012 
-\end{DoxyDate}
-Constructor.
-
-\begin{DoxyAuthor}{Author}
-Rahul 
-\end{DoxyAuthor}
-\begin{DoxyDate}{Date}
-9/21/2012
-\end{DoxyDate}
-
-\begin{DoxyParams}{Parameters}
-{\em parameter1} & The first parameter.\\
-\hline
-\end{DoxyParams}
-\hypertarget{classtest_app_af88f7715b2e0a9692b4ec947fad63c31}{\index{test\-App@{test\-App}!setup\-Models@{setup\-Models}}
-\index{setup\-Models@{setup\-Models}!testApp@{test\-App}}
-\subsubsection[{setup\-Models}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::setup\-Models (
+)}}\label{classtest_app_ac374af2c9d11d72f27d79e16f3902b95}
+Just to reset the touch\-\_\-selected variable of the models ,to show that nothing selected .. \hypertarget{classtest_app_a6a4db7a6a914fc4899763fc94bfca4b7}{\index{test\-App@{test\-App}!setup\-Tracker@{setup\-Tracker}}
+\index{setup\-Tracker@{setup\-Tracker}!testApp@{test\-App}}
+\subsubsection[{setup\-Tracker}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::setup\-Tracker (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{classtest_app_af88f7715b2e0a9692b4ec947fad63c31}
-Constructor.
+)}}\label{classtest_app_a6a4db7a6a914fc4899763fc94bfca4b7}
+
+
+Sets up the tracker. 
 
 \begin{DoxyAuthor}{Author}
 Rahul 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-9/21/2012
+10/28/2012 
+\end{DoxyDate}
+\hypertarget{classtest_app_ae9ee24f0c2bec5965519deef1a14da16}{\index{test\-App@{test\-App}!translate\-\_\-3\-D\-\_\-\-Model@{translate\-\_\-3\-D\-\_\-\-Model}}
+\index{translate\-\_\-3\-D\-\_\-\-Model@{translate\-\_\-3\-D\-\_\-\-Model}!testApp@{test\-App}}
+\subsubsection[{translate\-\_\-3\-D\-\_\-\-Model}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::translate\-\_\-3\-D\-\_\-\-Model (
+\begin{DoxyParamCaption}
+\item[{string}]{message}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_ae9ee24f0c2bec5965519deef1a14da16}
+
+
+Translate 3 d model.ip\%. 
+
+This function will translate the 3\-D Model depending on users finger movement on the touch screen ...
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10/28/2012
 \end{DoxyDate}
 
 \begin{DoxyParams}{Parameters}
-{\em parameter1} & The first parameter. \\
-\hline
-{\em parameter2} & The second parameter. \\
-\hline
-{\em parameter3} & The third parameter.\\
+{\em message} & The message.\\
 \hline
 \end{DoxyParams}
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10/6/2012
+\end{DoxyDate}
+
+\begin{DoxyParams}{Parameters}
+{\em string} & The U\-D\-P string that was Received .. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtest_app_a8afafb31eb516994348caaf54bdea6bb}{\index{test\-App@{test\-App}!translate\-Model@{translate\-Model}}
+\index{translate\-Model@{translate\-Model}!testApp@{test\-App}}
+\subsubsection[{translate\-Model}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::translate\-Model (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{message}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_a8afafb31eb516994348caaf54bdea6bb}
+Have to add the other calc.\-touch\-\_\-selected because deleting it will cause multiple objects to be dragged along and translated .. \hypertarget{classtest_app_ae18e12d5025a2167ebd63ca019468cc0}{\index{test\-App@{test\-App}!U\-D\-P\-Receive@{U\-D\-P\-Receive}}
+\index{U\-D\-P\-Receive@{U\-D\-P\-Receive}!testApp@{test\-App}}
+\subsubsection[{U\-D\-P\-Receive}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::\-U\-D\-P\-Receive (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classtest_app_ae18e12d5025a2167ebd63ca019468cc0}
+
+
+U\-D\-P receive.ip\%. 
+
+\begin{DoxyAuthor}{Author}
+Rahul 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+10/28/2012 
+\end{DoxyDate}
 \hypertarget{classtest_app_a853bbabdab3e7d2f207bb5a2028990bd}{\index{test\-App@{test\-App}!Update\-Tracking@{Update\-Tracking}}
 \index{Update\-Tracking@{Update\-Tracking}!testApp@{test\-App}}
 \subsubsection[{Update\-Tracking}]{\setlength{\rightskip}{0pt plus 5cm}void test\-App\-::\-Update\-Tracking (
@@ -327,7 +430,7 @@ Rahul
 )}}\label{classtest_app_a853bbabdab3e7d2f207bb5a2028990bd}
 
 
-Updates the tracking. 
+Updates the tracking received from the Vuzix i-\/\-Wear Tracker. 
 
 \begin{DoxyAuthor}{Author}
 Rahul 
@@ -336,6 +439,16 @@ Rahul
 9/21/2012 
 \end{DoxyDate}
 
+
+\subsection{Member Data Documentation}
+\hypertarget{classtest_app_a31efaa85f8a900bb659a537d56c73e03}{\index{test\-App@{test\-App}!window\-Height@{window\-Height}}
+\index{window\-Height@{window\-Height}!testApp@{test\-App}}
+\subsubsection[{window\-Height}]{\setlength{\rightskip}{0pt plus 5cm}int window\-Width test\-App\-::window\-Height}}\label{classtest_app_a31efaa85f8a900bb659a537d56c73e03}
+
+
+Gets the width and height of the window. 
+
+The height of the window. 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

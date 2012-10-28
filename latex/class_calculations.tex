@@ -16,10 +16,23 @@
 \hypertarget{class_calculations_a38fbecc378883ac235029f3ed486e11b}{void {\bfseries Calculate2d\-Coordinates} (float lat1, float long1, float lat2, float long2)}\label{class_calculations_a38fbecc378883ac235029f3ed486e11b}
 
 \item 
-\hypertarget{class_calculations_ad8ed2102c1c20465253a06f756bd919b}{void {\bfseries check\-\_\-intersection} (float \hyperlink{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw}, vector$<$ \hyperlink{class_p_o_is}{P\-O\-Is} $>$ \&\hyperlink{test_app_8cpp_a2a45ec4ebd7ddda05fdd49eb42148544}{scenes})}\label{class_calculations_ad8ed2102c1c20465253a06f756bd919b}
+\hypertarget{class_calculations_a55c4865df3581c1bcd6143dfc8469bd7}{void {\bfseries check\-\_\-intersection} (float \hyperlink{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw}, float pitch, vector$<$ \hyperlink{class_p_o_is}{P\-O\-Is} $>$ \&\hyperlink{test_app_8cpp_a2a45ec4ebd7ddda05fdd49eb42148544}{scenes})}\label{class_calculations_a55c4865df3581c1bcd6143dfc8469bd7}
 
 \item 
 \hypertarget{class_calculations_a85384e54e773cd547fcc4b63d5f0ff3b}{bool {\bfseries ray\-\_\-sphere\-\_\-intersect} (of\-Vec3f p1, of\-Vec3f p2, of\-Vec3f sc, double r)}\label{class_calculations_a85384e54e773cd547fcc4b63d5f0ff3b}
+
+\item 
+void \hyperlink{class_calculations_abaf3fb671ac5804f0351ee1e7b8e4400}{check\-\_\-touch\-\_\-intersection} (of\-Vec2f Touch\-\_\-\-Pos, int window\-Width, int window\-Height, float \hyperlink{test_app_8cpp_a7efc219781df4a1e281cb5d348b7fbf9}{yaw})
+\item 
+void \hyperlink{class_calculations_a17d1676ec8479e11289694ba8a7c40f8}{update\-B\-Bay\-Origin} (float x\-Position, float y\-Position, float z\-Position)
+\item 
+\hypertarget{class_calculations_a134141ed8db8810f13841375fb631f69}{void {\bfseries update\-Receiver\-Model\-Origin} (float x\-Position, float y\-Position, float z\-Position)}\label{class_calculations_a134141ed8db8810f13841375fb631f69}
+
+\item 
+\hypertarget{class_calculations_ac4a42ca72e1a272304a90d64d1328961}{void {\bfseries update\-Friend\-Model\-Origin} (float x\-Position, float y\-Position, float z\-Position)}\label{class_calculations_ac4a42ca72e1a272304a90d64d1328961}
+
+\item 
+\hypertarget{class_calculations_a87fd74af5cb6efae37c47bf1bae2fee0}{void {\bfseries update\-Destination\-Origin} (float x\-Position, float y\-Position, float z\-Position)}\label{class_calculations_a87fd74af5cb6efae37c47bf1bae2fee0}
 
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
@@ -82,6 +95,9 @@
 \hypertarget{class_calculations_a6adcaba8df6fa7dd925947c743a07096}{int {\bfseries selected\-\_\-note}}\label{class_calculations_a6adcaba8df6fa7dd925947c743a07096}
 
 \item 
+\hypertarget{class_calculations_aaa14563eb0a7dabfb80b152716e19b36}{int {\bfseries touch\-\_\-selected}}\label{class_calculations_aaa14563eb0a7dabfb80b152716e19b36}
+
+\item 
 \hypertarget{class_calculations_ac11c12fb79134ac8fd3036b5b5cc68f5}{float {\bfseries intersection\-\_\-pt1}}\label{class_calculations_ac11c12fb79134ac8fd3036b5b5cc68f5}
 
 \item 
@@ -105,8 +121,33 @@
 \item 
 \hypertarget{class_calculations_a5f7f606ee1afe8f2c1993a198e334a15}{of\-Vec3f {\bfseries friend\-\_\-loc}}\label{class_calculations_a5f7f606ee1afe8f2c1993a198e334a15}
 
+\item 
+\hypertarget{class_calculations_ab78fd2a4ba387dc48e6fff323e06fe98}{of\-Vec2f {\bfseries touch\-\_\-pos}}\label{class_calculations_ab78fd2a4ba387dc48e6fff323e06fe98}
+
 \end{DoxyCompactItemize}
 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_calculations_abaf3fb671ac5804f0351ee1e7b8e4400}{\index{Calculations@{Calculations}!check\-\_\-touch\-\_\-intersection@{check\-\_\-touch\-\_\-intersection}}
+\index{check\-\_\-touch\-\_\-intersection@{check\-\_\-touch\-\_\-intersection}!Calculations@{Calculations}}
+\subsubsection[{check\-\_\-touch\-\_\-intersection}]{\setlength{\rightskip}{0pt plus 5cm}void Calculations\-::check\-\_\-touch\-\_\-intersection (
+\begin{DoxyParamCaption}
+\item[{of\-Vec2f}]{Touch\-\_\-\-Pos, }
+\item[{int}]{window\-Width, }
+\item[{int}]{window\-Height, }
+\item[{float}]{yaw}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_calculations_abaf3fb671ac5804f0351ee1e7b8e4400}
+$<$ Touch\-\_\-\-Pos is the vector that stores the touch position from the center . \hypertarget{class_calculations_a17d1676ec8479e11289694ba8a7c40f8}{\index{Calculations@{Calculations}!update\-B\-Bay\-Origin@{update\-B\-Bay\-Origin}}
+\index{update\-B\-Bay\-Origin@{update\-B\-Bay\-Origin}!Calculations@{Calculations}}
+\subsubsection[{update\-B\-Bay\-Origin}]{\setlength{\rightskip}{0pt plus 5cm}void Calculations\-::update\-B\-Bay\-Origin (
+\begin{DoxyParamCaption}
+\item[{float}]{x\-Position, }
+\item[{float}]{y\-Position, }
+\item[{float}]{z\-Position}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_calculations_a17d1676ec8479e11289694ba8a7c40f8}
+Dunno y but the axis is Flipped .. 
 
 The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 

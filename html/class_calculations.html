@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Groups</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Groups</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -104,12 +104,25 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>calculateHaversineDi
 <tr class="memitem:a38fbecc378883ac235029f3ed486e11b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a38fbecc378883ac235029f3ed486e11b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Calculate2dCoordinates</b> (float lat1, float long1, float lat2, float long2)</td></tr>
 <tr class="separator:a38fbecc378883ac235029f3ed486e11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8ed2102c1c20465253a06f756bd919b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8ed2102c1c20465253a06f756bd919b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>check_intersection</b> (float <a class="el" href="test_app_8cpp.html#a7efc219781df4a1e281cb5d348b7fbf9">yaw</a>, vector&lt; <a class="el" href="class_p_o_is.html">POIs</a> &gt; &amp;<a class="el" href="test_app_8cpp.html#a2a45ec4ebd7ddda05fdd49eb42148544">scenes</a>)</td></tr>
-<tr class="separator:ad8ed2102c1c20465253a06f756bd919b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c4865df3581c1bcd6143dfc8469bd7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55c4865df3581c1bcd6143dfc8469bd7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>check_intersection</b> (float <a class="el" href="test_app_8cpp.html#a7efc219781df4a1e281cb5d348b7fbf9">yaw</a>, float pitch, vector&lt; <a class="el" href="class_p_o_is.html">POIs</a> &gt; &amp;<a class="el" href="test_app_8cpp.html#a2a45ec4ebd7ddda05fdd49eb42148544">scenes</a>)</td></tr>
+<tr class="separator:a55c4865df3581c1bcd6143dfc8469bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85384e54e773cd547fcc4b63d5f0ff3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85384e54e773cd547fcc4b63d5f0ff3b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>ray_sphere_intersect</b> (ofVec3f p1, ofVec3f p2, ofVec3f sc, double r)</td></tr>
 <tr class="separator:a85384e54e773cd547fcc4b63d5f0ff3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaf3fb671ac5804f0351ee1e7b8e4400"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calculations.html#abaf3fb671ac5804f0351ee1e7b8e4400">check_touch_intersection</a> (ofVec2f Touch_Pos, int windowWidth, int windowHeight, float <a class="el" href="test_app_8cpp.html#a7efc219781df4a1e281cb5d348b7fbf9">yaw</a>)</td></tr>
+<tr class="separator:abaf3fb671ac5804f0351ee1e7b8e4400"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17d1676ec8479e11289694ba8a7c40f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_calculations.html#a17d1676ec8479e11289694ba8a7c40f8">updateBBayOrigin</a> (float xPosition, float yPosition, float zPosition)</td></tr>
+<tr class="separator:a17d1676ec8479e11289694ba8a7c40f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a134141ed8db8810f13841375fb631f69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a134141ed8db8810f13841375fb631f69"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateReceiverModelOrigin</b> (float xPosition, float yPosition, float zPosition)</td></tr>
+<tr class="separator:a134141ed8db8810f13841375fb631f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a42ca72e1a272304a90d64d1328961"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4a42ca72e1a272304a90d64d1328961"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateFriendModelOrigin</b> (float xPosition, float yPosition, float zPosition)</td></tr>
+<tr class="separator:ac4a42ca72e1a272304a90d64d1328961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87fd74af5cb6efae37c47bf1bae2fee0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87fd74af5cb6efae37c47bf1bae2fee0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateDestinationOrigin</b> (float xPosition, float yPosition, float zPosition)</td></tr>
+<tr class="separator:a87fd74af5cb6efae37c47bf1bae2fee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -170,6 +183,9 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selected_model</b></td
 <tr class="memitem:a6adcaba8df6fa7dd925947c743a07096"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6adcaba8df6fa7dd925947c743a07096"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>selected_note</b></td></tr>
 <tr class="separator:a6adcaba8df6fa7dd925947c743a07096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa14563eb0a7dabfb80b152716e19b36"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa14563eb0a7dabfb80b152716e19b36"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>touch_selected</b></td></tr>
+<tr class="separator:aaa14563eb0a7dabfb80b152716e19b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac11c12fb79134ac8fd3036b5b5cc68f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac11c12fb79134ac8fd3036b5b5cc68f5"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>intersection_pt1</b></td></tr>
 <tr class="separator:ac11c12fb79134ac8fd3036b5b5cc68f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,14 +210,106 @@ ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>destination1</b></
 <tr class="memitem:a5f7f606ee1afe8f2c1993a198e334a15"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f7f606ee1afe8f2c1993a198e334a15"></a>
 ofVec3f&#160;</td><td class="memItemRight" valign="bottom"><b>friend_loc</b></td></tr>
 <tr class="separator:a5f7f606ee1afe8f2c1993a198e334a15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab78fd2a4ba387dc48e6fff323e06fe98"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab78fd2a4ba387dc48e6fff323e06fe98"></a>
+ofVec2f&#160;</td><td class="memItemRight" valign="bottom"><b>touch_pos</b></td></tr>
+<tr class="separator:ab78fd2a4ba387dc48e6fff323e06fe98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="abaf3fb671ac5804f0351ee1e7b8e4400"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Calculations::check_touch_intersection </td>
+          <td>(</td>
+          <td class="paramtype">ofVec2f&#160;</td>
+          <td class="paramname"><em>Touch_Pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>windowWidth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>windowHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>yaw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>&lt; Touch_Pos is the vector that stores the touch position from the center . </p>
+
+</div>
+</div>
+<a class="anchor" id="a17d1676ec8479e11289694ba8a7c40f8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Calculations::updateBBayOrigin </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>xPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>yPosition</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>zPosition</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Dunno y but the axis is Flipped .. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="_calculations_8h_source.html">Calculations.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 3 2012 00:38:50 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 28 2012 06:36:38 for Thesis Project - OpenFrameworks Part by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

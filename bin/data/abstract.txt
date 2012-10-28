@@ -1,0 +1,4 @@
+Exploring Interaction Techniques with HMD and Mobile Phones for Outdoor AR.
+
+Abstract:With Google's Project Glass releasing in a couple of months,There is a widespread interest and hope that the usage of HMDS will become common because of their small form factor . Although using HMDs can be very useful for overlaying Visual Information,Some operations are better suited on Handheld Devices such as text entry,gestures etc.
+In this talk ,I will talk about some of the interaction techniques that we have developed for this purpose.Since this project is a collaboration between HITLab and BlackBay ,I shall also describe some use cases of our system for the Courier Service Industy. 

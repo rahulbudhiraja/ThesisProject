@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['global_20integer_20variables',['Global integer variables',['../group___int_variables.html',1,'']]]
+  ['gui',['GUI',['../group___g_u_i.html',1,'']]]
 ];

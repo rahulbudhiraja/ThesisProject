@@ -6,14 +6,6 @@
 
 #ifndef _TEST_APP
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \def _TEST_APP
-///
-/// \brief A macro that defines test application.
-///
-/// \author Rahul
-/// \date 9/21/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define _TEST_APP
 
@@ -49,8 +41,13 @@ class testApp : public ofBaseApp{
 
 public:
 
+	
 	void setup();
+
+
+	
 	void update();
+	
 	void draw();
 
 	void keyPressed  (int key);
@@ -75,21 +72,38 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \fn void testApp::UpdateTracking();
 	///
-	/// \brief Updates the tracking.
+	/// \brief Updates the tracking received from the Vuzix i-Wear Tracker.
 	///
 	/// \author Rahul
 	/// \date 9/21/2012
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-
+			
 	void UpdateTracking();
-	void setupTracker();
-	void setupModels();
-	void drawModels();
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::setupTracker()
+	///
+	/// \brief Sets up the tracker.
+	///
+	/// \author Rahul
+	/// \date 10/28/2012
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// UDP Stuff ..
+	void setupTracker();
+	
+
+
+	/*
+	* \defgroup GUI
+	* @{
+	*/
+	/// \name UDP Connection Variables
+	/// These Variables will be used to setup the UDP connections 
 
 	/// \brief The UDP connection.
 	ofxUDPManager udpConnection;
@@ -99,35 +113,48 @@ public:
 	/// \brief The UDP receive connection.
 	ofxUDPManager udpReceiveConnection;
 
-	/// \brief The mono.
+	///@}
+	
+	/// \brief The Font Variable,Will store the fonts used for debugging...
 	ofTrueTypeFont  mono;
 	/// \brief The monosm.
 	ofTrueTypeFont  monosm;
 
-	/**
-	 * \defgroup IntVariables Global integer variables
-	 * @{
-	 */
-	
-	
 
-
-	///@{
-	
-	///	\name The AssimpModelLoader Variables ..
-	///		  These Variables will load all the Models that were used for the BlackBayAR demo .
-	///	\brief BlackBay Models ..	  
-	
-	ofxAssimpModelLoader bb_model,cr_model,lr_model,ls_model,pgn_model,pgy_model,pog_model,rc_model,sr_model,tbox_model;
-	
-	ofxAssimpModelLoader squirrelModel;
-
-	///@}
+	/*
+	* \defgroup GUI
+	* @{
+	*/
+    /// \name GUI stuff ..
+    /// These Functions can be easily replaced as OpenFrameWorks already has functions for the same ,but I am keeping them here for now ..
+	/// \brief GUIFunctions 
 
 	void drawAxes();
+
 	void drawPlane();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::drawTouches(string udpMessage);
+	///
+	/// \brief If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.
+	///
+	/// \author Rahul
+	/// \date 9/28/2012
+	///
+	/// \param udpMessage The Message received though UDP ..
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void drawTouches(string udpMessage);
+
+
+	
+///@}
+
+
 	void UDPReceive();
 
+	
+	
 	void addObjecttoScene(string);
 
 	ofColor Returncolor(string);
@@ -151,23 +178,12 @@ public:
 
 	void drawAugmentedPlane(float ,float,ofColor,ofColor,int ,string,string);
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/// \fn void testApp::drawTouches(string udpMessage);
-	///
-	/// \brief If the Handheld is being used a controller,This function will take the touch information and draw it on the AR view.
-	///
-	/// \author Rahul
-	/// \date 9/28/2012
-	///
-	/// \param udpMessage The Message received though UDP ..
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void drawTouches(string udpMessage);
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \property int windowWidth,windowHeight
 	///
-	/// \brief Gets the height of the window.
+	/// \brief Gets the width and height of the window.
 	///
 	/// \brief The height of the window.
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,23 +204,42 @@ public:
 	/// \param string The UDP string that was Received ..
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 	void translate_3D_Model(string);
 
-	float Bbaymodel_origin[3],Destination_origin[3],Friend_model_origin[3],Reciever_model_origin[3];
-	float Bbaymodel_translate[3],Destination_translate[3],Friend_model_translate[3],Reciever_model_translate[3];
-	
-	float Bbaymodel_rotation,Destination_rotation,Friend_rotation,Receiver_rotation;
-	ofVec3f Bbaymodel_rotAxis,Destination_rotAxis,Friend_rotAxis,Receiver_rotAxis;
-	ofVec3f Bbaymodel_UpdatedSceneMax,Bbaymodel_UpdatedSceneMin,Destination_UpdatedSceneMax,Destination_UpdatedSceneMin,Friend_UpdatedSceneMax,Friend_UpdatedSceneMin,Receiver_UpdatedSceneMax,Receiver_UpdatedSceneMin;
-	
-	float bbay_previousScale,dest_prevscale,friend_prevscale,recv_prevscale;
 
-	void updateScreenMaxandMin();
+	/** \addtogroup GUI
+	*  @{
+	*/
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::setupFonts()
+	///
+	/// \brief Sets up the fonts
+	/// These are not used much but can be used during debugging when you want to check which model is selected ..The selected model will appear on upper-middle part 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void set_model_initial_position();
 	void setupFonts();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::drawTouchImpressions(vector <string>message,bool somethingSelected=false)
+	///
+	/// \brief Draw touch impressions.
+	///
+	/// \author Rahul
+	/// \date 10/28/2012
+	///
+	/// \param message   The Split components of the mssage
+	/// \param somethingSelected (optional) Is something selected ?.
+	////////////////////////////////////////////////////////////////////////////////////////////////////7
+	void drawTouchImpressions(vector <string>message,bool);
+
+	/// @}
+
+
 	void setupUDPConnections();
+	
+	
 	void setupCrosshair();
 	void updateModelPositions();
 
@@ -212,7 +247,9 @@ public:
 
 	void drawCrosshair();
 	string Receive_Message();
-	void drawTouchImpressions(vector <string>message,bool);
+
+
+	
     void translateModel(vector <string>);
 	void storeFingerPosition(vector<string>);
 	void Check_if_Finger_Intersects_3DModel(vector <string>);
@@ -223,8 +260,7 @@ public:
 	vector <float> convertedTouchPoints;
 	
 	int Check_for_Finger_Intersections();
-	bool intersect_model(ofVec3f ,ofVec3f ,vector <float>);
-
+	
 	void convertPhonetoScreenCoordinates(string rawTouchPoints);
 
 	void temp_calculateMaxandMin();
@@ -233,14 +269,37 @@ public:
 	int Check_for_crosshair_model_intersection();
 	int crosshair_selected;
 
+
+	/*
+	* \defgroup XML
+	* @{
+	*/
+	/// \name XML Stuff
+	/// Takes care of loading the Models from the XML file,Storage,Displaying and Checking if the fingers touch the Model.
+	/// \brief 
+	
+
 	ofxXmlSettings ModelsFile;
+
 	vector<Models> ModelsList;
+
+	/// Load Models from the XML file
 	void loadModelsfromXML();
 
-	/// Draws the models Loaded from the XML.
+	/// Draws the models Loaded from the XML file (Default:data/Models.xml).
 	void drawModelsXML();
+	
+	///@}
 
-	int AndroidPhoneResWidth,AndroidPhoneResHeight;
+	/// Width  of the Android Phone's Screen Resolution
+	int AndroidPhoneResWidth;
+
+	/// Height of the Android Phone's Screen Resolution
+	int AndroidPhoneResHeight;
+
+	
+
+	
 };
 
 #endif

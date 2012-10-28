@@ -114,8 +114,6 @@ bool Models::intersect_model(vector <float>Touches,ofCamera camera)
 	if(UpdatedSceneMax_screencoods.z>1||UpdatedSceneMin_screencoods.z>1)
 	{doesintersect=false;/*cout<<"zzzzzzz "<<UpdatedSceneMax_screencoods.z<<"\t\t"<<UpdatedSceneMin_screencoods.z<<"\n\n\n\n";*/}
 
-	if(doesintersect)
-	touch_selected=doesintersect;
 
 	return doesintersect;
 }
