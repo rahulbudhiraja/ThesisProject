@@ -119,10 +119,19 @@ void testApp::setup()
 	crosshair_selected=0;
 	loadModelsfromXML();
 	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720; /// 
-	
+
+	SetupImageMatrices();
+	setupARToolkitStuff();
+
+	iphone5Model.loadModel("iphone/iPhone5.dae",false);
+	iphone5Model.setScaleNomalization(false);
+	iphone5Model.setScale(0.03,0.03,0.03);
+	iphone5Model.setRotation(0,90,0,0,1);
+
 }
 //--------------------------------------------------------------
 void testApp::update(){
+GrabCameraFrameandConvertMatrices();
 }
 //--------------------------------------------------------------
 void testApp::draw()
@@ -158,6 +167,17 @@ void testApp::draw()
 			ofPopMatrix();
 		}
 
+		iphone5Model.drawFaces();
+		if(artk.getNumDetectedMarkers()!=0)
+		{
+			iphone5Model.setPosition(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()-artk.getCameraPosition(0).y/10);
+			//ofBox(ofVec3f(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()+artk.getCameraPosition(0).y/10),20);
+					
+			//cout<<"\n\n Marker Detected"<<artk.getNumDetectedMarkers()<<"     "<<ofGetSystemTime();
+			string CameraPosition="CameraPos,"+ofToString(-artk.getCameraPosition(0).x/10)+","+ ofToString(artk.getCameraPosition(0).z/10)+","+ofToString(-artk.getCameraPosition(0).y/10+10)+",end";
+			int sent = udpSendCameraPosition.Send(CameraPosition.c_str(),CameraPosition.length());
+			cout<<"\n\n Camera Position  "<<artk.getCameraPosition(0).x/10 <<"\t\t"<<artk.getCameraPosition(0).y/10<<"\t\t"<<artk.getCameraPosition(0).z/10;
+		}
 		cam.end();
 
 		string message=Receive_Message();
@@ -203,6 +223,8 @@ void testApp::draw()
 	{		ofDrawBitmapString(ofToString(Check_for_Finger_Intersections()),ofGetWidth()-430,30);
 	convertedTouchPoints.clear();
 	}
+
+	
 	drawCrosshair();
 }
 //--------------------------------------------------------------
@@ -292,14 +314,6 @@ void testApp::drawPlane()
 	//    translate(0,0,10);
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn void testApp::UDPReceive()
-///
-/// \brief UDP receive.%ip%
-///
-/// \author Rahul
-/// \date 10/28/2012
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void testApp::UDPReceive()
 {
@@ -481,6 +495,10 @@ void testApp::setupUDPConnections()
 	udpReceiveConnection.Create();
 	udpReceiveConnection.Bind(12003);
 	udpReceiveConnection.SetNonBlocking(true);
+
+	udpSendCameraPosition.Create();
+	udpSendCameraPosition.Connect("192.168.43.1",12005);
+	udpSendCameraPosition.SetNonBlocking(true);
 }
 void testApp::setupCrosshair()
 {
@@ -490,7 +508,7 @@ void testApp::setupCrosshair()
 }
 void testApp::updateModelPositions()
 {
-	for(int i=0;i<ModelsList.size();i++)
+	for(int i	=0;i<ModelsList.size();i++)
 		ModelsList[i].updatePosition();
 }
 void testApp::drawCrosshair()
@@ -673,16 +691,6 @@ int testApp::Check_for_Finger_Intersections()
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/// \fn void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
-///
-/// \brief Convert phoneto screen coordinates.%ip%
-///
-/// \author Rahul
-/// \date 10/28/2012
-///
-/// \param rawTouchPoints The raw touch points.
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
 {
@@ -735,4 +743,67 @@ void testApp::resetModelVariables()
 	/// Just to reset the touch_selected variable of the models ,to show that nothing selected ..
 	for(int i=0;i<ModelsList.size();i++)
 		ModelsList[i].touch_selected=false;
+}
+
+void testApp::SetupImageMatrices()
+{
+	cameraWidth= 640;
+	cameraHeight= 480;
+
+	vidGrabber.initGrabber(cameraWidth, cameraHeight);
+
+	colorImage.allocate(cameraWidth, cameraHeight);
+	grayImage.allocate(cameraWidth, cameraHeight);
+	grayThres.allocate(cameraWidth, cameraHeight);
+
+	 
+}
+
+void testApp::setupARToolkitStuff()
+{
+	//artk.setup(cameraWidth, cameraHeight);
+	artk.setup(cameraWidth, cameraHeight,"RahulMacbookPro.cal","markerboard_480-499.cfg");
+	threshold = 90;
+	artk.setThreshold(threshold);
+}
+
+void testApp::GrabCameraFrameandConvertMatrices()
+{
+	vidGrabber.grabFrame();
+	bool bNewFrame = vidGrabber.isFrameNew();
+
+	if(bNewFrame) {
+
+		colorImage.setFromPixels(vidGrabber.getPixels(), cameraWidth, cameraHeight);
+
+		// convert our camera image to grayscale
+		grayImage = colorImage;
+		// apply a threshold so we can see what is going on
+		grayThres = grayImage;
+		grayThres.threshold(threshold);
+
+		// Pass in the new image pixels to artk
+		artk.update(grayImage.getPixels());
+
+	}
+}
+
+void testApp::checkifMarkerDetected()
+{
+
+	int myIndex = artk.getMarkerIndex(0);
+	if(myIndex >= 0) {	
+		// Get the corners
+		vector<ofPoint> corners;
+		artk.getDetectedMarkerBorderCorners(myIndex, corners);
+		// Can also get the center like this:
+		// ofPoint center = artk.getDetectedMarkerCenter(myIndex);
+		ofSetHexColor(0x0000ff);
+		for(int i=0;i<corners.size();i++) {
+			ofCircle(corners[i].x, corners[i].y, 70);
+		}
+	}
+
+	
+
 }

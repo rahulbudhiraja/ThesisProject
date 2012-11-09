@@ -27,6 +27,8 @@
 #include "ofxXmlSettings.h"
 #include <list>
 #include <Models.h>
+#include "ofxOpenCv.h"
+#include "ofxARToolkitPlus.h"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class testApp
@@ -40,14 +42,23 @@
 class testApp : public ofBaseApp{
 
 public:
-
+  
+	/// \defgroup OpenFrameWorks Default Functions 
+	/// @{
+	///	
+	/// \brief These are the default Functions that are included in an empty OpenFrameWorks Project.
+	/// Main functions to look at are the setup() and draw() functions
 	
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::setup()
+	///
+	/// \brief OpenFrameworks First method that is called at the beginning of the program.Initialize all Variables Here.
+	///
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void setup();
-
-
-	
 	void update();
-	
 	void draw();
 
 	void keyPressed  (int key);
@@ -72,7 +83,8 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 
-
+	/// @} 
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \fn void testApp::UpdateTracking();
 	///
@@ -88,7 +100,7 @@ public:
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	/// \fn void testApp::setupTracker()
 	///
-	/// \brief Sets up the tracker.
+	/// \brief Sets up the Vuzix iWear Tracker.
 	///
 	/// \author Rahul
 	/// \date 10/28/2012
@@ -99,7 +111,7 @@ public:
 
 
 	/*
-	* \defgroup GUI
+	* \defgroup Network
 	* @{
 	*/
 	/// \name UDP Connection Variables
@@ -112,6 +124,26 @@ public:
 	ofxUDPManager udpSendConnection;
 	/// \brief The UDP receive connection.
 	ofxUDPManager udpReceiveConnection;
+
+	ofxUDPManager udpSendCameraPosition;
+
+	/// \brief Sets up the Connections and Opens the ports
+	void setupUDPConnections();
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::UDPReceive()
+	/// \name UDPReceive
+	///
+	/// \brief This function will receive the UDP Packets and check whether the command sent from the Android Phone includes information about adding a Notes Pane.
+	///        If a note is added,then the message will be received in the format 
+	///        "note,Latitude_of_note,Longitude_of_note,Note Heading,Note Text"
+	///         
+	/// \author Rahul
+	/// \date 10/28/2012
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void UDPReceive();
 
 	///@}
 	
@@ -151,7 +183,7 @@ public:
 ///@}
 
 
-	void UDPReceive();
+	
 
 	
 	
@@ -229,15 +261,15 @@ public:
 	/// \author Rahul
 	/// \date 10/28/2012
 	///
-	/// \param message   The Split components of the mssage
+	/// \param message   The Split components of the message
 	/// \param somethingSelected (optional) Is something selected ?.
 	////////////////////////////////////////////////////////////////////////////////////////////////////7
+	
 	void drawTouchImpressions(vector <string>message,bool);
+	
+	/* @}*/
 
-	/// @}
 
-
-	void setupUDPConnections();
 	
 	
 	void setupCrosshair();
@@ -248,8 +280,8 @@ public:
 	void drawCrosshair();
 	string Receive_Message();
 
-
 	
+
     void translateModel(vector <string>);
 	void storeFingerPosition(vector<string>);
 	void Check_if_Finger_Intersects_3DModel(vector <string>);
@@ -261,6 +293,14 @@ public:
 	
 	int Check_for_Finger_Intersections();
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// \fn void testApp::convertPhonetoScreenCoordinates(string rawTouchPoints)
+	///
+	/// \brief Convert phone to screen coordinates.
+	///
+	/// \param rawTouchPoints The raw touch points.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	void convertPhonetoScreenCoordinates(string rawTouchPoints);
 
 	void temp_calculateMaxandMin();
@@ -289,7 +329,7 @@ public:
 	/// Draws the models Loaded from the XML file (Default:data/Models.xml).
 	void drawModelsXML();
 	
-	///@}
+	/// @}
 
 	/// Width  of the Android Phone's Screen Resolution
 	int AndroidPhoneResWidth;
@@ -297,8 +337,40 @@ public:
 	/// Height of the Android Phone's Screen Resolution
 	int AndroidPhoneResHeight;
 
-	
 
+	/// \defgroup ARToolkitPlus Variables
+	/// @{
+	///	
+	/// \brief These are the variables and Functions that ARToolkit uses.
+
+	/* ARToolKitPlus class */	
+	ofxARToolkitPlus artk;	
+	int threshold;
+
+	void setupARToolkitStuff();
+	void checkifMarkerDetected();
+
+	/// @}
+
+	/// \defgroup OpenCV Variables
+	/// @{
+	///	
+	/// \brief These are the variables and Functions that OpenCV uses.
+	/* OpenCV images */
+	
+	ofVideoGrabber vidGrabber;
+	ofxCvColorImage colorImage;
+	ofxCvGrayscaleImage grayImage;
+	ofxCvGrayscaleImage	grayThres;
+
+	int cameraWidth, cameraHeight;
+
+	void SetupImageMatrices();
+	void GrabCameraFrameandConvertMatrices();
+
+	/// @}
+
+	ofxAssimpModelLoader iphone5Model;
 	
 };
 
