@@ -36,7 +36,9 @@ int	Pid	= 0;
 using namespace std;
 HMODULE hMod;
 
-ofCamera cam,dummy;
+ofCamera cam,dummy,radarCam;
+
+
 /// \brief The roll.
 float yaw=0,roll=0;
 
@@ -147,6 +149,8 @@ void testApp::draw()
 			int sent = udpSendConnection.Send("Change",6);//// Send a Change message and change to dirn.compare==up;
 			dirn="up";
 		}
+
+
 		cam.setPosition(0,0,10);
 		cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
 
@@ -224,7 +228,9 @@ void testApp::draw()
 	convertedTouchPoints.clear();
 	}
 
-	
+	drawRadar();
+
+
 	drawCrosshair();
 }
 //--------------------------------------------------------------
@@ -806,4 +812,41 @@ void testApp::checkifMarkerDetected()
 
 	
 
+}
+
+void testApp::drawRadar()
+{
+	// Setup an overhead Camera ...
+
+	radarCam.setPosition(0,0,750);
+	radarCam.lookAt(ofVec3f(0,0,0),ofVec3f(0.0,1.0,0));
+	radarCam.roll(g_fYaw);
+
+	ofSetColor(255,255,255);
+	
+	radarCam.begin();
+	
+	ofViewport(0,ofGetHeight()-200,200,200);
+	drawModels();
+	
+	radarCam.end();
+
+	// The Circles ...
+
+	ofEnableAlphaBlending();
+
+	ofNoFill();
+	
+	ofSetColor(255,255,255);
+	ofCircle(105,ofGetHeight()-100,100);
+	ofCircle(105,ofGetHeight()-100,60);
+	ofCircle(105,ofGetHeight()-100,30);
+	
+	ofFill();
+
+	ofSetColor(0,255,0,40);
+    ofCircle(105,ofGetHeight()-100,100);
+
+	ofDisableAlphaBuilding();
+	
 }

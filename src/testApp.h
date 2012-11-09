@@ -371,6 +371,11 @@ public:
 	/// @}
 
 	ofxAssimpModelLoader iphone5Model;
+
+
+	/// Radar code ..
+
+	void drawRadar();
 	
 };
 
