@@ -74,9 +74,6 @@ void Models::calculateSceneMaxandMin()
 {
 	UpdatedSceneMax=Position+Model.getSceneMax(true).rotate(_RotationAngle,RotationAxis);
 	UpdatedSceneMin=Position+Model.getSceneMin(true).rotate(_RotationAngle,RotationAxis);
-
-
-
 }
 
 void Models::checkifFingersTouchModel(vector<float>TouchPoints)
@@ -179,4 +176,16 @@ void Models::updateScale()
 	Previous_Scale[1]=Scale[1];
 	Previous_Scale[2]=Scale[2];
 
+}
+
+void Models::setDescription(string description)
+{
+	Description=description;
+
+}
+
+string Models::getDescription()
+{
+	return Description;
+	
 }

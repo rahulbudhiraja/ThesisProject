@@ -376,6 +376,9 @@ public:
 	/// Radar code ..
 
 	void drawRadar();
+
+	ofTrueTypeFont Serif_25;
+	void DrawDescription(string description);
 	
 };
 

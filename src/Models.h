@@ -26,7 +26,7 @@ public:
 	ofVec2f MidPoint;
 	ofVec3f UpdatedSceneMax_screencoods,UpdatedSceneMin_screencoods;
 	ofVec3f temp_translate;
-	
+	string Description;
 
 
 public:
@@ -37,6 +37,7 @@ public:
 	void setId(int);
 	void setRotationAxisandAngle(float,float,float,float);
 	void setScale(float,float,float);
+	void setDescription(string description);
 	void loadandSetupModels();
 	void drawModel();
 	void setPosition(float,float,float);
@@ -48,5 +49,5 @@ public:
 	ofxAssimpModelLoader getModel();
 	void setPreviousScale();
 	void updateScale();
-
+	string getDescription();
 };

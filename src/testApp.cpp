@@ -92,6 +92,9 @@ bool beginCrossDimSelection=false,keepCrossDimSelected=true;
 int crossDimObjSelected=0;
 long time_begin_crossDimSelection=0;
 
+
+int guiWidth=300,guiHeight=125;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn void testApp::setup()
 ///
@@ -124,7 +127,7 @@ void testApp::setup()
 
 	SetupImageMatrices();
 	setupARToolkitStuff();
-
+ 
 	iphone5Model.loadModel("iphone/iPhone5.dae",false);
 	iphone5Model.setScaleNomalization(false);
 	iphone5Model.setScale(0.03,0.03,0.03);
@@ -215,7 +218,8 @@ void testApp::draw()
 				drawTouches(message);
 
 			else calc.touch_selected=0;
-
+			if(crosshair_selected)
+				DrawDescription(ModelsList[crosshair_selected].getDescription());
 		}
 	}
 	else if(dirn.compare("up")==0)
@@ -484,7 +488,7 @@ void testApp::translate_3D_Model(string message)
 void testApp::setupFonts()
 {
 	Serif_10.loadFont("Serif.ttf",10);
-	Serif_15.loadFont("Serif.ttf",15);
+	Serif_25.loadFont("Serif.ttf",25);
 	
 	///load our type
 	mono.loadFont("type/mono.ttf", 9);
@@ -662,16 +666,7 @@ int testApp:: Check_for_crosshair_model_intersection()
 	Crosshair_coords.push_back(ofGetWidth()/2);
 	Crosshair_coords.push_back(ofGetHeight()/2);
 	crosshair_selected=0;
-	/*if(intersect_model(cam.worldToScreen(Bbaymodel_UpdatedSceneMax),cam.worldToScreen(Bbaymodel_UpdatedSceneMin),Crosshair_coords))
-	crosshair_selected=1;
-	else if(intersect_model(cam.worldToScreen(Destination_UpdatedSceneMax),cam.worldToScreen(Destination_UpdatedSceneMin),Crosshair_coords))
-	crosshair_selected=2;
-	else if(intersect_model(cam.worldToScreen(Friend_UpdatedSceneMax),cam.worldToScreen(Friend_UpdatedSceneMin),Crosshair_coords))
-	crosshair_selected=3;
-	else if(intersect_model(cam.worldToScreen(Receiver_UpdatedSceneMax),cam.worldToScreen(Receiver_UpdatedSceneMin),Crosshair_coords))
-	crosshair_selected=4;
 
-	*/
 	for (int i=0;i<ModelsList.size();i++)
 	{
 		if(ModelsList[i].intersect_model(Crosshair_coords,cam)&&calc.touch_selected==0)	
@@ -728,6 +723,7 @@ void testApp::loadModelsfromXML()
 		model_object.setScale(ModelsFile.getValue("Scale::x",0.0,0),ModelsFile.getValue("Scale::y",0.0,0),ModelsFile.getValue("Scale::z",0.0,0));
 		model_object.setRotationAxisandAngle(ModelsFile.getValue("Rotation::Angle",0.0,0),ModelsFile.getValue("Rotation::Axis::x",0.0,0),ModelsFile.getValue("Rotation::Axis::y",0.0,0),ModelsFile.getValue("Rotation::Axis::z",0.0,0));
 		model_object.setPosition(ModelsFile.getValue("Position::x",0.0,0),ModelsFile.getValue("Position::y",0.0,0),ModelsFile.getValue("Position::z",0.0,0));
+		model_object.setDescription(ModelsFile.getValue("Description","",0));
 		ModelsFile.popTag();
 		model_object.loadandSetupModels();
 
@@ -820,14 +816,14 @@ void testApp::drawRadar()
 
 	radarCam.setPosition(0,0,750);
 	radarCam.lookAt(ofVec3f(0,0,0),ofVec3f(0.0,1.0,0));
-	radarCam.roll(g_fYaw);
+	//radarCam.roll(g_fYaw);
 
 	ofSetColor(255,255,255);
 	
 	radarCam.begin();
 	
 	ofViewport(0,ofGetHeight()-200,200,200);
-	drawModels();
+	drawModelsXML();
 	
 	radarCam.end();
 
@@ -842,11 +838,71 @@ void testApp::drawRadar()
 	ofCircle(105,ofGetHeight()-100,60);
 	ofCircle(105,ofGetHeight()-100,30);
 	
+	ofPushMatrix();
+	
+	ofTranslate(105,ofGetHeight()-100);
+	ofRotate(g_fYaw,0,0,1);
+	
+
+	ofSetColor(255,255,255,98);
 	ofFill();
+	ofSetPolyMode(OF_POLY_WINDING_NONZERO);
+
+	
+
+
+	ofBeginShape();
+		ofVertex(0,0);
+		ofVertex(45,-80);
+		ofVertex(-45,-80);	
+	ofEndShape();
+	
+	ofLine(0,0,45,-80);
+	ofLine(0,0,-45,-80);
+
+	ofPopMatrix();
+	
+	
 
 	ofSetColor(0,255,0,40);
     ofCircle(105,ofGetHeight()-100,100);
+	
+	
 
-	ofDisableAlphaBuilding();
+	ofDisableAlphaBlending();
+	
+}
+
+void testApp::DrawDescription(string description)
+{
+	
+
+//ofEnableAlphaBlending();
+	ofSetColor(255,0,0);
+	
+	//ofEnableArbTex();
+	glAlphaFunc ( GL_GREATER, 0.5) ;  
+	glEnable ( GL_ALPHA_TEST ) ;
+	Serif_25.drawString(description,ofGetWidth()-guiWidth+70,45);
+	glDisable(GL_ALPHA_TEST);	 
+
+	ofSetColor(255);
+
+	//// Draw the White Background 
+	ofRect(ofGetWidth()-guiWidth-10,10,guiWidth,guiHeight);
+
+	ofBeginShape();
+	
+	ofVertex(ofGetWidth()/2,ofGetHeight()/2);
+	ofVertex(ofGetWidth()-guiWidth-10,100);
+	ofVertex(ofGetWidth()-guiWidth+50,guiHeight);
+	
+	ofEndShape();
+
+		//ofDisableAlphaBlending();
+	//ofTranslate(0,0,10);
+
+	//ofTranslate(0,0,-10);
+
 	
 }
