@@ -386,10 +386,19 @@ public:
 	IplImage *colorImg;
 	int redBlobCoordinates[2],blueBlobCoordinates[2],yellowBlobCoordinates[2],greenBlobCoordinates[2];
 
+	// Old blobTracking ..
 	void GetThresholdedImage(IplImage*,string,int coordinates[]);
 	void GrabCameraFrameandSetThreshold();
 	IplImage *frame;
+
+	// New BlobTracking ..
+	ofxCvColorImage rgb,hsb;
+	ofxCvGrayscaleImage hue,sat,bri,filtered,filtered2;    
 	
+	void setupCameraforBlobs();
+	void GrabFrameandFindContours();
+	ofxCvContourFinder contours,contours2;
+
 };
 
 #endif

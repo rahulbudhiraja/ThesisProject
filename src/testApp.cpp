@@ -98,7 +98,8 @@ long time_begin_crossDimSelection=0;
 
 int guiWidth=300,guiHeight=125;
 
-# define TRACKBLOBS
+//# define TRACKBLOBS
+#define NEWTRACKBLOBS
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn void testApp::setup()
@@ -144,6 +145,12 @@ void testApp::setup()
 	setupImgMatrices();
 
 #endif
+
+
+#ifdef NEWTRACKBLOBS
+
+	setupCameraforBlobs();
+#endif
 }
 //--------------------------------------------------------------
 void testApp::update(){
@@ -158,6 +165,10 @@ void testApp::update(){
 
 	GrabCameraFrameandSetThreshold();
 
+#endif
+
+#ifdef NEWTRACKBLOBS
+	GrabFrameandFindContours();
 #endif
 }
 //--------------------------------------------------------------
@@ -249,6 +260,17 @@ void testApp::draw()
 			ofSetColor(0,255,255);
 			ofCircle(ofPoint(yellowBlobCoordinates[0],yellowBlobCoordinates[1]),20);
 
+			ofSetColor(0);
+
+			ofBeginShape();
+			ofVertex(blueBlobCoordinates[0],blueBlobCoordinates[1]);
+			ofVertex(redBlobCoordinates[0],redBlobCoordinates[1]);
+			ofVertex(yellowBlobCoordinates[0],yellowBlobCoordinates[1]);
+			ofVertex(greenBlobCoordinates[0],greenBlobCoordinates[1]);
+			ofEndShape();
+				
+
+
 			//ofLine()
 
 			ofLine(yellowBlobCoordinates[0],yellowBlobCoordinates[1], greenBlobCoordinates[0],greenBlobCoordinates[1]);
@@ -264,6 +286,21 @@ void testApp::draw()
 
 		// Add the scribbling image and the frame...
 		//cvShowImage("thresh", imgYellowThresh);
+
+#endif
+
+#ifdef NEWTRACKBLOBS
+		ofSetColor(255,255,0);
+		for (int i=0; i<contours.nBlobs; i++) 
+			ofCircle(contours.blobs[i].centroid.x*ofGetWindowWidth()/cameraWidth, contours.blobs[i].centroid.y*ofGetWindowHeight()/cameraHeight, 20);
+		
+		ofSetColor(0,255,0);
+		for (int i=0; i<contours2.nBlobs; i++) 
+						ofCircle(contours2.blobs[i].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[i].centroid.y*ofGetWindowHeight()/cameraHeight, 20);
+
+		ofSetColor(0);
+		if(contours.nBlobs>0&&contours2.nBlobs>0)
+				ofRect(min(contours.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth),min(contours.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight, contours2.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight),(abs(contours.blobs[0].centroid.x-contours2.blobs[0].centroid.x)*ofGetWindowWidth())/cameraWidth,(abs(contours.blobs[0].centroid.y-contours2.blobs[0].centroid.y)*ofGetWindowHeight())/cameraHeight);
 
 #endif
 		string message=Receive_Message();
@@ -1018,15 +1055,25 @@ void testApp::GetThresholdedImage(IplImage* img,string color,int coordinates[])
 
 	else if(color.compare("green")==0)
 	// Green Color 
-	cvInRangeS(imgHSV, cvScalar(35, 100, 100), cvScalar(98, 255, 255), imgThreshed);
+	cvInRangeS(imgHSV, cvScalar(45, 100, 100), cvScalar(85, 255, 255), imgThreshed);
 
 	else if(color.compare("red")==0)
-		// Green Color 
-		cvInRangeS(imgHSV, cvScalar(0, 100, 100), cvScalar(17, 255, 255), imgThreshed);
+	{	// Green Color 
+		IplImage *temp1=cvCreateImage(cvGetSize(img), 8, 1);
+		IplImage *temp2=cvCreateImage(cvGetSize(img), 8, 1);
+
+		
+		cvInRangeS(imgHSV, cvScalar(0, 135, 135), cvScalar(20, 255, 255), temp1);
+		cvInRangeS(imgHSV, cvScalar(159, 135, 135), cvScalar(179, 255, 255), temp2);
+		cvOr(temp1,temp2, imgThreshed);
+
+		cvReleaseImage(&temp1);
+		cvReleaseImage(&temp2);
+	}
 
 	else if(color.compare("yellow")==0)
 		// Green Color 
-		cvInRangeS(imgHSV, cvScalar(18, 100, 100), cvScalar(29, 255, 255), imgThreshed);
+		cvInRangeS(imgHSV, cvScalar(18, 100, 100), cvScalar(32, 255, 255), imgThreshed);
 
 	CvMoments *moments = (CvMoments*)malloc(sizeof(CvMoments));
 	cvMoments(imgThreshed, moments, 1);
@@ -1036,7 +1083,7 @@ void testApp::GetThresholdedImage(IplImage* img,string color,int coordinates[])
 	double moment01 = cvGetSpatialMoment(moments, 0, 1);
 	double area = cvGetCentralMoment(moments, 0, 0);
 
-	//cout<<"\n\n Color "<<color<<"Area"<<area<<"\n";
+	cout<<"\n\n Color "<<color<<"Area"<<area<<"\n";
 	// Holding the last and current ball positions
 	int posX = 0;
 	int posY = 0;
@@ -1072,6 +1119,65 @@ void testApp::GrabCameraFrameandSetThreshold()
 		GetThresholdedImage(frame,"red",redBlobCoordinates);
 		GetThresholdedImage(frame,"green",greenBlobCoordinates);
 		GetThresholdedImage(frame,"blue",blueBlobCoordinates);
+
+	}
+}
+
+void testApp::setupCameraforBlobs()
+{
+	cameraWidth=320;cameraHeight=240;
+
+	vidGrabber.setDeviceID(0);
+	vidGrabber.initGrabber(cameraWidth, cameraHeight, true);
+	vidGrabber.videoSettings();
+
+	rgb.allocate(cameraWidth, cameraHeight);
+	hsb.allocate(cameraWidth, cameraHeight);
+	hue.allocate(cameraWidth, cameraHeight);
+	sat.allocate(cameraWidth, cameraHeight);
+	bri.allocate(cameraWidth, cameraHeight);
+
+	filtered.allocate(cameraWidth, cameraHeight);
+	filtered2.allocate(cameraWidth, cameraHeight);
+
+
+}
+
+void testApp::GrabFrameandFindContours()
+{
+
+	vidGrabber.update();	
+
+	if(vidGrabber.isFrameNew())
+	{
+
+	
+
+//copy webcam pixels to rgb image
+rgb.setFromPixels(vidGrabber.getPixels(), cameraWidth,cameraHeight);
+
+//mirror horizontal
+//rgb.mirror(false, true);
+
+//duplicate rgb
+hsb = rgb;
+
+//convert to hsb
+hsb.convertRgbToHsv();
+
+//store the three channels as grayscale images
+hsb.convertToGrayscalePlanarImages(hue, sat, bri);
+
+//filter image based on the hue value were looking for
+for (int i=0; i<cameraWidth*cameraHeight; i++) {
+	filtered.getPixels()[i] = ofInRange(hue.getPixels()[i],10,30) ? 255 : 0;
+	filtered2.getPixels()[i] = ofInRange(hue.getPixels()[i],75,88) ? 255 : 0;
+}
+filtered.flagImageChanged();
+filtered2.flagImageChanged();
+//run the contour finder on the filtered image to find blobs with a certain hue
+contours.findContours(filtered, 50, cameraWidth*cameraHeight/2, 1, false);
+contours2.findContours(filtered2, 50, cameraWidth*cameraHeight/2, 1, false);
 
 	}
 }
