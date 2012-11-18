@@ -30,6 +30,7 @@
 #include "ofxOpenCv.h"
 #include "ofxARToolkitPlus.h"
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \class testApp
 ///
@@ -372,13 +373,22 @@ public:
 
 	ofxAssimpModelLoader iphone5Model;
 
-
 	/// Radar code ..
 
 	void drawRadar();
 
 	ofTrueTypeFont Serif_25;
 	void DrawDescription(string description);
+	
+	// Blob Stuff ...
+
+	void setupImgMatrices();
+	IplImage *colorImg;
+	int redBlobCoordinates[2],blueBlobCoordinates[2],yellowBlobCoordinates[2],greenBlobCoordinates[2];
+
+	void GetThresholdedImage(IplImage*,string,int coordinates[]);
+	void GrabCameraFrameandSetThreshold();
+	IplImage *frame;
 	
 };
 

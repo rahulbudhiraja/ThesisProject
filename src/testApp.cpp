@@ -19,6 +19,9 @@
 #define IWR_NOTRACKER_INSTANCE	4 // Tracker driver did not open properly.
 #define IWR_NO_STEREO			5 // Stereo driver not loaded.
 #define IWR_STEREO_CORRUPT		6 // Stereo driver exports incorrect.
+
+#define USEARMARKER
+
 extern void	IWRFilterTracking( long *yaw, long *pitch, long *roll );
 
 bool g_tracking	= false;		// True = enable head tracking
@@ -95,6 +98,8 @@ long time_begin_crossDimSelection=0;
 
 int guiWidth=300,guiHeight=125;
 
+# define TRACKBLOBS
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn void testApp::setup()
 ///
@@ -125,18 +130,35 @@ void testApp::setup()
 	loadModelsfromXML();
 	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720; /// 
 
+#ifdef ARMARKER
 	SetupImageMatrices();
 	setupARToolkitStuff();
- 
 	iphone5Model.loadModel("iphone/iPhone5.dae",false);
 	iphone5Model.setScaleNomalization(false);
 	iphone5Model.setScale(0.03,0.03,0.03);
 	iphone5Model.setRotation(0,90,0,0,1);
+#endif 
 
+#ifdef TRACKBLOBS
+
+	setupImgMatrices();
+
+#endif
 }
 //--------------------------------------------------------------
 void testApp::update(){
-GrabCameraFrameandConvertMatrices();
+
+	#ifdef ARMARKER
+
+	GrabCameraFrameandConvertMatrices();
+
+	#endif
+
+#ifdef TRACKBLOBS
+
+	GrabCameraFrameandSetThreshold();
+
+#endif
 }
 //--------------------------------------------------------------
 void testApp::draw()
@@ -166,6 +188,7 @@ void testApp::draw()
 		drawModelsXML();
 		ofSetColor(255, 255, 255);
 		ofFill();
+
 		for(i=0;i<scenes.size();i++)
 		{
 			ofPushMatrix();
@@ -174,19 +197,64 @@ void testApp::draw()
 			ofPopMatrix();
 		}
 
-		iphone5Model.drawFaces();
+#ifdef ARMARKER
 		if(artk.getNumDetectedMarkers()!=0)
-		{
-			iphone5Model.setPosition(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()-artk.getCameraPosition(0).y/10);
+		{	
+			
+			//iphone5Model.setPosition(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()-artk.getCameraPosition(0).y/10);
 			//ofBox(ofVec3f(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()+artk.getCameraPosition(0).y/10),20);
 					
+			ofPushMatrix();
+			ofRotateZ(g_fYaw);
+			ofTranslate(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()-artk.getCameraPosition(0).y/10);
+			ofRotateX(90);
+			ofSetColor(255,0,0);
+			ofRect(-136.6/20,0,-70.6/20,136.6/10,70.6/10);
+			//iphone5Model.drawFaces();
+			//ofBox(ofVec3f(cam.getX()-artk.getCameraPosition(0).x/10,cam.getY()+artk.getCameraPosition(0).z/10,cam.getZ()+artk.getCameraPosition(0).y/10),20);
+			ofPopMatrix();
+
+
 			//cout<<"\n\n Marker Detected"<<artk.getNumDetectedMarkers()<<"     "<<ofGetSystemTime();
 			string CameraPosition="CameraPos,"+ofToString(-artk.getCameraPosition(0).x/10)+","+ ofToString(artk.getCameraPosition(0).z/10)+","+ofToString(-artk.getCameraPosition(0).y/10+10)+",end";
 			int sent = udpSendCameraPosition.Send(CameraPosition.c_str(),CameraPosition.length());
 			cout<<"\n\n Camera Position  "<<artk.getCameraPosition(0).x/10 <<"\t\t"<<artk.getCameraPosition(0).y/10<<"\t\t"<<artk.getCameraPosition(0).z/10;
 		}
+#endif
+
+
 		cam.end();
 
+#ifdef TRACKBLOBS
+
+		// We want to draw a line only if its a valid position
+		if(yellowBlobCoordinates[0]!=0&&blueBlobCoordinates[0]!=0&&greenBlobCoordinates[0]!=0&&redBlobCoordinates[0]!=0)
+		{
+			// Draw a yellow line from the previous point to the current point
+		/*	cvLine(imgScribble, cvPoint(yellowBlobCoordinates[0],yellowBlobCoordinates[1]), cvPoint(greenBlobCoordinates[0],greenBlobCoordinates[1]), cvScalar(0,255,255), 15);
+			cvLine(imgScribble, cvPoint(redBlobCoordinates[0],redBlobCoordinates[1]), cvPoint(yellowBlobCoordinates[0],yellowBlobCoordinates[1]), cvScalar(0,255,255), 15);
+			cvLine(imgScribble, cvPoint(redBlobCoordinates[0],redBlobCoordinates[1]), cvPoint(blueBlobCoordinates[0],blueBlobCoordinates[1]), cvScalar(0,255,255), 15);
+			cvLine(imgScribble, cvPoint(blueBlobCoordinates[0],blueBlobCoordinates[1]), cvPoint(greenBlobCoordinates[0],greenBlobCoordinates[1]), cvScalar(0,255,255), 15);*/
+
+			cout<<"Passing"<<endl;
+
+			ofEnableAlphaBlending();
+
+			ofCircle(ofPoint(blueBlobCoordinates[0],blueBlobCoordinates[1]),20);
+			ofCircle(ofPoint(redBlobCoordinates[0],redBlobCoordinates[1]),20);
+			ofCircle(ofPoint(greenBlobCoordinates[0],greenBlobCoordinates[1]),20);
+			ofCircle(ofPoint(yellowBlobCoordinates[0],yellowBlobCoordinates[1]),20);
+
+			//ofLine()
+
+
+			ofDisableAlphaBlending();
+		}
+
+		// Add the scribbling image and the frame...
+		//cvShowImage("thresh", imgYellowThresh);
+
+#endif
 		string message=Receive_Message();
 
 		if(message.length()>0)
@@ -219,7 +287,7 @@ void testApp::draw()
 
 			else calc.touch_selected=0;
 			if(crosshair_selected)
-				DrawDescription(ModelsList[crosshair_selected].getDescription());
+				DrawDescription(ModelsList[crosshair_selected-1].getDescription());
 		}
 	}
 	else if(dirn.compare("up")==0)
@@ -751,9 +819,11 @@ void testApp::SetupImageMatrices()
 {
 	cameraWidth= 640;
 	cameraHeight= 480;
-
+	
+	vidGrabber.setDeviceID(1);
 	vidGrabber.initGrabber(cameraWidth, cameraHeight);
-
+	//vidGrabber.listDevices(); // Use this to check which camera to use ..
+	vidGrabber.setDeviceID(1);
 	colorImage.allocate(cameraWidth, cameraHeight);
 	grayImage.allocate(cameraWidth, cameraHeight);
 	grayThres.allocate(cameraWidth, cameraHeight);
@@ -764,8 +834,9 @@ void testApp::SetupImageMatrices()
 void testApp::setupARToolkitStuff()
 {
 	//artk.setup(cameraWidth, cameraHeight);
-	artk.setup(cameraWidth, cameraHeight,"RahulMacbookPro.cal","markerboard_480-499.cfg");
-	threshold = 90;
+	artk.setup(cameraWidth, cameraHeight,"USB_Cam.cal","markerboard_480-499.cfg");
+	threshold = 180;
+	//threshold=90;
 	artk.setThreshold(threshold);
 }
 
@@ -841,15 +912,12 @@ void testApp::drawRadar()
 	ofPushMatrix();
 	
 	ofTranslate(105,ofGetHeight()-100);
-	ofRotate(g_fYaw,0,0,1);
+	ofRotate(-g_fYaw,0,0,1);
 	
 
 	ofSetColor(255,255,255,98);
 	ofFill();
 	ofSetPolyMode(OF_POLY_WINDING_NONZERO);
-
-	
-
 
 	ofBeginShape();
 		ofVertex(0,0);
@@ -883,7 +951,7 @@ void testApp::DrawDescription(string description)
 	//ofEnableArbTex();
 	glAlphaFunc ( GL_GREATER, 0.5) ;  
 	glEnable ( GL_ALPHA_TEST ) ;
-	Serif_25.drawString(description,ofGetWidth()-guiWidth+70,45);
+	Serif_25.drawString(description,ofGetWidth()-guiWidth+40,45);
 	glDisable(GL_ALPHA_TEST);	 
 
 	ofSetColor(255);
@@ -905,4 +973,92 @@ void testApp::DrawDescription(string description)
 	//ofTranslate(0,0,-10);
 
 	
+}
+
+void testApp::setupImgMatrices()
+{
+	cameraWidth= 640;
+	cameraHeight= 480;
+	
+	vidGrabber.setDeviceID(1);
+	vidGrabber.initGrabber(cameraWidth, cameraHeight);
+	//vidGrabber.listDevices(); // Use this to check which camera to use ..
+
+	colorImage.allocate(cameraWidth,cameraHeight);
+	
+	frame=0;
+	
+}
+
+
+void testApp::GetThresholdedImage(IplImage* img,string color,int coordinates[])
+{
+	// Convert the image into an HSV image
+	IplImage* imgHSV = cvCreateImage(cvGetSize(img), 8, 3);
+	cvCvtColor(img, imgHSV, CV_BGR2HSV);
+
+	IplImage* imgThreshed = cvCreateImage(cvGetSize(img), 8, 1);
+
+	if(color.compare("blue")==0)
+	// Blue
+    cvInRangeS(imgHSV, cvScalar(100, 100, 100), cvScalar(125, 255, 255), imgThreshed);
+
+	else if(color.compare("green")==0)
+	// Green Color 
+	cvInRangeS(imgHSV, cvScalar(35, 100, 100), cvScalar(98, 255, 255), imgThreshed);
+
+	else if(color.compare("red")==0)
+		// Green Color 
+		cvInRangeS(imgHSV, cvScalar(0, 100, 100), cvScalar(17, 255, 255), imgThreshed);
+
+	else if(color.compare("yellow")==0)
+		// Green Color 
+		cvInRangeS(imgHSV, cvScalar(18, 100, 100), cvScalar(29, 255, 255), imgThreshed);
+
+	CvMoments *moments = (CvMoments*)malloc(sizeof(CvMoments));
+	cvMoments(imgThreshed, moments, 1);
+
+	// The actual moment values
+	double moment10 = cvGetSpatialMoment(moments, 1, 0);
+	double moment01 = cvGetSpatialMoment(moments, 0, 1);
+	double area = cvGetCentralMoment(moments, 0, 0);
+
+	cout<<"\n\n Color "<<color<<"Area"<<area<<"\n";
+	// Holding the last and current ball positions
+	int posX = 0;
+	int posY = 0;
+	
+	posX = moment10/area;
+	posY = moment01/area;
+
+	if(area>100)
+	{	coordinates[0]=posX;coordinates[1]=posY;}
+	else coordinates[0]=coordinates[1]=0;
+	// Print it out for debugging purposes
+	// 
+	// Release the thresholded image+moments... we need no memory leaks.. please
+	cvReleaseImage(&imgThreshed);
+	//cvReleaseImage(&img);
+	cvReleaseImage(&imgHSV);
+	delete moments;
+
+
+}
+
+void testApp::GrabCameraFrameandSetThreshold()
+{
+	vidGrabber.grabFrame();
+	bool bNewFrame = vidGrabber.isFrameNew();
+
+	if(bNewFrame) 
+	{
+		colorImage.setFromPixels(vidGrabber.getPixels(), cameraWidth, cameraHeight);
+		frame=colorImage.getCvImage();
+
+		GetThresholdedImage(frame,"yellow",yellowBlobCoordinates);
+		GetThresholdedImage(frame,"red",redBlobCoordinates);
+		GetThresholdedImage(frame,"green",greenBlobCoordinates);
+		GetThresholdedImage(frame,"blue",blueBlobCoordinates);
+
+	}
 }
