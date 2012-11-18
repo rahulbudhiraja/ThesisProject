@@ -240,12 +240,23 @@ void testApp::draw()
 
 			ofEnableAlphaBlending();
 
+			ofSetColor(0,0,255);
 			ofCircle(ofPoint(blueBlobCoordinates[0],blueBlobCoordinates[1]),20);
+			ofSetColor(255,0,0);
 			ofCircle(ofPoint(redBlobCoordinates[0],redBlobCoordinates[1]),20);
+			ofSetColor(0,255,0);
 			ofCircle(ofPoint(greenBlobCoordinates[0],greenBlobCoordinates[1]),20);
+			ofSetColor(0,255,255);
 			ofCircle(ofPoint(yellowBlobCoordinates[0],yellowBlobCoordinates[1]),20);
 
 			//ofLine()
+
+			ofLine(yellowBlobCoordinates[0],yellowBlobCoordinates[1], greenBlobCoordinates[0],greenBlobCoordinates[1]);
+			ofLine(redBlobCoordinates[0],redBlobCoordinates[1], greenBlobCoordinates[0],greenBlobCoordinates[1]);
+			ofLine(redBlobCoordinates[0],redBlobCoordinates[1], blueBlobCoordinates[0],blueBlobCoordinates[1]);
+			ofLine(blueBlobCoordinates[0],blueBlobCoordinates[1], yellowBlobCoordinates[0],yellowBlobCoordinates[1]);
+
+
 
 
 			ofDisableAlphaBlending();
@@ -820,9 +831,9 @@ void testApp::SetupImageMatrices()
 	cameraWidth= 640;
 	cameraHeight= 480;
 	
-	vidGrabber.setDeviceID(1);
+	vidGrabber.setDeviceID(0);
 	vidGrabber.initGrabber(cameraWidth, cameraHeight);
-	//vidGrabber.listDevices(); // Use this to check which camera to use ..
+	vidGrabber.listDevices(); // Use this to check which camera to use ..
 	vidGrabber.setDeviceID(1);
 	colorImage.allocate(cameraWidth, cameraHeight);
 	grayImage.allocate(cameraWidth, cameraHeight);
@@ -980,10 +991,12 @@ void testApp::setupImgMatrices()
 	cameraWidth= 640;
 	cameraHeight= 480;
 	
-	vidGrabber.setDeviceID(1);
+	vidGrabber.setDeviceID(0);
+	
 	vidGrabber.initGrabber(cameraWidth, cameraHeight);
 	//vidGrabber.listDevices(); // Use this to check which camera to use ..
-
+	vidGrabber.listDevices();cout<<"\n\n Device";
+	vidGrabber.videoSettings();
 	colorImage.allocate(cameraWidth,cameraHeight);
 	
 	frame=0;
@@ -1023,7 +1036,7 @@ void testApp::GetThresholdedImage(IplImage* img,string color,int coordinates[])
 	double moment01 = cvGetSpatialMoment(moments, 0, 1);
 	double area = cvGetCentralMoment(moments, 0, 0);
 
-	cout<<"\n\n Color "<<color<<"Area"<<area<<"\n";
+	//cout<<"\n\n Color "<<color<<"Area"<<area<<"\n";
 	// Holding the last and current ball positions
 	int posX = 0;
 	int posY = 0;
@@ -1031,7 +1044,7 @@ void testApp::GetThresholdedImage(IplImage* img,string color,int coordinates[])
 	posX = moment10/area;
 	posY = moment01/area;
 
-	if(area>100)
+	if(area>200)
 	{	coordinates[0]=posX;coordinates[1]=posY;}
 	else coordinates[0]=coordinates[1]=0;
 	// Print it out for debugging purposes
