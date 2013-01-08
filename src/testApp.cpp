@@ -20,7 +20,8 @@
 #define IWR_NO_STEREO			5 // Stereo driver not loaded.
 #define IWR_STEREO_CORRUPT		6 // Stereo driver exports incorrect.
 
-#define USEARMARKER
+//#define USEARMARKER
+//#define NEWTRACKBLOBS
 
 extern void	IWRFilterTracking( long *yaw, long *pitch, long *roll );
 
@@ -99,7 +100,7 @@ long time_begin_crossDimSelection=0;
 int guiWidth=300,guiHeight=125;
 
 //# define TRACKBLOBS
-#define NEWTRACKBLOBS
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn void testApp::setup()
@@ -129,7 +130,7 @@ void testApp::setup()
 	last_time_select=0;
 	crosshair_selected=0;
 	loadModelsfromXML();
-	AndroidPhoneResWidth=1280;AndroidPhoneResHeight=720; /// 
+	AndroidPhoneResWidth=800;AndroidPhoneResHeight=480; /// 
 
 #ifdef ARMARKER
 	SetupImageMatrices();
@@ -151,6 +152,15 @@ void testApp::setup()
 
 	setupCameraforBlobs();
 #endif
+
+
+	viewport_x=viewport_y=0;
+	texScreen.allocate(300,300,GL_RGB);
+
+	server.setup(44999);
+	ScreenGrabbedImage.allocate(ofGetScreenWidth(),ofGetScreenHeight(),OF_IMAGE_COLOR);
+
+	showText=true;
 }
 //--------------------------------------------------------------
 void testApp::update(){
@@ -169,7 +179,11 @@ void testApp::update(){
 
 #ifdef NEWTRACKBLOBS
 	GrabFrameandFindContours();
+	last_camerapos_sent=0;
 #endif
+
+	server.update(2048);
+	;//ScreenGrabbedImage.grabScreen(0,0,320,240);
 }
 //--------------------------------------------------------------
 void testApp::draw()
@@ -178,28 +192,54 @@ void testApp::draw()
 	windowHeight=ofGetHeight();
 	ofBackground(0,0,0);
 	UpdateTracking();
+
+	
 	if(g_fPitch>-25)
 	{
 		if(dirn.compare("down")==0)
 		{
+			
+			if(ofGetSystemTime()-last_camerapos_sent>50)
+				{last_camerapos_sent=ofGetSystemTime();
 			int sent = udpSendConnection.Send("Change",6);//// Send a Change message and change to dirn.compare==up;
-			dirn="up";
+			}dirn="up";
 		}
 
+		// Viewport Experiments 
+		//ofViewport(0,0,ofGetWidth()+10*viewport_x,ofGetHeight()+10*viewport_y);
+		
 
 		cam.setPosition(0,0,10);
 		cam.lookAt(ofVec3f(0,100,10),ofVec3f(0,0,1.0)); // have changed this a bit ..
-
+		
 		cam.pan(g_fYaw);
 		cam.tilt(g_fPitch);
+
+		/*Temp_viewport=ofGetCurrentViewport();
+		Temp_viewport.x=viewport_x;
+		Temp_viewport.y=viewport_y;*/
+	
+		
 		cam.begin();
+
+		
+	
+		//cam.enableOrtho();
+			
 		drawAxes();
 		drawPlane();
 		//drawModels();
 		drawModelsXML();
+
+		
+		//texScreen.loadScreenData(100,100,300,300);
+	
+		
 		ofSetColor(255, 255, 255);
 		ofFill();
 
+		
+	
 		for(i=0;i<scenes.size();i++)
 		{
 			ofPushMatrix();
@@ -232,9 +272,10 @@ void testApp::draw()
 			cout<<"\n\n Camera Position  "<<artk.getCameraPosition(0).x/10 <<"\t\t"<<artk.getCameraPosition(0).y/10<<"\t\t"<<artk.getCameraPosition(0).z/10;
 		}
 #endif
-
-
+		
+	
 		cam.end();
+		
 
 #ifdef TRACKBLOBS
 
@@ -288,6 +329,7 @@ void testApp::draw()
 		//cvShowImage("thresh", imgYellowThresh);
 
 #endif
+		;//texScreen.draw(100,100);
 
 #ifdef NEWTRACKBLOBS
 		ofSetColor(255,255,0);
@@ -296,11 +338,28 @@ void testApp::draw()
 		
 		ofSetColor(0,255,0);
 		for (int i=0; i<contours2.nBlobs; i++) 
-						ofCircle(contours2.blobs[i].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[i].centroid.y*ofGetWindowHeight()/cameraHeight, 20);
-
+			ofCircle(contours2.blobs[i].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[i].centroid.y*ofGetWindowHeight()/cameraHeight, 20);
+		
 		ofSetColor(0);
+
+		
+
 		if(contours.nBlobs>0&&contours2.nBlobs>0)
+		    {
+				
+				ScreenGrabbedImage.resize((abs(contours.blobs[0].centroid.x-contours2.blobs[0].centroid.x)*ofGetWindowWidth())/cameraWidth,(abs(contours.blobs[0].centroid.y-contours2.blobs[0].centroid.y)*ofGetWindowHeight())/cameraHeight);
+				ScreenGrabbedImage.grabScreen(min(contours.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth),min(contours.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight, contours2.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight),(abs(contours.blobs[0].centroid.x-contours2.blobs[0].centroid.x)*ofGetWindowWidth())/cameraWidth,(abs(contours.blobs[0].centroid.y-contours2.blobs[0].centroid.y)*ofGetWindowHeight())/cameraHeight);
+				ScreenGrabbedImage.resize(320,240);
 				ofRect(min(contours.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth),min(contours.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight, contours2.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight),(abs(contours.blobs[0].centroid.x-contours2.blobs[0].centroid.x)*ofGetWindowWidth())/cameraWidth,(abs(contours.blobs[0].centroid.y-contours2.blobs[0].centroid.y)*ofGetWindowHeight())/cameraHeight);
+		}
+		if(contours.nBlobs>0&&contours2.nBlobs>0&&(ofGetSystemTime()/1000)-last_camerapos_sent>6)
+		{string CameraPosition="Yaw,"+ofToString(g_fYaw)+",X,"+ ofToString(min(contours.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth, contours2.blobs[0].centroid.x*ofGetWindowWidth()/cameraWidth))+",Y,"+ofToString(min(contours.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight, contours2.blobs[0].centroid.y*ofGetWindowHeight()/cameraHeight))+",width,"+ofToString(abs(contours.blobs[0].centroid.x-contours2.blobs[0].centroid.x)*ofGetWindowWidth()/cameraWidth)+",height,"+ofToString(abs(contours.blobs[0].centroid.y-contours2.blobs[0].centroid.y)*ofGetWindowHeight()/cameraHeight)+",tilt,"+ofToString(g_fPitch)+",end,";
+		;//int sent = udpSendCameraPosition.Send(CameraPosition.c_str(),CameraPosition.length());
+		//cout<<"\n\n Camera Position  "<<artk.getCameraPosition(0).x/10 <<"\t\t"<<artk.getCameraPosition(0).y/10<<"\t\t"<<artk.getCameraPosition(0).z/10;
+		last_camerapos_sent=ofGetSystemTime()/1000;
+		
+		
+		}
 
 #endif
 		string message=Receive_Message();
@@ -348,14 +407,48 @@ void testApp::draw()
 	convertedTouchPoints.clear();
 	}
 
-	drawRadar();
+	string statusStr =  "status: " + server.getStateStr();
+	statusStr += " -- sent "+ofToString(server.getPctSent(), 2)+"%";
 
+	ofSetColor(255, 0, 255);
 
-	drawCrosshair();
+	if(showText)
+	{
+	ofDrawBitmapString(statusStr, 10, 20);
+	ofDrawBitmapString("server - launch client than hit s key to send current frame", 10, ofGetHeight()-20);
+	}
+	
+	// Just commenting this out for the viewport experiments ..
+	//drawRadar();
+
+	//	drawCrosshair();
 }
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
 	yaw++;
+
+
+	// Viewport Experiments 
+	if(key==OF_KEY_DOWN)
+		viewport_y++;
+	else if(key==OF_KEY_RIGHT)
+		viewport_x++;
+	else if(key==OF_KEY_LEFT)
+		viewport_x--;
+	else if(key==OF_KEY_UP)
+		viewport_y--;
+	if(key=='s')
+		{
+			ScreenGrabbedImage.saveImage("test.jpg");
+			
+				server.sendPixels(ScreenGrabbedImage.getPixels());
+		ScreenGrabbedImage.saveImage("test.jpg");
+	}
+
+	else if(key=='t')
+		showText=!showText;
+	else if(key=='f')
+		ofToggleFullscreen();
 }
 // --------------------------------------------------------------. 
 void testApp::keyReleased(int key){
@@ -616,14 +709,14 @@ void testApp::setupUDPConnections()
 	udpConnection.Bind(12001);
 	udpConnection.SetNonBlocking(true);
 	udpSendConnection.Create();
-	udpSendConnection.Connect("192.168.43.1",13001);
+	udpSendConnection.Connect("10.0.0.3",13001);
 	udpSendConnection.SetNonBlocking(true);
 	udpReceiveConnection.Create();
 	udpReceiveConnection.Bind(12003);
 	udpReceiveConnection.SetNonBlocking(true);
 
 	udpSendCameraPosition.Create();
-	udpSendCameraPosition.Connect("192.168.43.1",12005);
+	udpSendCameraPosition.Connect("10.0.0.3",12005);
 	udpSendCameraPosition.SetNonBlocking(true);
 }
 void testApp::setupCrosshair()
@@ -1170,8 +1263,8 @@ hsb.convertToGrayscalePlanarImages(hue, sat, bri);
 
 //filter image based on the hue value were looking for
 for (int i=0; i<cameraWidth*cameraHeight; i++) {
-	filtered.getPixels()[i] = ofInRange(hue.getPixels()[i],10,30) ? 255 : 0;
-	filtered2.getPixels()[i] = ofInRange(hue.getPixels()[i],75,88) ? 255 : 0;
+	filtered.getPixels()[i] = ofInRange(hue.getPixels()[i],20,30) ? 255 : 0;
+			filtered2.getPixels()[i] = ofInRange(hue.getPixels()[i],55,65) ? 255 : 0;
 }
 filtered.flagImageChanged();
 filtered2.flagImageChanged();

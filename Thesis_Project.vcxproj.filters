@@ -509,6 +509,9 @@
     <ClInclude Include="..\..\..\addons\ofxOpenCv\src\ofxOpenCv.h">
       <Filter>src\Addons\ofxOpenCV</Filter>
     </ClInclude>
+    <ClInclude Include="src\pixelServer.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\addons\ofxARtoolkitPlus\.gitignore">

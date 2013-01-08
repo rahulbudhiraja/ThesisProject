@@ -249,6 +249,7 @@
     <ClInclude Include="src\GUIStuff.h" />
     <ClInclude Include="src\Models.h" />
     <ClInclude Include="src\NoteInformation.h" />
+    <ClInclude Include="src\pixelServer.h" />
     <ClInclude Include="src\POIS.h" />
     <ClInclude Include="src\ProcessReceivedData.h" />
     <ClInclude Include="src\testApp.h" />

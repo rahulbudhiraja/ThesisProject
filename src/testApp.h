@@ -29,6 +29,7 @@
 #include <Models.h>
 #include "ofxOpenCv.h"
 #include "ofxARToolkitPlus.h"
+#include "pixelServer.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,6 +399,23 @@ public:
 	void setupCameraforBlobs();
 	void GrabFrameandFindContours();
 	ofxCvContourFinder contours,contours2;
+
+	//// View Port Experiments --- will be removed later ..
+
+	ofRectangle Temp_viewport;
+	int viewport_x,viewport_y;
+
+	ofFbo screenpart;
+	ofTexture texScreen;
+
+	float last_camerapos_sent;
+	
+	/////// Pixel Server Stuff ..
+
+	pixelServer server;
+	
+	ofImage ScreenGrabbedImage;
+	bool showText;
 
 };
 
