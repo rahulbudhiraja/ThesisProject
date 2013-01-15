@@ -1,0 +1,29 @@
+<Session ______>
+
+<Date>
+
+<Time>
+
+<Session Duration>
+
+<Task type="Sticky Finger">
+
+<Object id="1"><Name "Model Name">
+
+<Accuracy> Blah %age ..
+
+<Error>
+
+<Pixels>
+
+<Percentage> 
+
+<Object id="2">
+
+...
+</Task>
+
+</Session>
+
+
+<Session Blah >

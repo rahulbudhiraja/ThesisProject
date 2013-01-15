@@ -417,6 +417,43 @@ public:
 	ofImage ScreenGrabbedImage;
 	bool showText;
 
+	/// User study helper variables and functions ...
+
+	void RandomizeTargetPosition();
+	
+	ofVec3f TargetPosition,TargetPositionScreenCoods;
+	ofVec3f CursorPosition;
+
+	void drawTargetandCursor();
+	void SaveAndRecordTimes();
+	void checkifTargetisonScreen();
+
+	float SessionTimeBegin,SessionTimeEnd;
+	float accuracy; // Accuracy in Percentage -- eg: 99.9 blah ..
+	float error; // Error in Terms of Pixels 
+
+	ofxXmlSettings Timings;
+
+	int numberofSessions;
+
+	bool isTargetVisible,isCursorSelected;
+
+	void checkifCursorIntersectsFinger();
+
+	void classifyGesture(string);
+	void translateCursor(vector<string>);
+
+	float difference[2];
+
+	ofImage bullsEye;
+	void checkifCursorIntersectsTarget();
+
+	float startTime;
+	float motionSensitivity;
+
+
+	int activeGesture;
+
 };
 
 #endif

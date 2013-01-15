@@ -101,6 +101,8 @@ int guiWidth=300,guiHeight=125;
 
 //# define TRACKBLOBS
 
+# define USERSTUDY
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /// \fn void testApp::setup()
@@ -129,7 +131,10 @@ void testApp::setup()
 	initialyaw=g_fYaw;
 	last_time_select=0;
 	crosshair_selected=0;
+
+
 	loadModelsfromXML();
+	
 	AndroidPhoneResWidth=800;AndroidPhoneResHeight=480; /// 
 
 #ifdef ARMARKER
@@ -151,16 +156,31 @@ void testApp::setup()
 #ifdef NEWTRACKBLOBS
 
 	setupCameraforBlobs();
+		ScreenGrabbedImage.allocate(ofGetScreenWidth(),ofGetScreenHeight(),OF_IMAGE_COLOR);
 #endif
 
 
 	viewport_x=viewport_y=0;
-	texScreen.allocate(300,300,GL_RGB);
-
+	
 	server.setup(44999);
-	ScreenGrabbedImage.allocate(ofGetScreenWidth(),ofGetScreenHeight(),OF_IMAGE_COLOR);
+
+	
 
 	showText=true;
+
+#ifdef USERSTUDY
+
+	TargetPosition.x=TargetPosition.y=TargetPosition.z=0;
+	CursorPosition.x=ofGetWidth()/2;CursorPosition.y=ofGetHeight()/2;
+	RandomizeTargetPosition();
+	bullsEye.loadImage("bullseye.png");
+	bullsEye.resize(100,100);
+
+#endif
+
+	 startTime=ofGetElapsedTimeMillis();
+	 motionSensitivity=20;
+	//SaveAndRecordTimes();
 }
 //--------------------------------------------------------------
 void testApp::update(){
@@ -191,7 +211,7 @@ void testApp::draw()
 	windowWidth=ofGetWidth();
 	windowHeight=ofGetHeight();
 	ofBackground(0,0,0);
-	UpdateTracking();
+	//UpdateTracking();
 
 	
 	if(g_fPitch>-25)
@@ -222,14 +242,16 @@ void testApp::draw()
 		
 		cam.begin();
 
-		
-	
 		//cam.enableOrtho();
 			
 		drawAxes();
 		drawPlane();
 		//drawModels();
+
+#ifndef USERSTUDY
+
 		drawModelsXML();
+#endif
 
 		
 		//texScreen.loadScreenData(100,100,300,300);
@@ -239,6 +261,7 @@ void testApp::draw()
 		ofFill();
 
 		
+#ifndef USERSTUDY
 	
 		for(i=0;i<scenes.size();i++)
 		{
@@ -247,6 +270,7 @@ void testApp::draw()
 			drawAugmentedPlane(scenes[i].x,scenes[i].y,Notes[i].text_color,Notes[i].bg_color,i,Notes[i].note_heading,Notes[i].note_text);
 			ofPopMatrix();
 		}
+#endif
 
 #ifdef ARMARKER
 		if(artk.getNumDetectedMarkers()!=0)
@@ -363,9 +387,12 @@ void testApp::draw()
 
 #endif
 		string message=Receive_Message();
-
+	
 		if(message.length()>0)
-			;//cout<<"\n\n UDP received Message"<<message;
+			;
+		else ;//gestureType=0;//cout<<"\n\n UDP received Message"<<message;
+		
+		
 		if(message.compare("Left Swipe")==0&&gestureType==4&&(ofGetSystemTime()-time_begin_crossDimSelection)<2000)
 		{
 			//cout<<"Left Swipe";
@@ -373,28 +400,130 @@ void testApp::draw()
 			cout<<sendMessage<<"\n\n";
 			int sent = udpSendConnection.Send(sendMessage.c_str(),6);
 		}
+
+		else if(message.compare("Stop")==0)
+			gestureType=0;
+
+		
+		
 		else if(message.length()>0)
-			convertPhonetoScreenCoordinates(message);
+			{
+				convertPhonetoScreenCoordinates(message);
+#ifdef USERSTUDY
+
+				result=ofSplitString(ofToString(message),",");
+				
+				if(result[0].compare("Sensitivity")==0)
+				{
+					motionSensitivity=ofToFloat(result[1]);
+					cout<<motionSensitivity<<endl;
+				}
+				
+				else if(result[0].compare(("Initialize"))==0)
+				{
+					
+					motionSensitivity=ofToFloat(result[2]);
+					activeGesture=ofToInt(result[4])+1;
+					AndroidPhoneResWidth=ofToInt(result[8]);
+					AndroidPhoneResHeight=ofToInt(result[10]);
+					startTime=ofGetElapsedTimeMillis();
+					cout<<"message"<<message;
+				}
+
+				else if(result[0].compare("End")==0)
+				{
+
+					SaveAndRecordTimes();
+					ofExit(0);
+					
+				}
+				
+				else if(result[0].compare(("Sensor"))==0)
+				{
+					gestureType=6;
+					
+					CursorPosition.x-=ofToFloat(result[2])/motionSensitivity;
+					CursorPosition.y+=ofToFloat(result[4])/motionSensitivity;
+					
+					if(CursorPosition.x<0)
+						CursorPosition.x=0;
+					else if(CursorPosition.x>ofGetWidth())
+						CursorPosition.x=ofGetWidth();
+					
+					if(CursorPosition.y<0)
+						CursorPosition.y=0;
+					else if(CursorPosition.y>ofGetHeight())
+						CursorPosition.y=ofGetHeight();
+
+
+				}
+
+				else
+				{
+					drawTouchImpressions(result,false);
+					checkifCursorIntersectsFinger();
+				
+				cout<<result[result.size()-2]<<endl;
+				
+				if(isCursorSelected)
+				classifyGesture(message);
+                }
+#endif
+
+		}
+
+		
+
 		if(gestureType==0&&last_gesture_selected&&convertedTouchPoints[0]==1)
 		{
 			gestureType=1;
+			result=ofSplitString(ofToString(message),",");
+			drawTouchImpressions(result,false);
 			last_gesture_selected=!last_gesture_selected;
+			cout<<"Blah";
 		}
-		else if(gestureType>=1&&gestureType<4)
-			translate_3D_Model(message);
+		else if(gestureType>=1&&gestureType<=6 &&gestureType!=4)
+#ifdef USERSTUDY
+		{
+			cout<<"result\n\n";
+			if(message.length()>0)
+			{
+
+			
+			result=ofSplitString(ofToString(message),",");
+			cout<<"translate\n\n";
+			translateCursor(result);
+			}
+		}
+#endif	
+
+#ifndef USERSTUDY
+
+	translate_3D_Model(message); // This should be replaced with Translate Cursor ..
+
+#endif
+
 		else {	
 			beginSelection=false;
 			calc.touch_selected=0;
-			resetModelVariables();
+			gestureType=0;
+			
+#ifndef USERSTUDY
+resetModelVariables();
 			updateModelPositions();
-			UDPReceive();
+
 			Check_for_crosshair_model_intersection();
+			UDPReceive();
+
 			if(message.length()>0&&message.compare("Left Swipe")!=0)
 				drawTouches(message);
 
 			else calc.touch_selected=0;
 			if(crosshair_selected)
 				DrawDescription(ModelsList[crosshair_selected-1].getDescription());
+#endif			
+				
+			
 		}
 	}
 	else if(dirn.compare("up")==0)
@@ -402,11 +531,14 @@ void testApp::draw()
 		int sent = udpSendConnection.Send("Change",6);;//// Send a Change message and change to dirn.compare==up;
 		dirn="down";
 	}
+	
+	
 	if(convertedTouchPoints.size()>0)
 	{		ofDrawBitmapString(ofToString(Check_for_Finger_Intersections()),ofGetWidth()-430,30);
 	convertedTouchPoints.clear();
 	}
 
+#ifdef NEWTRACKBLOBS
 	string statusStr =  "status: " + server.getStateStr();
 	statusStr += " -- sent "+ofToString(server.getPctSent(), 2)+"%";
 
@@ -417,11 +549,14 @@ void testApp::draw()
 	ofDrawBitmapString(statusStr, 10, 20);
 	ofDrawBitmapString("server - launch client than hit s key to send current frame", 10, ofGetHeight()-20);
 	}
-	
+#endif
 	// Just commenting this out for the viewport experiments ..
-	//drawRadar();
+	drawRadar();
 
 	//	drawCrosshair();
+
+	checkifTargetisonScreen();
+	drawTargetandCursor();
 }
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
@@ -432,11 +567,12 @@ void testApp::keyPressed(int key){
 	if(key==OF_KEY_DOWN)
 		viewport_y++;
 	else if(key==OF_KEY_RIGHT)
-		viewport_x++;
+		g_fYaw--;
 	else if(key==OF_KEY_LEFT)
-		viewport_x--;
+		g_fYaw++;
 	else if(key==OF_KEY_UP)
 		viewport_y--;
+#ifdef NEWTRACKBLOBS	
 	if(key=='s')
 		{
 			ScreenGrabbedImage.saveImage("test.jpg");
@@ -447,6 +583,7 @@ void testApp::keyPressed(int key){
 
 	else if(key=='t')
 		showText=!showText;
+	#endif
 	else if(key=='f')
 		ofToggleFullscreen();
 }
@@ -633,7 +770,7 @@ void testApp::drawAugmentedPlane(float xPosition,float yPosition,ofColor textCol
 void testApp::drawTouches(string udpMessage)
 {
 	vector<string> components= ofSplitString(udpMessage,",");
-	ofSetColor(255,0,0,90);
+	ofSetColor(255,0,0,20);
 	storeFingerPosition(components);
 	ofFill();
 	ofEnableAlphaBlending();
@@ -751,7 +888,7 @@ void testApp::drawTouchImpressions(vector <string>message,bool somethingSelected
 	if(ofToInt(message[0])==1)
 	{
 		ofFill();
-		ofEnableAlphaBlending();
+		//ofEnableAlphaBlending();
 
 		if(somethingSelected)
 		{
@@ -760,7 +897,7 @@ void testApp::drawTouchImpressions(vector <string>message,bool somethingSelected
 		}
 		else 
 		{
-			ofSetColor(255,0,0,90);
+			ofSetColor(0,0,255);
 			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,20);
 		}
 		ofDisableAlphaBlending();
@@ -778,7 +915,7 @@ void testApp::drawTouchImpressions(vector <string>message,bool somethingSelected
 		}
 		else 
 		{
-			ofSetColor(255,0,0,90);
+			ofSetColor(255,0,0);
 			ofCircle(ofGetWidth()*ofToFloat(message[1])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[2])/AndroidPhoneResHeight,0,20);
 			ofCircle(ofGetWidth()*ofToFloat(message[3])/AndroidPhoneResWidth,ofGetHeight()*ofToFloat(message[4])/AndroidPhoneResHeight,0,20);
 		}
@@ -899,6 +1036,7 @@ int testApp::Check_for_Finger_Intersections()
 	//cout<<"\n\nSelected	"<<selection;
 	return calc.touch_selected;
 
+	
 }
 
 
@@ -1035,8 +1173,9 @@ void testApp::drawRadar()
 	radarCam.begin();
 	
 	ofViewport(0,ofGetHeight()-200,200,200);
-	drawModelsXML();
-	
+	//drawModelsXML();
+	ofSetColor(255,255,255);
+	ofSphere(TargetPosition.x,TargetPosition.y,50);
 	radarCam.end();
 
 	// The Circles ...
@@ -1272,5 +1411,217 @@ filtered2.flagImageChanged();
 contours.findContours(filtered, 50, cameraWidth*cameraHeight/2, 1, false);
 contours2.findContours(filtered2, 50, cameraWidth*cameraHeight/2, 1, false);
 
+}
+
+
+}
+
+void testApp::RandomizeTargetPosition()
+{
+	TargetPosition.x=ofRandom(-200,200);
+	TargetPosition.y=ofRandom(-200,200);
+	TargetPosition.z=ofRandom(-35,35);
+
+
+}
+
+void testApp::drawTargetandCursor()
+{
+	
+	if(gestureType>0)
+		ofSetColor(0,255,0);
+	else if(isCursorSelected)
+		ofSetColor(0,100,0);
+	else ofSetColor(240,86,86);
+
+	ofCircle(CursorPosition.x,CursorPosition.y,50);
+	
+	if(isTargetVisible)
+	{
+		ofSetColor(255,255,255);
+		//ofCircle(TargetPositionScreenCoods.x,TargetPositionScreenCoods.y,50);
+		ofEnableAlphaBlending();
+		bullsEye.draw(TargetPositionScreenCoods.x,TargetPositionScreenCoods.y);
+		ofDisableAlphaBlending();
 	}
 }
+
+void testApp::SaveAndRecordTimes()
+{
+	if(!Timings.loadFile("Timings.xml"))
+		Timings.addTag("Timings");
+
+	Timings.pushTag("Timings");
+
+	int numberofSessions=Timings.getNumTags("Session");
+
+	Timings.addTag("Session");
+	Timings.pushTag("Session",numberofSessions);
+
+	time_t t = time(0);   
+	struct tm * now = localtime( & t );
+	string currentDate=ofToString(now->tm_mday)+"-" +ofToString(now->tm_mon + 1)+"-"+ofToString(((now->tm_year)+ 1900));
+
+	Timings.addValue("Id",numberofSessions+1);
+	Timings.addValue("Date",currentDate);
+
+	string currentTime=ofToString(now->tm_hour)+"-" +ofToString(now->tm_min)+"-"+ofToString(now->tm_sec);
+
+	cout<<endl<<currentTime<<endl;
+
+	Timings.addValue("Time",currentTime);
+	
+	Timings.addValue("X Error",ofToString(CursorPosition.x-TargetPosition.x));
+	Timings.addValue("Y Error",ofToString(CursorPosition.y-TargetPosition.y));
+
+	/// Duration ..
+	Timings.addValue("Duration",ofToString(ofGetElapsedTimeMillis()-startTime));
+
+	/// Gesture Type ...
+
+	/// Accuracy %age ..Cartesian Difference in error as a percentage ..
+
+	Timings.addValue("Accuracy",ofToString(sqrt(pow(CursorPosition.x-TargetPosition.x,2)+pow(CursorPosition.y-TargetPosition.y,2))));
+		
+	/// 
+
+	
+
+/// Session pop ..
+
+	Timings.popTag();
+
+	//Timings.popTag();
+
+	Timings.saveFile("Timings.xml");
+	
+}
+
+void testApp::checkifTargetisonScreen()
+{
+	TargetPositionScreenCoods=cam.worldToScreen(TargetPosition);
+
+	if(TargetPositionScreenCoods.z<1)
+		isTargetVisible=true;
+	else isTargetVisible=false;
+
+	if(isTargetVisible)
+		;//cout<<"ssaawwwwwwwwwww";
+
+	;//cout<<"\n\n\n"<<TargetPosition.x;
+}
+
+void testApp::checkifCursorIntersectsFinger()
+{
+	if(convertedTouchPoints[0]==1)
+	{
+		;//cout<<"pass";
+		if(abs(convertedTouchPoints[1]-CursorPosition.x)<25&&abs(convertedTouchPoints[2]-CursorPosition.y)<25)
+           isCursorSelected=true;//cout<<"iT IS TOUCHING ...";
+		else isCursorSelected=false;//cout<<"It is not touching ..";
+	}
+
+	if(convertedTouchPoints[0]==2)
+	{
+		float midPointTouch_x=((convertedTouchPoints[1])+(convertedTouchPoints[3]))/2;
+		float midPointTouch_y=((convertedTouchPoints[2])+(convertedTouchPoints[4]))/2;
+		
+
+		if(abs(midPointTouch_x-CursorPosition.x)<25&&abs(midPointTouch_y-CursorPosition.y)<25)
+			{isCursorSelected=true;//cout<<"iT IS TOUCHING ...";
+		cout<<"touch"<<endl;
+		}
+		else isCursorSelected=false;
+
+
+	}
+	
+}
+
+void testApp::classifyGesture(string message)
+{
+
+	vector<string> components= ofSplitString(message,",");
+		
+	if(ofToInt(components[0])==1&&components[components.size()-2]=="S")
+	{
+		gestureType=1;
+		//cout<<"\nThe 3D Model is"<<calc.touch_selected;
+		time_begin_crossDimSelection=10000;
+	}
+	if(ofToInt(components[0])==2&&components[components.size()-2]=="HC")
+	{
+		gestureType=2;
+		//cout<<"\n Head Crusher";
+		time_begin_crossDimSelection=10000;
+	}
+	if(ofToInt(components[0])==2&&components[components.size()-2]=="SF"&&calc.touch_selected!=0)
+	{
+		gestureType=3;
+		cout<<"\n Scaling Gesture";
+		time_begin_crossDimSelection=10000;
+	}
+	if(ofToInt(components[0])==1&&components[components.size()-1]=="CD"&&calc.touch_selected!=0)
+	{
+		gestureType=4;
+		//cout<<"\n Cross Dimensional";
+		time_begin_crossDimSelection=ofGetSystemTime();
+		crossDimObjSelected=calc.touch_selected;
+	}
+
+	if(ofToInt(components[0])==1&&components[components.size()-2]=="TP")
+	{
+		gestureType=5;
+		time_begin_crossDimSelection=10000;
+		cout<<"Tap";
+	}
+	
+
+
+	
+	cout<<components[components.size()-2]<<"\t\t"<<gestureType;
+	////cout<<"g-Fyaw"<<g_fYaw<<endl;
+	components.clear();
+} 
+
+void testApp::translateCursor(vector<string> message)
+{
+	
+	if((gestureType==1||gestureType==5)&&ofToFloat(message[1])>0&&ofToFloat(message[2])>0&&(activeGesture==1||activeGesture==3)) // NEEDS TO BE CHANGED ..
+		{
+
+		if(!beginSelection)
+		{	
+			last_single_touch[0]=(ofToFloat(message[1]));
+			last_single_touch[1]=(ofToFloat(message[2]));
+			difference[0]=CursorPosition.x-last_single_touch[0];
+			difference[1]=CursorPosition.y-last_single_touch[1];
+			beginSelection=!beginSelection;
+			CursorPosition.x=convertedTouchPoints[1];
+			CursorPosition.y=convertedTouchPoints[2];
+		}
+		else
+		{
+
+			CursorPosition.x=convertedTouchPoints[1];
+			CursorPosition.y=convertedTouchPoints[2];
+		
+
+		cout<<"Translating";
+		cout<<(ofToFloat(message[1])-last_single_touch[0])<<"     "<<(ofToFloat(message[2])-last_single_touch[1]);
+		}
+	}
+	
+	else if(gestureType==2&&ofToFloat(message[1])>0&&ofToFloat(message[2])>0&&activeGesture==2)
+	{
+
+		CursorPosition.x=(abs(convertedTouchPoints[1])+abs(convertedTouchPoints[3]))/2;
+		CursorPosition.y=(abs(convertedTouchPoints[2])+abs(convertedTouchPoints[4]))/2;
+	}
+
+	else gestureType=0;	
+
+}
+
+
+

@@ -182,7 +182,7 @@ void Models::setDescription(string description)
 {
 	Description=description;
 
-}
+} 
 
 string Models::getDescription()
 {

@@ -1,0 +1,30 @@
+<Timings>
+    <Session>
+        <Id>1</Id>
+        <Date>13-1-2013</Date>
+        <Time>3-18-14</Time>
+        <X />
+    </Session>
+    <Session>
+        <Id>2</Id>
+        <Date>13-1-2013</Date>
+        <Time>3-18-39</Time>
+        <X />
+    </Session>
+    <Session>
+        <Id>3</Id>
+        <Date>13-1-2013</Date>
+        <Time>3-19-32</Time>
+        <X />
+    </Session>
+    <Session>
+        <Id>4</Id>
+        <Date>13-1-2013</Date>
+        <Time>5-24-17</Time>
+        <X Error>503.457</X Error>
+        <Y Error>36.5747</Y Error>
+        <Duration>14196</Duration>
+        <Accuracy>504.784</Accuracy>
+    </Session>
+</Timings>
+<Timings></Timings>
